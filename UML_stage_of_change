@@ -1,0 +1,19 @@
+@startuml
+
+enum MotivationalLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+class MotivationalState {
+  - state: MotivationalLevel
+  + isHigh(): boolean
+  + isMedium(): boolean
+  + isLow(): boolean
+}
+
+MotivationalState --> MotivationalLevel
+
+
+@enduml7

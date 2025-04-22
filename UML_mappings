@@ -1,0 +1,51 @@
+@startuml
+
+' Base Class for Mechanics '
+class MechanicBase #lightblue {
+  +id: int
+  +name: string
+}
+' Base Class for NotivationalMechanic '
+class MotivationalMechanic #lightblue extends MechanicBase {
+  weights: List[Mapping]
+}
+object ProgramAdherenceLeaderboard
+ProgramAdherenceLeaderboard : MotivationalMechanic
+ProgramAdherenceLeaderboard : weights = [ExperienceAndLevelSystemToPersonal_MasteryMapping]
+
+Mapping -> MotivationalTrait  : has
+Mapping -> PlayerType : has
+
+
+' Base Class for User Trait '
+class UserTrait {
+  +id: int
+  +name: string
+}
+
+' Base Class for Motivational Trait '
+class MotivationalTrait #orange extends UserTrait {
+}
+
+object Personal_Mastery
+Personal_Mastery : MotivationalTrait
+
+class Mapping {
+  Trait : UserTrait
+  Mechanic: MotivationalMechanic
+  weight: float
+}
+
+object ExperienceAndLevelSystemToPersonal_MasteryMapping {
+  Trait = Personal_Mastery
+  Mechanic = ExperienceAndLevelSystem
+  weight = 0.3
+}
+ExperienceAndLevelSystemToPersonal_MasteryMapping : Mapping
+
+
+' Base Class for Player type '
+class PlayerType #lightgreen extends UserTrait {
+}
+
+@enduml
