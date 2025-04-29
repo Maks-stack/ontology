@@ -2,139 +2,141 @@
 
 skinparam linetype polyline
 
-abstract class Metric {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +metricType: MetricType
-  +value: float
+package Metrics_and_Measurements {
+
+  class Metric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+
+  class MetricComputation {
+    +algorithm: String
+  }
+
+  MetricComputation --> Metric : "produces"
+
+  Measurement <-- MetricComputation : "reads"
+
+  object MechanicUsageRate
+  MechanicUsageRate : Metric´
+  MechanicUsageRate : userId = 1
+  MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
+  MechanicUsageRate --> Metric : "instance of"
+
+  object MechanicDisplayRate
+  MechanicDisplayRate : Metric´
+  MechanicDisplayRate : userId = 1
+  MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
+  MechanicDisplayRate --> Metric : "instance of"
+
+  object MechanicEngagement
+  MechanicEngagement : Metric´
+  MechanicEngagement : userId = 1
+  MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
+  MechanicEngagement --> Metric : "instance of"
+
+  object SessionDuration
+  SessionDuration : userId = 1
+  SessionDuration : mechanicId = 101
+  SessionDuration : impressionCount = 2
+  SessionDuration : timestamp = 2025-04-21T09:00:00Z
+  SessionDuration --> Metric : "incance of"
+
+  object ClickRate
+  ClickRate : userId = 1
+  ClickRate : mechanicId = 101
+  ClickRate : impressionCount = 2
+  ClickRate : timestamp = 2025-04-21T09:00:00Z
+  ClickRate --> Metric : "incance of"
+
+  object Adherence
+  Adherence : Metric
+  Adherence : userId = 1
+  Adherence : timestamp = 2023-10-01T12:00:00Z
+  Adherence --> Metric : "instance of"
+
+  note as A1
+  Percentage of the finished tasks out of the overall prescribed tasks
+  end note
+
+  A1 .. Adherence
+
+  class Measurement {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +measurementType: MeasurementType
+    +value: float
+  }
+
+  note top of Measurement
+  Represents a direct, single-point observation 
+  or quantitative recording of user behavior or 
+  state at a given moment in time.
+
+  Examples:
+  - Click rate
+  - Session duration
+  - Number of impressions
+  end note
+
+  object mechanicImpression
+  mechanicImpression : Measurement
+  mechanicImpression : userId = 1
+  mechanicImpression : mechanicId = 101
+  mechanicImpression : impressionCount = 5
+  mechanicImpression : timestamp = 2025-04-21T09:00:00Z
+
+  mechanicImpression ---> Measurement :"instance of"
+
+  note bottom of mechanicImpression
+  Captures a one-time measurement of how often
+  a specific motivational mechanic was shown or visible 
+  to the user at a given point in time.
+  Used to support decisions on reinforcing or deactivating it.
+  end note
+
+  object Time
+  Time : userId = 1
+  Time : mechanicId = 101
+  Time : impressionCount = 2
+  Time : timestamp = 2025-04-21T09:00:00Z
+  Time --> Measurement : "incance of"
+
+  ' 🔵 Interaction Object
+  object mechanicInteraction
+  mechanicInteraction : userId = 1
+  mechanicInteraction : mechanicId = 101
+  mechanicInteraction : impressionCount = 2
+  mechanicInteraction : timestamp = 2025-04-21T09:00:00Z
+
+  mechanicInteraction --> Measurement : "instance of"
+
+  note bottom of mechanicInteraction
+  Captures a one-time measurement of how often
+  a specific motivational mechanic was used or interacted with 
+  by the user at a specific moment.
+  Helps evaluate the effectiveness of mechanic engagement.
+  end note
 }
 
-class MechanicEngagementEvaluator {
-  +calculateMechanicUsageRate(userId: int): MechanicUsageRate
-  +calculateMechanicDisplayRate(userId: int): MechanicDisplayRate
-  +calculateMechanicEngament(userId: int): MechanicEngament
-  +calculateSessionDuration(userId: int): SessionDuration
-  +calculateClickRate(userId: int): ClickRate
-}
+package KeySituations_and_UserActions {
 
-note right of MechanicEngagementEvaluator::calculateMechanicUsageRate
-Returns: 
-count(MechanicInteraction events for userId) / observationPeriod
-end note
+  class MeasurementType {
+    +id: int
+    +name: String
+  }
 
-note right of MechanicEngagementEvaluator::calculateMechanicDisplayRate
-Returns: 
-count(MechanicDisplayed events for userId) / observationPeriod
-end note
+  note top of MeasurementType
+  Represents the type or category of a measurement.
+  Examples: Click rate, session duration, etc.
+  end note
 
-note right of MechanicEngagementEvaluator::calculateSessionDuration
-Returns: 
-average(SessionEnded - SessionStarted)
-end note
+  Measurement --> MeasurementType : "is of type"
 
-note right of MechanicEngagementEvaluator::calculateClickRate
-Returns: 
-total(Clicks) / total(Session duration)
-end note
-
-note top of MechanicEngagementEvaluator
-Aggregates event data and calculates metrics such as:
-- usage/display rates for mechanics
-- click/session metrics
-Stores or returns metric instances accordingly.
-end note
-
-MechanicEngagementEvaluator --> MechanicInteraction : "reads"
-MechanicEngagementEvaluator --> MechanicDisplayed : "reads"
-MechanicEngagementEvaluator --> MechanicDisplayRate : "calculates"
-MechanicEngagementEvaluator --> MechanicUsageRate : "calculates"
-MechanicEngagementEvaluator --> MechanicEngagement : "calculates with display + usage rate"
-
-MechanicEngagement --> MotivationalMechanic : "of"
-
-class MechanicUsageRate extends Metric {
-  +mechanicId: int
-}
-
-class MechanicDisplayRate extends Metric {
-  +mechanicId: int
-}
-
-class MechanicEngament extends Metric {
-  +mechanicId: int
-}
-
-
-
-class MetricTable << (D,orchid) Database >> {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +value: float
-  +contextId: int  ' (optional: mechanicId or screenName reference)'
-}
-
-MetricTable <-- Metric : "is stored in"
-
-class Adherence extends Metric  {
-  percentage: float
-}
-
-abstract class Measurement {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +measurementType: MeasurementType
-  +value: float
-}
-
-note top of Measurement
-Represents a direct, single-point observation 
-or quantitative recording of user behavior or 
-state at a given moment in time.
-
-Examples:
-- Click rate
-- Session duration
-- Number of impressions
-end note
-
-class GameMechanicImpression extends Measurement {
-  +mechanicId: int
-  +impressionCount: int
-}
-
-note bottom of GameMechanicImpression
-Captures a one-time measurement of how often
-a specific motivational mechanic was shown or visible 
-to the user at a given point in time.
-Used to support decisions on reinforcing or deactivating it.
-end note
-
-GameMechanicImpression --> MechanicDisplayed : "triggers"
-GameMechanicInteraction --> MechanicInteraction : "triggers"
-
-class GameMechanicInteraction extends Measurement {
-  +mechanicId: int
-  +impressionCount: int
-}
-
-note bottom of GameMechanicInteraction
-Captures a one-time measurement of how often
-a specific motivational mechanic was used or interacted with 
-by the user at a specific moment.
-Helps evaluate the effectiveness of mechanic engagement.
-end note
-
-class SessionDuration extends Measurement {
-  +duration: float
-}
-class ClickRate extends Measurement {
-  +clickRate: float
-}
-
-abstract class Event {
+class KeySituation {
   +id: int
   +userId: int
   +timestamp: DateTime
@@ -144,42 +146,47 @@ abstract class Event {
   +metadata: Map<String, String>
 }
 
-class MechanicDisplayed extends Event {
-  +mechanicId: int
-}
+object TaskFinished
+TaskFinished : KeySituation
+TaskFinished : userId = 1
+TaskFinished : timestamp = 2023-10-01T12:00:00Z
+TaskFinished : taskId = 123
+TaskFinished --> KeySituation : "instance of"
 
-class MechanicInteraction extends Event {
-  +mechanicId: int
-}
+object MechanicDisplayed
+MechanicDisplayed : KeySituation
+MechanicDisplayed : userId = 1
+MechanicDisplayed : timestamp = 2023-10-01T12:00:00Z
+MechanicDisplayed : taskId = 123
+MechanicDisplayed --> KeySituation : "instance of"
 
-class SessionStarted extends Event {
-  +startTime: DateTime
-}
+object MechanicInteraction
+MechanicInteraction : KeySituation
+MechanicInteraction : userId = 1
+MechanicInteraction : timestamp = 2023-10-01T12:00:00Z
+MechanicInteraction : taskId = 123
+MechanicInteraction --> KeySituation : "instance of"
 
-class SessionEnded extends Event {
-  +endTime: DateTime
-}
+object SessionStarted
+SessionStarted : KeySituation
+SessionStarted : userId = 1
+SessionStarted : timestamp = 2023-10-01T12:00:00Z
+SessionStarted : taskId = 123
+SessionStarted --> KeySituation : "instance of"
 
-note left of Event
-Generic event structure used for multiple behavioral logs,
+object SessionEnded
+SessionEnded : KeySituation
+SessionEnded : userId = 1
+SessionEnded : timestamp = 2023-10-01T12:00:00Z
+SessionEnded : taskId = 123
+SessionEnded --> KeySituation : "instance of"
+
+note left of KeySituation
+Generic KeySituation structure used for multiple behavioral logs,
 such as screen visits, mechanic usage, and session tracking.
 end note
 
-
-class EventTable << (D,orchid) Database >> {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +mechanicId: int
-  +screen: String
-  +value: float
-  +metadata: Text
-}
-
-EventTable <-- Event : "is stored in"
-
-
-abstract class UserAction {
+class UserAction {
   +id: int
   +userId: int
   +timestamp: DateTime
@@ -187,281 +194,187 @@ abstract class UserAction {
   +metadata: Map<String, String>
 }
 
-class Click extends UserAction
-class NavigateForward extends UserAction
-class NavigateBack extends UserAction
-class ButtonClick extends UserAction
-
-
-class UserActionTable << (D,orchid) Database >> {
-  +id: int
+object Action {
   +userId: int
   +timestamp: DateTime
-  +actionType: ActionType
   +screen: String
-  +metadata: Text
-}
-
-UserActionTable <-- UserAction : "is stored in"
-
-User --> "0..*" UserAction : "performs"
-
-class ActiveMotivationalMechanics #9bfbff {
-  list<MotivationalMechanic> mechanics
-}
-
-class MotivationalMechanic #9bfbff {
-  +mechanicId: int
-  +name: string
-  +description: string
-  +isActive(): boolean
-  +mechanicTraitWeights: List<MechanicTraitWeight>
-}
-
-class MotivationalMechanicTable << (D,orchid) Database >> {
-  +mechanicId: int
-  +isActive(): boolean
-}
-
-class MechanicTraitWeight #9bfbff {
-  +mechanicId: int
-  +userTrait: UserTrait
-  +weight: float  ' (0.0 – 1.0) '
-}
-
-class MechanicTraitWeightsTable << (D,orchid) Database >> {
-  +mechanicId: int
-  +userTrait: UserTrait
-  +weight: float
-}
-
-MotivationalMechanic o-- "1..*" MechanicTraitWeight : "has"
-MechanicTraitWeight --> MechanicTraitWeightsTable : "is stored in"
-
-MotivationalMechanic --> MotivationalMechanicTable : "is stored in"
-
-note as A1
-Percentage of the finished tasks out of the overall prescribed tasks
-end note
-
-A1 .. Adherence
+  +metadata: Map<String, String>
+} 
+Action : UserAction
+Action --> UserAction : "instance of"
 
 
-class Program #lightgreen{
-  +id: int
-  +name: String
-  +description: String
-}
-
-note right of Program
-A succession of tasks blocks. 
-end note
-
-
-class Task #lightgreen{
-  +id: int
-  +title: String
-  +description: String
-  +isMandatory: Boolean
-  +completed: Boolean
-}
-class Level #lightgreen {
-  +id: int
-  +name: String
-  +difficulty: Int
-  +unlocked: Boolean
-}
-class Repetitions #lightgreen {
-  +id: int
-  +count: Int
-  +completed: Boolean
-}
-note bottom of Level
-Indicates the difficulty of a task. Optional as task might not have difficulty.
-end note
-
-note bottom of Repetitions
-Indicates the mumber of repetitions of a task. Mandatory to define program.
-end note
-class TaskBlock #lightgreen {
-  +id: int
-  +title: String
-  +description: String
-  +startDate: DateTime
-  +endDate: DateTime
-  +taskAssignments: List<TaskAssignment>
-}
-
-' 🔄 Defines required repetitions per level'
-class TaskRequirement #lightgreen {
-  +requiredRepetitions: int
-}
-note left of TaskRequirement
-How many times a Task must be repeated
-on a specific Level within a TaskBlock.
-end note
-
-note right of TaskBlock
-A timeframe that defines a number of tasks to be finished 
-at a certain level during a specified duration time. 
-Defined by date and time.
-end note
-
-' Links a Task to a set of Level requirements within a TaskBlock '
-class TaskAssignment #lightgreen{
-  task: Task
-}
-note right of TaskAssignment
-Assigns a Task to a TaskBlock and defines
-required repetitions across Levels.
-end note
-
-TaskAssignment --> "1..1" Task : "assigned task"
-TaskAssignment --> "1..*" TaskRequirement
-TaskRequirement --> "0..1" Level : "optional difficulty level"
-TaskRequirement --> "1..*" Repetitions : "mandatory number of repetitions"
-
-TaskBlock --> "1..*" TaskAssignment
-Program --> "1..*" TaskBlock
-
-class RepetitionFinished{
-  +RepetitionFinishedStart : DateTime
-  +RepetitionFinishedEnd : DateTime
-}
-
-class RepetitionTable << (D,orchid) Database >> {
-  +repetitionId: int
+object Click {
   +userId: int
-  +taskId: int
-  +score: float
-  +errors: int
-  +time: float
-  +level: int
-  +successful: boolean
   +timestamp: DateTime
+  +screen: String
+  +metadata: Map<String, String>
+} 
+Click : UserAction
+Click --> UserAction : "instance of"
+
+UserAction --> KeySituation : "triggers"
+KeySituation --> Measurement : "triggers"
+Measurement --> Metric : "triggers"
+
 }
 
+package Program_and_Tasks {
 
+  class Program #lightgreen{
+    +id: int
+    +name: String
+    +description: String
+  }
 
-class User #f59bff {
-  +id: int
-  +UserTraitWeights: List<UserTraitWeight>
-}
-
-abstract class UserTrait {
-  +id: int
-  +name: string
-}
-together {
-  class MotivationalTrait extends UserTrait
-  note bottom of MotivationalTrait
-  MotivationalTrait is a representation of a user's motivational characteristics.
+  note right of Program
+  A succession of tasks blocks. 
   end note
 
-  class PlayerType extends UserTrait
-  note bottom of PlayerType
-  Playertype is a representation of a user's gaming style or approach.
+
+  class Task #lightgreen{
+    +id: int
+    +title: String
+    +description: String
+    +isMandatory: Boolean
+    +completed: Boolean
+  }
+  class Level #lightgreen {
+    +id: int
+    +name: String
+    +difficulty: Int
+    +unlocked: Boolean
+  }
+  class Repetitions #lightgreen {
+    +id: int
+    +count: Int
+    +completed: Boolean
+  }
+  note bottom of Level
+  Indicates the difficulty of a task. Optional as task might not have difficulty.
   end note
 
-  class DigitalLiteracy extends UserTrait
-  note bottom of DigitalLiteracy
-  Describes a user's familiarity and comfort with digital technologies,
-  including software tools, navigation, and basic troubleshooting.
+  note bottom of Repetitions
+  Indicates the mumber of repetitions of a task. Mandatory to define program.
+  end note
+  class TaskBlock #lightgreen {
+    +id: int
+    +title: String
+    +description: String
+    +startDate: DateTime
+    +endDate: DateTime
+    +taskAssignments: List<TaskAssignment>
+  }
+
+  ' 🔄 Defines required repetitions per level'
+  class TaskRequirement #lightgreen {
+    +requiredRepetitions: int
+  }
+  note left of TaskRequirement
+  How many times a Task must be repeated
+  on a specific Level within a TaskBlock.
   end note
 
-  class CognitiveAbility extends UserTrait
-  note bottom of CognitiveAbility
-  Represents a user's capacity for logical reasoning, memory, and 
-  problem-solving. Important for adapting the complexity of tasks.
+  note right of TaskBlock
+  A timeframe that defines a number of tasks to be finished 
+  at a certain level during a specified duration time. 
+  Defined by date and time.
   end note
 
-  class AttentionSpan extends UserTrait
-  note bottom of AttentionSpan
-  Describes the user's ability to maintain focus over time. 
-  Useful for pacing content and avoiding cognitive overload.
+  ' Links a Task to a set of Level requirements within a TaskBlock '
+  class TaskAssignment #lightgreen{
+    task: Task
+  }
+  note right of TaskAssignment
+  Assigns a Task to a TaskBlock and defines
+  required repetitions across Levels.
   end note
 
-  class SelfDiscipline extends UserTrait
-  note bottom of SelfDiscipline
-  Indicates the user's ability to stay consistent, resist distractions, 
-  and complete tasks independently.
-  end note
+  TaskAssignment --> "1..1" Task : "assigned task"
+  TaskAssignment --> "1..*" TaskRequirement
+  TaskRequirement --> "0..1" Level : "optional difficulty level"
+  TaskRequirement --> "1..*" Repetitions : "mandatory number of repetitions"
 
-  class FrustrationTolerance extends UserTrait
-  note bottom of FrustrationTolerance
-  Measures how well a user copes with difficulty, failure, or delay. 
-  Helpful for adjusting challenge levels and support mechanisms.
-  end note
+  TaskBlock --> "1..*" TaskAssignment
+  Program --> "1..*" TaskBlock
 }
 
-class UserTraitWeight #f59bff {
-  +trait: UserTrait
-  +weight: float  ' (0.0 – 1.0) '
+package User_and_UserTraits {
+
+  class User #f59bff {
+    +id: int
+    +UserTraitWeights: List<UserTraitWeight>
+  }
+
+  User --> Program : "has assigned"
+  User --> UserAction : "performs"
+
+  class UserTrait {
+    +id: int
+    +name: string
+  }
+  together {
+    class MotivationalTrait extends UserTrait
+    note bottom of MotivationalTrait
+    MotivationalTrait is a representation of a user's motivational characteristics.
+    end note
+
+    class PlayerType extends UserTrait
+    note bottom of PlayerType
+    Playertype is a representation of a user's gaming style or approach.
+    end note
+
+    class DigitalLiteracy extends UserTrait
+    note bottom of DigitalLiteracy
+    Describes a user's familiarity and comfort with digital technologies,
+    including software tools, navigation, and basic troubleshooting.
+    end note
+
+    class CognitiveAbility extends UserTrait
+    note bottom of CognitiveAbility
+    Represents a user's capacity for logical reasoning, memory, and 
+    problem-solving. Important for adapting the complexity of tasks.
+    end note
+
+    class AttentionSpan extends UserTrait
+    note bottom of AttentionSpan
+    Describes the user's ability to maintain focus over time. 
+    Useful for pacing content and avoiding cognitive overload.
+    end note
+
+    class SelfDiscipline extends UserTrait
+    note bottom of SelfDiscipline
+    Indicates the user's ability to stay consistent, resist distractions, 
+    and complete tasks independently.
+    end note
+
+    object FrustrationTolerance
+    FrustrationTolerance : UserTrait
+    FrustrationTolerance : userId = 1
+    FrustrationTolerance --> UserTrait : "instance of"
+
+    note bottom of FrustrationTolerance
+    Measures how well a user copes with difficulty, failure, or delay. 
+    Helpful for adjusting challenge levels and support mechanisms.
+    end note
+  }
+
+  class UserTraitWeight #f59bff {
+    +trait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "0..*" UserTraitWeight : "has"
+  UserTraitWeight --> UserTrait : "references"
+
+  class UserTraitWeight #f59bff{
+    +userId: int
+    +traitId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
 }
 
-User --> "0..*" UserTraitWeight : "has"
-UserTraitWeight --> UserTrait : "references"
-
-class UserTraitTable << (D,orchid) Database >> {
-  +id: int
-  +name: string
-}
-
-UserTrait --> UserTraitTable : "is stored in"
-
-class UserTraitWeight #f59bff{
-  +userId: int
-  +traitId: int
-  +userTrait: UserTrait
-  +weight: float  ' (0.0 – 1.0) '
-}
-
-User --> CognitiveLoadState : "has"
-
-class UserTable << (D,orchid) Database >> {
-  +userId: int
-  +name: String
-  +email: String
-  +createdAt: DateTime
-  +lastLogin: DateTime
-}
-
-class UserTraitWeightsTable << (D,orchid) Database >> {
-  +userId: int
-  +traitId: MotivationalTrait
-  +weight: float
-}
-
-class CognitiveLoadTable << (D,orchid) Database >> {
-  +userId: int
-  +loadLevel: LoadLevel
-}
-
-UserTable <-- User : "is stored in"
-UserTraitWeight --> UserTraitWeightsTable: "is stored in"
-
-class AdherenceEvaluator {  
-  +evaluate(program: Program, userId: int): float
-}
-
-AdherenceEvaluator --> RepetitionFinished : "reads finished repetitions"
-RepetitionFinished --> RepetitionTable : "Loaded from"
-AdherenceEvaluator --> Program : "reads prescribed tasks from program for task block"
-AdherenceEvaluator --> Adherence : "evaluates"
-
-
-class MotivationalStateEngine #9bfbff {
-  +updateState(userId: int, state: CurrentMotivationalState): void
-}
-
-MotivationalStateEngine --> CurrentMotivationalStateTable : "updates"
-
-note top of MotivationalStateEngine
-Encapsulates logic for determining and updating
-the users current motivational state.  
-The state is represented by CurrentMotivationalState  
-and persisted in CurrentMotivationalStateTable.
-end note
 
 
 enum MotivationalStates #9bfbff { 
@@ -470,84 +383,33 @@ enum MotivationalStates #9bfbff {
   HIGH
 }
 
-class CurrentMotivationalState #9bfbff { 
+class MotivationalState #9bfbff { 
   - state: MotivationalStates
   + isHigh(): boolean
   + isMedium(): boolean
   + isLow(): boolean
 }
 
-class CurrentMotivationalStateTable << (D,orchid) >> {
-  +userId: int
-  +state: MotivationalStates
-}
 
 CurrentMotivationalState --> MotivationalStates
-CurrentMotivationalStateTable <-- CurrentMotivationalState : "is stored in"
-
-
-class MotivationalMechanicEngine #9bfbff {
-  +selectMechanics(user: User): SelectedMechanics
-  +activateOrDeactivateMechanics(state: CognitiveLoadState): void
-  +storeSelection(selection: SelectedMechanics): void
-}
-
-note top of MotivationalMechanicEngine
-Selects and adjusts motivational mechanics based on:
-- trait weights
-- the users cognitive load state (overloaded, optimal, underchallenged)
-Mechanics are activated or deactivated dynamically.
-end note
-
-
-class SelectedMechanics #9bfbff {
-  + mechanicsMechanics : List<MotivationalMechanic>
-}
-
-
-MotivationalMechanicEngine --> User : "reads UserTraitWeights"
-MotivationalMechanicEngine --> MotivationalMechanic : "reads engagement"
-
-MotivationalMechanicEngine --> SelectedMechanics : "selects based on traits"
-MotivationalMechanicEngine --> SelectedMechanics : "selects based on enagement rate"
-SelectedMechanics --> "0..*" MotivationalMechanic : "has several"
-
-MotivationalMechanicEngine --> User : "reads user cognitive load state"
-MotivationalMechanicEngine --> ActiveMotivationalMechanics : "activates from selection"
-SelectedMechanics --> ActiveMotivationalMechanics : "used to populate"
-
-CognitiveLoadState --> CognitiveLoadTable : "reads from"
 
 class CognitiveLoadState {
-  +level: LoadLevel
-  +isOverloaded(): boolean
-  +isUnderchallenged(): boolean
-  +isOptimal(): boolean
 }
 
-abstract class CognitiveLoadState {
-  +isOverloaded(): boolean
-  +isUnderchallenged(): boolean
-  +isOptimal(): boolean
-}
+object UnderchallengedState
+UnderchallengedState : CognitiveLoadState
+UnderchallengedState : userId = 1
+UnderchallengedState --> CognitiveLoadState : "instance of"
 
-class UnderchallengedState extends CognitiveLoadState {
-  +isUnderchallenged(): true
-  +isOverloaded(): false
-  +isOptimal(): false
-}
+object OptimalLoadState
+OptimalLoadState : CognitiveLoadState
+OptimalLoadState : userId = 1
+OptimalLoadState --> CognitiveLoadState : "instance of"
 
-class OptimalLoadState extends CognitiveLoadState {
-  +isUnderchallenged(): false
-  +isOverloaded(): false
-  +isOptimal(): true
-}
-
-class OverloadedState extends CognitiveLoadState {
-  +isUnderchallenged(): false
-  +isOverloaded(): true
-  +isOptimal(): false
-}
+object OverloadedState
+OverloadedState : CognitiveLoadState
+OverloadedState : userId = 1
+OverloadedState --> CognitiveLoadState : "instance of"
 
 note as MOTIVATION_VS_LOAD
 **CurrentMotivationalState** vs. **CognitiveLoadState**
@@ -565,59 +427,56 @@ Together, they shape adaptive decisions:
 - Low Motivation + Underchallenged → introduce rewards or stimulation
 end note
 
-class MotivationalMessageEngine #cdeaff {
-  +selectMessage(state: CurrentMotivationalState): MotivationalMessage
-}
-
 class MotivationalMessage #cdeaff {
   +id: int
   +text: String
   +targetState: MotivationalStates
 }
 
-MotivationalMessageEngine --> CurrentMotivationalState : "reads"
-MotivationalMessageEngine --> MotivationalMessage : "selects appropriate"
+MotivationalMessage --> MotivationalStates : "selected based on"
 
-note top of MotivationalMessageEngine
-Selects motivational messages tailored to the user's
-current motivational state (LOW, MEDIUM, HIGH).
-end note
+
 
 package Usertrait_Mechanic_Mapping {
+
+  class MotivationalMechanic #9bfbff {
+  +mechanicId: int
+  +name: string
+  +description: string
+  +isActive(): boolean
+  +mechanicTraitWeights: List<MechanicTraitWeight>
+}
+
+class MechanicTraitWeight #9bfbff {
+  +mechanicId: int
+  +userTrait: UserTrait
+  +weight: float  ' (0.0 – 1.0) '
+}
+
+MotivationalMechanic --> "1..*" MechanicTraitWeight : "has"
   
-  ' Base Class for Mechanics '
-  class MechanicBase #lightblue {
-    +id: int
-    +name: string
-  }
-  ' Base Class for NotivationalMechanic '
-  class MotivationalMechanic #lightblue extends MechanicBase {
-    weights: List[Mapping]
+  class LeaderBoardMechanic extends MotivationalMechanic{
+
   }
   object ProgramAdherenceLeaderboard
-  ProgramAdherenceLeaderboard : MotivationalMechanic
+  ProgramAdherenceLeaderboard : LeaderBoardMechanic
   ProgramAdherenceLeaderboard : weights = [ExperienceAndLevelSystemToPersonal_MasteryMapping]
+  ProgramAdherenceLeaderboard --> LeaderBoardMechanic : "instance of"
 
-  MotivationalMechanicEngine --> Mapping : "reads Mechanic traitWeights"
-  
-  ' Base Class for User Trait '
-  class UserTrait {
-    +id: int
-    +name: string
-  }
-
-  ' Base Class for Motivational Trait '
-  class MotivationalTrait #orange extends UserTrait {
-  }
-
-  object Personal_Mastery
-  Personal_Mastery : MotivationalTrait
+  object PerformanceLeaderboard
+  PerformanceLeaderboard : LeaderBoardMechanic
+  PerformanceLeaderboard : weights = [ExperienceAndLevelSystemToPersonal_MasteryMapping]
+  PerformanceLeaderboard --> LeaderBoardMechanic : "instance of"
 
   class Mapping {
     Trait : UserTrait
     Mechanic: MotivationalMechanic
     weight: float
   }
+  Mapping --> UserTrait : "has"
+  Mapping --> MotivationalMechanic : "references"
+
+  MotivationalMechanic --> Mapping: "selected based on"
 
   object ExperienceAndLevelSystemToPersonal_MasteryMapping {
     Trait = Personal_Mastery
@@ -626,12 +485,8 @@ package Usertrait_Mechanic_Mapping {
   }
   ExperienceAndLevelSystemToPersonal_MasteryMapping : Mapping
 
-
-  ' Base Class for Player type '
-  class PlayerType #lightgreen extends UserTrait {
-  }
+  
 
 }
-
 
 @enduml7
