@@ -47,5 +47,4 @@ ExperienceAndLevelSystemToPersonal_MasteryMapping : Mapping
 ' Base Class for Player type '
 class PlayerType #lightgreen extends UserTrait {
 }
-
 @enduml

@@ -42,14 +42,14 @@ package Metrics_and_Measurements {
   SessionDuration : mechanicId = 101
   SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
-  SessionDuration --> Metric : "incance of"
+  SessionDuration --> Metric : "instance of"
 
   object ClickRate
   ClickRate : userId = 1
   ClickRate : mechanicId = 101
   ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> Metric : "incance of"
+  ClickRate --> Metric : "intance of"
 
   object Adherence
   Adherence : Metric
@@ -103,7 +103,7 @@ package Metrics_and_Measurements {
   Time : mechanicId = 101
   Time : impressionCount = 2
   Time : timestamp = 2025-04-21T09:00:00Z
-  Time --> Measurement : "incance of"
+  Time --> Measurement : "instance of"
 
   ' 🔵 Interaction Object
   object mechanicInteraction
@@ -174,6 +174,20 @@ SessionStarted : timestamp = 2023-10-01T12:00:00Z
 SessionStarted : taskId = 123
 SessionStarted --> KeySituation : "instance of"
 
+object TaskStarted
+TaskStarted : KeySituation
+TaskStarted : userId = 1
+TaskStarted : timestamp = 2023-10-01T12:00:00Z
+TaskStarted : taskId = 123
+TaskStarted --> KeySituation : "instance of"
+
+object TaskEnded
+TaskEnded : KeySituation
+TaskEnded : userId = 1
+TaskEnded : timestamp = 2023-10-01T12:00:00Z
+TaskEnded : taskId = 123
+TaskEnded --> KeySituation : "instance of"
+
 object SessionEnded
 SessionEnded : KeySituation
 SessionEnded : userId = 1
@@ -221,82 +235,97 @@ Measurement --> Metric : "triggers"
 
 package Program_and_Tasks {
 
-  class Program #lightgreen{
+  abstract class ITaskComponent #lightyellow {
+    +getId(): int
+    +getTitle(): String
+    +getDescription(): String
+  }
+
+  class Program #lightgreen {
     +id: int
     +name: String
     +description: String
   }
 
   note right of Program
-  A succession of tasks blocks. 
+  A succession of task blocks (composites).
   end note
 
-
-  class Task #lightgreen{
+  class Task #lightblue {
     +id: int
     +title: String
     +description: String
     +isMandatory: Boolean
     +completed: Boolean
   }
+
   class Level #lightgreen {
     +id: int
     +name: String
     +difficulty: Int
     +unlocked: Boolean
   }
+
   class Repetitions #lightgreen {
     +id: int
     +count: Int
     +completed: Boolean
   }
+
   note bottom of Level
   Indicates the difficulty of a task. Optional as task might not have difficulty.
   end note
 
   note bottom of Repetitions
-  Indicates the mumber of repetitions of a task. Mandatory to define program.
+  Indicates the number of repetitions of a task. Mandatory to define program.
   end note
+
+  class TaskRequirement #lightblue {
+    +requiredRepetitions: int
+  }
+
+  note left of TaskRequirement
+  How many times a Task must be repeated
+  on a specific Level within a TaskBlock.
+  end note
+
+  class TaskAssignment #lightblue {
+    task: Task
+    inplements ITaskComponent
+  }
+
+  note right of TaskAssignment
+  Assigns a Task to a TaskBlock and defines
+  required repetitions across Levels.
+  end note
+
   class TaskBlock #lightgreen {
     +id: int
     +title: String
     +description: String
     +startDate: DateTime
     +endDate: DateTime
-    +taskAssignments: List<TaskAssignment>
+    +children: List<ITaskComponent>
+    inplements ITaskComponent
   }
-
-  ' 🔄 Defines required repetitions per level'
-  class TaskRequirement #lightgreen {
-    +requiredRepetitions: int
-  }
-  note left of TaskRequirement
-  How many times a Task must be repeated
-  on a specific Level within a TaskBlock.
-  end note
 
   note right of TaskBlock
-  A timeframe that defines a number of tasks to be finished 
-  at a certain level during a specified duration time. 
-  Defined by date and time.
+  Composite element: groups multiple TaskAssignments and TaskBlocks
+  into a hierarchy. Allows nested structures.
   end note
 
-  ' Links a Task to a set of Level requirements within a TaskBlock '
-  class TaskAssignment #lightgreen{
-    task: Task
-  }
-  note right of TaskAssignment
-  Assigns a Task to a TaskBlock and defines
-  required repetitions across Levels.
-  end note
+  ' Inheritance for Composite structure
+  ITaskComponent <|-- TaskAssignment
+  ITaskComponent <|-- TaskBlock
 
-  TaskAssignment --> "1..1" Task : "assigned task"
+  TaskAssignment --> "1" Task : assigned
   TaskAssignment --> "1..*" TaskRequirement
-  TaskRequirement --> "0..1" Level : "optional difficulty level"
-  TaskRequirement --> "1..*" Repetitions : "mandatory number of repetitions"
+  TaskRequirement --> "0..1" Level : optional
+  TaskRequirement --> "1..*" Repetitions : required
 
-  TaskBlock --> "1..*" TaskAssignment
   Program --> "1..*" TaskBlock
+  TaskBlock --> "0..*" ITaskComponent : contains
+
 }
 
 package User_and_UserTraits {
@@ -375,67 +404,68 @@ package User_and_UserTraits {
   }
 }
 
+package MotivationalState_and_CognitiveLoadState {
+
+  class MotivationalState { 
+    - state: MotivationalStates
+    + isHigh(): boolean
+    + isMedium(): boolean
+    + isLow(): boolean
+  }
+
+  MotivationalState --> Metric : "calculated from"
+  MotivationalState --> Program : "calculated from"
+
+  object Low
+  Low : MotivationalState
+  Low : userId = 1
+  Low --> MotivationalState : "instance of"
+
+  object Medium
+  Medium : MotivationalState
+  Medium : userId = 1
+  Medium --> MotivationalState : "instance of"
+
+  object High
+  High : MotivationalState
+  High : userId = 1
+  High --> MotivationalState : "instance of"
 
 
-enum MotivationalStates #9bfbff { 
-  LOW
-  MEDIUM
-  HIGH
+  class CognitiveLoadState {
+  }
+
+  CognitiveLoadState --> Metric : "calculated from"
+
+  object UnderchallengedState
+  UnderchallengedState : CognitiveLoadState
+  UnderchallengedState : userId = 1
+  UnderchallengedState --> CognitiveLoadState : "instance of"
+
+  object OptimalLoadState
+  OptimalLoadState : CognitiveLoadState
+  OptimalLoadState : userId = 1
+  OptimalLoadState --> CognitiveLoadState : "instance of"
+
+  object OverloadedState
+  OverloadedState : CognitiveLoadState
+  OverloadedState : userId = 1
+  OverloadedState --> CognitiveLoadState : "instance of"
+
+  class MotivationalMessage #cdeaff {
+    +id: int
+    +text: String
+    +targetState: MotivationalStates
+  }
+
+  MotivationalMessage --> MotivationalState : "selected based on"
+  MotivationalMessage --> KeySituation : "shown during"
+
+  object MotivationalMessagePM_LOW
+  MotivationalMessagePM_LOW : MotivationalMessage
+  MotivationalMessagePM_LOW : userId = 1
+  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
 }
-
-class MotivationalState #9bfbff { 
-  - state: MotivationalStates
-  + isHigh(): boolean
-  + isMedium(): boolean
-  + isLow(): boolean
-}
-
-
-CurrentMotivationalState --> MotivationalStates
-
-class CognitiveLoadState {
-}
-
-object UnderchallengedState
-UnderchallengedState : CognitiveLoadState
-UnderchallengedState : userId = 1
-UnderchallengedState --> CognitiveLoadState : "instance of"
-
-object OptimalLoadState
-OptimalLoadState : CognitiveLoadState
-OptimalLoadState : userId = 1
-OptimalLoadState --> CognitiveLoadState : "instance of"
-
-object OverloadedState
-OverloadedState : CognitiveLoadState
-OverloadedState : userId = 1
-OverloadedState --> CognitiveLoadState : "instance of"
-
-note as MOTIVATION_VS_LOAD
-**CurrentMotivationalState** vs. **CognitiveLoadState**
-
-*CurrentMotivationalState*: 
-Describes the user's **inner drive or engagement** (motivation level).
-Values: LOW, MEDIUM, HIGH.
-
-*CognitiveLoadState*: 
-Reflects the user's **mental workload or task burden**.
-Values: UNDERCHALLENGED, OPTIMAL, OVERLOADED.
-
-Together, they shape adaptive decisions:
-- High Motivation + Overloaded → lighten tasks
-- Low Motivation + Underchallenged → introduce rewards or stimulation
-end note
-
-class MotivationalMessage #cdeaff {
-  +id: int
-  +text: String
-  +targetState: MotivationalStates
-}
-
-MotivationalMessage --> MotivationalStates : "selected based on"
-
-
 
 package Usertrait_Mechanic_Mapping {
 
@@ -447,6 +477,8 @@ package Usertrait_Mechanic_Mapping {
   +mechanicTraitWeights: List<MechanicTraitWeight>
 }
 
+MotivationalMechanic --> CognitiveLoadState : "activated based on"
+
 class MechanicTraitWeight #9bfbff {
   +mechanicId: int
   +userTrait: UserTrait
@@ -455,18 +487,38 @@ class MechanicTraitWeight #9bfbff {
 
 MotivationalMechanic --> "1..*" MechanicTraitWeight : "has"
   
-  class LeaderBoardMechanic extends MotivationalMechanic{
-
+  class SocialMechanic extends MotivationalMechanic {
+    +socialMechanicId: int
+  }
+  class LeaderBoardMechanic extends SocialMechanic{
   }
   object ProgramAdherenceLeaderboard
   ProgramAdherenceLeaderboard : LeaderBoardMechanic
-  ProgramAdherenceLeaderboard : weights = [ExperienceAndLevelSystemToPersonal_MasteryMapping]
+  ProgramAdherenceLeaderboard : weights = [ProgramAdherenceLeaderboardToPersonal_MasteryMapping]
   ProgramAdherenceLeaderboard --> LeaderBoardMechanic : "instance of"
 
   object PerformanceLeaderboard
   PerformanceLeaderboard : LeaderBoardMechanic
-  PerformanceLeaderboard : weights = [ExperienceAndLevelSystemToPersonal_MasteryMapping]
+  PerformanceLeaderboard : weights = [PerformanceLeaderboardToPersonal_MasteryMapping]
   PerformanceLeaderboard --> LeaderBoardMechanic : "instance of"
+
+  class CommunityInsights extends SocialMechanic {
+  
+  }
+
+  class ChallengeMechanic extends MotivationalMechanic {
+    +challengeMechanicId: int
+  }
+
+  object Wager
+  Wager : ChallengeMechanic
+  Wager : weights = [WagerToPersonal_MasteryMapping]
+  Wager --> ChallengeMechanic : "instance of"
+
+  object Streak
+  Streak : ChallengeMechanic
+  Streak : weights = [StreakToPersonal_MasteryMapping]
+  Streak --> ChallengeMechanic : "instance of"
 
   class Mapping {
     Trait : UserTrait
@@ -478,15 +530,37 @@ MotivationalMechanic --> "1..*" MechanicTraitWeight : "has"
 
   MotivationalMechanic --> Mapping: "selected based on"
 
-  object ExperienceAndLevelSystemToPersonal_MasteryMapping {
+  object ProgramAdherenceLeaderboardToPersonal_MasteryMapping {
     Trait = Personal_Mastery
-    Mechanic = ExperienceAndLevelSystem
-    weight = 0.3
+    Mechanic = ProgramAdherenceLeaderboard
+    weight = 0.4
   }
-  ExperienceAndLevelSystemToPersonal_MasteryMapping : Mapping
+  ProgramAdherenceLeaderboardToPersonal_MasteryMapping : Mapping
+  ProgramAdherenceLeaderboardToPersonal_MasteryMapping --> Mapping : "instance of"
 
-  
+  object PerformanceLeaderboardToPersonal_MasteryMapping {
+    Trait = Personal_Mastery
+    Mechanic = PerformanceLeaderboard
+    weight = 0.7
+  }
+  PerformanceLeaderboardToPersonal_MasteryMapping : Mapping
+  PerformanceLeaderboardToPersonal_MasteryMapping --> Mapping : "instance of"
 
+  object WagerToPersonal_MasteryMapping {
+    Trait = Personal_Mastery
+    Mechanic = Wager
+    weight = 1
+  }
+  WagerToPersonal_MasteryMapping : Mapping
+  WagerToPersonal_MasteryMapping --> Mapping : "instance of"
+
+  object StreakToPersonal_MasteryMapping {
+    Trait = Personal_Mastery
+    Mechanic = Streak
+    weight = 0.9
+  }
+  StreakToPersonal_MasteryMapping : Mapping
+  StreakToPersonal_MasteryMapping --> Mapping : "instance of"
 }
 
 @enduml7
