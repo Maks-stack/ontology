@@ -122,7 +122,7 @@ package Metrics_and_Measurements {
   end note
 }
 
-package KeySituations_and_UserActions {
+package KeySituations {
 
   class MeasurementType {
     +id: int
@@ -200,36 +200,89 @@ Generic KeySituation structure used for multiple behavioral logs,
 such as screen visits, mechanic usage, and session tracking.
 end note
 
-class UserAction {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +screen: String
-  +metadata: Map<String, String>
 }
 
-object Action {
-  +userId: int
-  +timestamp: DateTime
-  +screen: String
-  +metadata: Map<String, String>
-} 
-Action : UserAction
-Action --> UserAction : "instance of"
+package Interventions {
+  class Intervention {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  }
+
+  note right of Intervention
+  Represents a planned activity, stimulus, or interaction
+  aimed at influencing user behavior or collecting data.
+  Examples: questionnaires, prompts, mini-games, etc.
+  end note
+
+  class Questionnaire {
+    +questionCount: int
+    +estimatedTime: int
+  }
+
+  Questionnaire --> Intervention : "instance of"
+  Intervention --> KeySituation : "triggered by"
+
+  object MorningMoodCheck
+  MorningMoodCheck : Questionnaire
+  MorningMoodCheck : id = 1
+  MorningMoodCheck : name = "Morning Mood Check"
+  MorningMoodCheck : description = "Daily check-in on user's mood"
+  MorningMoodCheck : questionCount = 5
+  MorningMoodCheck : estimatedTime = 3
+  MorningMoodCheck --> Questionnaire : "instance of"
+
+  class MotivationalMessage #cdeaff {
+    +id: int
+    +text: String
+    +targetState: MotivationalStates
+  }
+  
+  MotivationalMessage --> Intervention : "instance of"
+
+  MotivationalMessage --> MotivationalState : "selected based on"
+  MotivationalMessage --> KeySituation : "shown during"
+
+  object MotivationalMessagePM_LOW
+  MotivationalMessagePM_LOW : MotivationalMessage
+  MotivationalMessagePM_LOW : userId = 1
+  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+}
+
+package UserActions{
+
+  class UserAction {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  }
+
+  object Action {
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  } 
+  Action : UserAction
+  Action --> UserAction : "instance of"
 
 
-object Click {
-  +userId: int
-  +timestamp: DateTime
-  +screen: String
-  +metadata: Map<String, String>
-} 
-Click : UserAction
-Click --> UserAction : "instance of"
+  object Click {
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  } 
+  Click : UserAction
+  Click --> UserAction : "instance of"
 
-UserAction --> KeySituation : "triggers"
-KeySituation --> Measurement : "triggers"
-Measurement --> Metric : "triggers"
+  UserAction --> KeySituation : "triggers"
+  KeySituation --> Measurement : "triggers"
+  Measurement --> Metric : "triggers"
 
 }
 
@@ -451,20 +504,6 @@ package MotivationalState_and_CognitiveLoadState {
   OverloadedState : CognitiveLoadState
   OverloadedState : userId = 1
   OverloadedState --> CognitiveLoadState : "instance of"
-
-  class MotivationalMessage #cdeaff {
-    +id: int
-    +text: String
-    +targetState: MotivationalStates
-  }
-
-  MotivationalMessage --> MotivationalState : "selected based on"
-  MotivationalMessage --> KeySituation : "shown during"
-
-  object MotivationalMessagePM_LOW
-  MotivationalMessagePM_LOW : MotivationalMessage
-  MotivationalMessagePM_LOW : userId = 1
-  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
 }
 
 package Usertrait_Mechanic_Mapping {
