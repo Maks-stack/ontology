@@ -1,0 +1,76 @@
+@startuml
+package User_and_UserTraits {
+
+  class User #f59bff {
+    +id: int
+    +UserTraitWeights: List<UserTraitWeight>
+  }
+
+  class UserTrait {
+    +id: int
+    +name: string
+  }
+
+  class UserTraitWeight #f59bff {
+    +userId: int
+    +traitId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "0..*" UserTraitWeight : "has"
+  UserTraitWeight --> UserTrait : "references"
+  User --> Program : "has assigned"
+  User --> UserAction : "performs"
+
+  class MotivationalTrait extends UserTrait
+  note right of MotivationalTrait
+    MotivationalTrait is a representation of a user's
+    motivational characteristics.
+  end note
+
+  class PlayerType extends UserTrait
+  note right of PlayerType
+    Playertype is a representation of a user's gaming
+    style or approach.
+  end note
+
+  class DigitalLiteracy extends UserTrait
+  note right of DigitalLiteracy
+    Describes a user's familiarity and comfort with digital
+    technologies, including software tools, navigation,
+    and basic troubleshooting.
+  end note
+
+  class CognitiveAbility extends UserTrait
+  note right of CognitiveAbility
+    Represents a user's capacity for logical reasoning, memory,
+    and problem-solving. Important for adapting the complexity
+    of tasks.
+  end note
+
+  class AttentionSpan extends UserTrait
+  note right of AttentionSpan
+    Describes the user's ability to maintain focus over time. 
+    Useful for pacing content and avoiding cognitive overload.
+  end note
+
+  class SelfDiscipline extends UserTrait
+  note right of SelfDiscipline
+    Indicates the user's ability to stay consistent, resist
+    distractions, and complete tasks independently.
+  end note
+
+  object FrustrationTolerance
+  FrustrationTolerance : UserTrait
+  FrustrationTolerance : userId = 1
+  FrustrationTolerance --> UserTrait : "instance of"
+
+  note right of FrustrationTolerance
+    Measures how well a user copes with difficulty,
+    failure, or delay. Helpful for adjusting challenge levels
+    and support mechanisms.
+  end note
+}
+
+@enduml

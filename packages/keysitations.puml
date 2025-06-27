@@ -1,0 +1,50 @@
+package KeySituations {
+
+class KeySituation {
+  +id: int
+  +userId: int
+  +timestamp: DateTime
+  +mechanicId: int
+  +screen: String
+  +value: float
+  +metadata: Map<String, String>
+}
+
+object TaskFinished
+TaskFinished : KeySituation
+TaskFinished --> KeySituation : "instance of"
+
+object MechanicDisplayed
+MechanicDisplayed : KeySituation
+MechanicDisplayed --> KeySituation : "instance of"
+
+object MechanicInteraction
+MechanicInteraction : KeySituation
+MechanicInteraction --> KeySituation : "instance of"
+
+object SessionStarted
+SessionStarted : KeySituation
+SessionStarted --> KeySituation : "instance of"
+
+object TaskStarted
+TaskStarted : KeySituation
+TaskStarted --> KeySituation : "instance of"
+
+object TaskEnded
+TaskEnded : KeySituation
+TaskEnded --> KeySituation : "instance of"
+
+object SessionEnded
+SessionEnded : KeySituation
+SessionEnded --> KeySituation : "instance of"
+
+object ScreenEntered
+ScreenEntered : KeySituation
+ScreenEntered --> KeySituation : "instance of"
+
+note left of KeySituation
+Generic KeySituation structure used for multiple behavioral logs,
+such as screen visits, mechanic usage, and session tracking.
+end note
+
+}

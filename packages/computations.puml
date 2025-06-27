@@ -1,0 +1,9 @@
+@startuml7
+
+package Computations {
+  HesitationTime --> Time : "computed from"
+  HesitationTime --> Click : "computed from"
+  HesitationTime --> ScreenEntered : "computed from"
+
+
+@enduml7

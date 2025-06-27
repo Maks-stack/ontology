@@ -1,0 +1,42 @@
+package Interventions {
+  class Intervention {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  }
+
+  note right of Intervention
+  Represents a planned activity, stimulus, or interaction
+  aimed at influencing user behavior or collecting data.
+  Examples: questionnaires, prompts, mini-games, etc.
+  end note
+
+  class Questionnaire {
+    +questionCount: int
+    +estimatedTime: int
+  }
+
+  Questionnaire --> Intervention : "instance of"
+  Intervention --> KeySituation : "triggered by"
+  Intervention --> Interval : "triggered by"
+
+  object Intrinsic_Motivation_Inventory 
+  Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
+
+  object User_Engagement_Scale
+  User_Engagement_Scale --> Questionnaire : "instance of"
+
+  class MotivationalMessage #cdeaff {
+    +id: int
+    +text: String
+  }
+  
+  MotivationalMessage --> Intervention : "instance of"
+
+  object MotivationalMessagePM_LOW
+  MotivationalMessagePM_LOW : MotivationalMessage
+  MotivationalMessagePM_LOW : userId = 1
+  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+}
