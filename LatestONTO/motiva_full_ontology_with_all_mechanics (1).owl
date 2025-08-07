@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:motiva="http://example.org/motiva#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+>
+  <rdf:Description rdf:about="http://example.org/motiva#Achievement_Symbols_GT2">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Conformity_Anchor_GT58">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Themed_Events">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#MechanicDisplayRate">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-10-01T12:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Water_Coolers_GT55">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#algorithm">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#SessionDuration">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:mechanicId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">101</motiva:mechanicId>
+    <motiva:impressionCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</motiva:impressionCount>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-21T09:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Encouraging_Messages_Between_Games">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#startDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Build_From_Scratch_GT43">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#measurementType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#triggeredBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#Intervention"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Progress_Bars_GT4">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Special_warning_for_Hard_Exercise">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Status_Quo_Sloth_GT85">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Visual_Progress_Maps">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Empowerment_of_Creativity_Feedback">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Leaderboards_GT3">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#triggers">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#UserAction"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Unpredictability_and_Curiosity">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Minimalist_Features">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Ownership_and_Possession">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Measurement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Exchangable_Points_GT75">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#produces">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#MetricComputation"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#Metric"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#has">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#User"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#UserTraitWeight"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#hasAssigned">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#TaskAssignment"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#TaskRequirement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#value">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Rockstar_Effect_GT92">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Sunk_Cost_Prison_GT50">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#reads">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#MetricComputation"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#Measurement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#FOMO_Punch">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Oracle_Effect_GT71">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#computedFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#Metric"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#Measurement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#mechanicImpression">
+    <rdf:type rdf:resource="http://example.org/motiva#Measurement"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:mechanicId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">101</motiva:mechanicId>
+    <motiva:impressionCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</motiva:impressionCount>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-21T09:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Trophy_Shelves_GT64">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#MechanicUsageRate">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-10-01T12:00:00+00:00</motiva:timestamp>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#completed">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#references">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#UserTraitWeight"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Self_Assigned_Targets">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#HesitationTime">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-10-01T12:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#calculatedFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#MotivationalState"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#Metric"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#questionCount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Social_Share_Brag_Buttons_GT57">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Flash_Challenges_Evanescent_Opportunities_GT86">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Torture_Breaks_GT66">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#estimatedTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#selectedBasedOn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#MotivationalMessage"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#MotivationalState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#performs">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#User"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#UserAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Personalized_workout_recommendations_Alfred_Effect_GT83">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Glowing_Choice_GT28">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Basic_Components_Infinite_Combos">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Loss_and_Avoidance">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#MechanicEngagement">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-10-01T12:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Milestone_Unlock_GT19">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Daily_Scores">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Group_Quests_GT22">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#metadata">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Status_Points_GT1">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Free_Lunch_GT24">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Epic_Meaning_and_Calling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Mystery_Boxes_Random_Rewards_GT72">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#mechanicId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#timestamp">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Customization_Based_on_Badges_Achievements">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Monitor_Attachment_GT42">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Wager">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Social_Networking">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Collection_Sets_GT16">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Development_and_Accomplishment">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Elitism_GT26">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Epic_Meaning_and_Calling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Scarcity_and_Impatience">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Momentum_System">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#DailyInterval">
+    <rdfs:subClassOf rdf:resource="http://example.org/motiva#Interval"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Unlockable_Rare_Content">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Lottery_Rolling_Rewards_GT74">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Countdown_Timers_GT65">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Social_Treasures_GT22">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#weight">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Magnetic_Caps_GT68">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Easter_Eggs_Sudden_Rewards_GT30">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Unpredictability_and_Curiosity"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Rightful_Heritage_GT46">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#userId">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Buddy_system_Mentorship_GT61">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#impressionCount">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Level_and_Experience_Point_System">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Anchored_Juxtaposition_GT69">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#text">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Streak_Society">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#id">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Contextualizing_Messages_between_games">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#count">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Customization_Creative_Free">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#screen">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#ClickRate">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:mechanicId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">101</motiva:mechanicId>
+    <motiva:impressionCount rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</motiva:impressionCount>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2025-04-21T09:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#endDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Social_Prods_GT62">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Evolved_UI_GT81">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#categorizedInto">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Adherence">
+    <rdf:type rdf:resource="http://example.org/motiva#Metric"/>
+    <motiva:userId rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</motiva:userId>
+    <motiva:timestamp rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2023-10-01T12:00:00+00:00</motiva:timestamp>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Narrative_GT10">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Epic_Meaning_and_Calling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Humanity_Hero_GT27">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Epic_Meaning_and_Calling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Combo_Mechanic">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Re_engagement_Prompts_Push_Notifications">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Loss_and_Avoidance"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Boosters_GT8">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Plant_Picker_Meaningful_Choices_GT11">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Appointment_Dynamics_GT21">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Social_Influence_and_Relatedness">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Flash_Challenges">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Scarcity_and_Impatience"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#IngameCurrency">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Ownership_and_Possession"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#title">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#instanceOf">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Beginners_Luck_GT23">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Epic_Meaning_and_Calling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Daily_Challenges">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Metric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#difficulty">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Community_Insights">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Social_Influence_and_Relatedness"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#requiredRepetitions">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Custom_PLayer_Made_Content">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Empowerment_of_Creativity_Feedback"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#WeeklyInterval">
+    <rdfs:subClassOf rdf:resource="http://example.org/motiva#Interval"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#isMandatory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Ingame_Instructions_based_on_performance">
+    <rdf:type rdf:resource="http://example.org/motiva#GameMechanic"/>
+    <motiva:categorizedInto rdf:resource="http://example.org/motiva#Development_and_Accomplishment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#contains">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#TaskBlock"/>
+    <rdfs:range rdf:resource="http://example.org/motiva#TaskAssignment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#Epic_Meaning_and_Calling">
+    <rdf:type rdf:resource="http://example.org/motiva#CoreDrive"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#MonthlyInterval">
+    <rdfs:subClassOf rdf:resource="http://example.org/motiva#Interval"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.org/motiva#MetricComputation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+</rdf:RDF>

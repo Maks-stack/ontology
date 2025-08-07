@@ -1,0 +1,1024 @@
+@startuml7
+
+skinparam linetype polyline
+
+title Motiva Framework Ontology
+
+package Metrics_and_Measurements {
+
+  class Metric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+
+  class MetricComputation {
+    +algorithm: String
+  }
+
+  MetricComputation --> Metric : "produces"
+
+  Measurement <-- MetricComputation : "reads"
+
+  object MechanicUsageRate
+  MechanicUsageRate : Metric
+  MechanicUsageRate : userId = 1
+  MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
+  MechanicUsageRate --> Metric : "instance of"
+
+  object MechanicDisplayRate
+  MechanicDisplayRate : Metric
+  MechanicDisplayRate : userId = 1
+  MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
+  MechanicDisplayRate --> Metric : "instance of"
+
+  object MechanicEngagement
+  MechanicEngagement : Metric
+  MechanicEngagement : userId = 1
+  MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
+  MechanicEngagement --> Metric : "instance of"
+
+  object SessionDuration
+  SessionDuration : userId = 1
+  SessionDuration : mechanicId = 101
+  SessionDuration : impressionCount = 2
+  SessionDuration : timestamp = 2025-04-21T09:00:00Z
+  SessionDuration --> Metric : "instance of"
+
+  object ClickRate
+  ClickRate : userId = 1
+  ClickRate : mechanicId = 101
+  ClickRate : impressionCount = 2
+  ClickRate : timestamp = 2025-04-21T09:00:00Z
+  ClickRate --> Metric : "intance of"
+
+  object Adherence
+  Adherence : Metric
+  Adherence : userId = 1
+  Adherence : timestamp = 2023-10-01T12:00:00Z
+  Adherence --> Metric : "instance of"
+
+  object HesitationTime
+  HesitationTime : Metric
+  HesitationTime : userId = 1
+  HesitationTime : timestamp = 2023-10-01T12:00:00Z
+  HesitationTime --> Metric : "instance of"
+
+  note as A1
+  Percentage of the finished tasks out of the overall prescribed tasks
+  end note
+
+  A1 .. Adherence
+
+  class Measurement {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +measurementType: MeasurementType
+    +value: float
+  }
+
+  note top of Measurement
+  Represents a direct, single-point observation 
+  or quantitative recording of user behavior or 
+  state at a given moment in time.
+
+  Examples:
+  - Click rate
+  - Session duration
+  - Number of impressions
+  end note
+
+  object mechanicImpression
+  mechanicImpression : Measurement
+  mechanicImpression : userId = 1
+  mechanicImpression : mechanicId = 101
+  mechanicImpression : impressionCount = 5
+  mechanicImpression : timestamp = 2025-04-21T09:00:00Z
+
+  mechanicImpression ---> Measurement :"instance of"
+
+  note bottom of mechanicImpression
+  Captures a one-time measurement of how often
+  a specific motivational mechanic was shown or visible 
+  to the user at a given point in time.
+  Used to support decisions on reinforcing or deactivating it.
+  end note
+
+  object Time
+  Time : userId = 1
+  Time : mechanicId = 101
+  Time : impressionCount = 2
+  Time : timestamp = 2025-04-21T09:00:00Z
+  Time --> Measurement : "instance of"
+
+  ' 🔵 Interaction Object
+  object mechanicInteraction
+  mechanicInteraction : userId = 1
+  mechanicInteraction : mechanicId = 101
+  mechanicInteraction : impressionCount = 2
+  mechanicInteaction : timestamp = 2025-04-21T09:00:00Z
+
+  mechanicInteractio --> Measurement : "instance of"
+
+  note bottom of mechanicInteraction
+  Captures a one-time measurement of how often
+  a specific motivational mechanic was used or interacted with 
+  by the user at a specific moment.
+  Helps evaluate the effectiveness of mechanic engagement.
+  end note
+}
+
+package KeySituations {
+
+class KeySituation {
+  +id: int
+  +userId: int
+  +timestamp: DateTime
+  +mechanicId: int
+  +screen: String
+  +value: float
+  +metadata: Map<String, String>
+}
+
+object TaskFinished
+TaskFinished : KeySituation
+TaskFinished --> KeySituation : "instance of"
+
+object MechanicDisplayed
+MechanicDisplayed : KeySituation
+MechanicDisplayed --> KeySituation : "instance of"
+
+object MechanicInteraction
+MechanicInteraction : KeySituation
+MechanicInteraction --> KeySituation : "instance of"
+
+object SessionStarted
+SessionStarted : KeySituation
+SessionStarted --> KeySituation : "instance of"
+
+object TaskStarted
+TaskStarted : KeySituation
+TaskStarted --> KeySituation : "instance of"
+
+object TaskEnded
+TaskEnded : KeySituation
+TaskEnded --> KeySituation : "instance of"
+
+object SessionEnded
+SessionEnded : KeySituation
+SessionEnded --> KeySituation : "instance of"
+
+object ScreenEntered
+ScreenEntered : KeySituation
+ScreenEntered --> KeySituation : "instance of"
+
+note left of KeySituation
+Generic KeySituation structure used for multiple behavioral logs,
+such as screen visits, mechanic usage, and session tracking.
+end note
+
+}
+
+package Units {
+
+  class Interval{
+    +start: DateTime
+    +end: DateTime
+  }
+
+  object DailyInterval 
+  DailyInterval --> Interval : "instance of"
+
+  object WeeklyInterval 
+  WeeklyInterval --> Interval : "instance of"
+
+  object MonthlyInterval
+  MonthlyInterval --> Interval : "instance of"
+}
+
+package Interventions {
+  class Intervention {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  }
+
+  note right of Intervention
+  Represents a planned activity, stimulus, or interaction
+  aimed at influencing user behavior or collecting data.
+  Examples: questionnaires, prompts, mini-games, etc.
+  end note
+
+  class Questionnaire {
+    +questionCount: int
+    +estimatedTime: int
+  }
+
+  Questionnaire --> Intervention : "instance of"
+  Intervention --> KeySituation : "triggered by"
+  Intervention --> Interval : "triggered by"
+
+  object Intrinsic_Motivation_Inventory 
+  Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
+
+  object User_Engagement_Scale
+  User_Engagement_Scale --> Questionnaire : "instance of"
+
+  class MotivationalMessage #cdeaff {
+    +id: int
+    +text: String
+  }
+  
+  MotivationalMessage --> Intervention : "instance of"
+
+  object MotivationalMessagePM_LOW
+  MotivationalMessagePM_LOW : MotivationalMessage
+  MotivationalMessagePM_LOW : userId = 1
+  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+}
+
+
+
+
+
+package UserActions{
+
+  object Click  {
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  } 
+  Click : UserAction
+  Click --> UserAction : "instance of"
+
+
+  class UserAction {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  }
+
+
+  object Action {
+    +userId: int
+    +timestamp: DateTime
+    +screen: String
+    +metadata: Map<String, String>
+  } 
+  Action : UserAction
+  Action --> UserAction : "instance of"
+
+  UserAction --> KeySituation : "triggers"
+  KeySituation --> Measurement : "triggers"
+  Measurement --> Metric : "triggers"
+
+}
+
+package Program_and_Tasks {
+
+  class Program #lightgreen {
+    +id: int
+    +name: String
+    +description: String
+  }
+
+  note right of Program
+  A succession of task blocks (composites).
+  end note
+
+  class Task #lightgreen {
+    +id: int
+    +title: String
+    +description: String
+    +isMandatory: Boolean
+    +completed: Boolean
+  }
+
+  class Level #lightgreen {
+    +id: int
+    +name: String
+    +difficulty: Int
+    +unlocked: Boolean
+  }
+
+  class Repetitions #lightgreen {
+    +id: int
+    +count: Int
+    +completed: Boolean
+  }
+
+  note bottom of Level
+  Indicates the difficulty of a task. Optional as task might not have difficulty.
+  end note
+
+  note bottom of Repetitions
+  Indicates the number of repetitions of a task. Mandatory to define program.
+  end note
+
+  class TaskRequirement #lightgreen {
+    +requiredRepetitions: int
+  }
+
+  note left of TaskRequirement
+  How many times a Task must be repeated
+  on a specific Level within a TaskBlock.
+  end note
+
+  class TaskAssignment #lightgreen {
+    task: Task
+
+  }
+
+  note right of TaskAssignment
+  Assigns a Task to a TaskBlock and defines
+  required repetitions across Levels.
+  end note
+
+  class TaskBlock #lightgreen {
+    +id: int
+    +title: String
+    +description: String
+    +startDate: DateTime
+    +endDate: DateTime
+  }
+
+  note right of TaskBlock
+  Composite element: groups multiple TaskAssignments and TaskBlocks
+  into a hierarchy. Allows nested structures.
+  end note
+
+  TaskAssignment --> "1" Task : "has assigned"
+  TaskAssignment --> "1..*" TaskRequirement: "has Assigned"
+  TaskRequirement --> "0..1" Level : optional
+  TaskRequirement --> "1..*" Repetitions : required
+
+  Program --> "1..*" TaskBlock
+
+  TaskBlock --> "1..*" TaskAssignment : "contains"
+
+}
+
+package User_and_UserTraits {
+
+  class User #f59bff {
+    +id: int
+    +UserTraitWeights: List<UserTraitWeight>
+  }
+
+  User --> Program : "has assigned"
+  User --> UserAction : "performs"
+
+  class UserTrait {
+    +id: int
+    +name: string
+  }
+  together {
+    class MotivationalTrait extends UserTrait
+    note bottom of MotivationalTrait
+    MotivationalTrait is a representation of a user's motivational characteristics.
+    end note
+
+    class PlayerType extends UserTrait
+    note bottom of PlayerType
+    Playertype is a representation of a user's gaming style or approach.
+    end note
+
+    object Philanthropist {
+      Motivated by Purpose. Philanthropists are altruistic, aiming to enrich the lives of others and make a meaningful impact. They are driven by the desire to give back.
+    }
+    Philanthropist --> PlayerType : "instance of"
+
+    object Achiever {
+      Motivated by Mastery. Achievers seek to learn new skills and continually improve themselves. They thrive on challenges and the satisfaction that comes from overcoming them.
+    }
+    Achiever --> PlayerType : "instance of"
+
+    object Free_Spirit {
+      Motivated by Autonomy. Free Spirits desire the freedom to explore and create. Some are creators at heart, while others are explorers. All share a common need for independence.
+    }
+    Free_Spirit --> PlayerType : "instance of"
+
+    object Socializer {
+      The Socializer is motivated by Relatedness. Socializers enjoy interacting with others and building strong social connections. Their goal is to foster relationships and create a sense of community.
+    }
+    Socializer --> PlayerType : "instance of"
+
+    object Player {
+      The Player is motivated by Rewards. They will do what is needed of them to collect rewards from a system. They are in it for themselves.
+    }
+    Player --> PlayerType : "instance of"
+
+    object Disruptor {
+      The Disruptor is motivated by Change. In general, they want to disrupt your system, either directly or through other users to force positive or negative change.
+    }
+    Disruptor --> PlayerType : "instance of"
+
+
+    class DigitalLiteracy extends UserTrait
+    note bottom of DigitalLiteracy
+    Describes a user's familiarity and comfort with digital technologies,
+    including software tools, navigation, and basic troubleshooting.
+    end note
+
+    class CognitiveAbility extends UserTrait
+    note bottom of CognitiveAbility
+    Represents a user's capacity for logical reasoning, memory, and 
+    problem-solving. Important for adapting the complexity of tasks.
+    end note
+
+    class AttentionSpan extends UserTrait
+    note bottom of AttentionSpan
+    Describes the user's ability to maintain focus over time. 
+    Useful for pacing content and avoiding cognitive overload.
+    end note
+
+    class SelfDiscipline extends UserTrait
+    note bottom of SelfDiscipline
+    Indicates the user's ability to stay consistent, resist distractions, 
+    and complete tasks independently.
+    end note
+
+    object FrustrationTolerance
+    FrustrationTolerance : UserTrait
+    FrustrationTolerance : userId = 1
+    FrustrationTolerance --> UserTrait : "instance of"
+
+    note bottom of FrustrationTolerance
+    Measures how well a user copes with difficulty, failure, or delay. 
+    Helpful for adjusting challenge levels and support mechanisms.
+    end note
+  }
+
+  class UserTraitWeight #f59bff {
+    +trait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "0..*" UserTraitWeight : "has"
+  UserTraitWeight --> UserTrait : "references"
+
+  class UserTraitWeight #f59bff{
+    +userId: int
+    +traitId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+}
+
+package MotivationalState_and_CognitiveLoadState {
+
+  class MotivationalState { 
+    - state: MotivationalStates
+    + isHigh(): boolean
+    + isMedium(): boolean
+    + isLow(): boolean
+  }
+
+  MotivationalState --> Metric : "calculated from"
+  MotivationalState --> Program : "calculated from"
+  MotivationalState <-- MotivationalMessage : "selected based on"
+
+  object Low
+  Low : MotivationalState
+  Low : userId = 1
+  Low --> MotivationalState : "instance of"
+
+  object Medium
+  Medium : MotivationalState
+  Medium : userId = 1
+  Medium --> MotivationalState : "instance of"
+
+  object High
+  High : MotivationalState
+  High : userId = 1
+  High --> MotivationalState : "instance of"
+
+
+  class CognitiveLoadState {
+  }
+
+  CognitiveLoadState --> Metric : "calculated from"
+
+  object UnderchallengedState
+  UnderchallengedState : CognitiveLoadState
+  UnderchallengedState : userId = 1
+  UnderchallengedState --> CognitiveLoadState : "instance of"
+
+  object OptimalLoadState
+  OptimalLoadState : CognitiveLoadState
+  OptimalLoadState : userId = 1
+  OptimalLoadState --> CognitiveLoadState : "instance of"
+
+  object OverloadedState
+  OverloadedState : CognitiveLoadState
+  OverloadedState : userId = 1
+  OverloadedState --> CognitiveLoadState : "instance of"
+}
+
+package Usertrait_Mechanic_Mapping {
+
+  class MechanicTraitWeight #9bfbff {
+    +mechanicId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  class Mapping {
+    Trait : UserTrait
+    Mechanic: MotivationalMechanic
+    weight: float
+  }
+  Mapping --> UserTrait : "has"
+
+  object Narrative_GT10_to_Philantropist {
+    Trait = Philantropist
+    Mechanic = Narrative_GT10
+    weight = 0.8
+  }
+  Narrative_GT10_to_Philantropist : Mapping
+  Narrative_GT10_to_Philantropist --> Mapping : "instance of"
+
+  Narrative_GT10_to_Philantropist --> Philanthropist : "corresponds to"
+  Narrative_GT10_to_Philantropist --> Narrative_GT10 : "corresponds by"
+}
+
+HesitationTime --> Time : "computed from"
+HesitationTime --> Click : "computed from"
+HesitationTime --> ScreenEntered : "computed from"
+
+package "MotivationalMechanics" {
+
+  left to right direction
+  class CoreDrive
+  class GameMechanic 
+
+  GameMechanic --> Mapping: "selected based on"
+
+  '//----------------------------------Epic Meaning and Calling---------------------------------------------'
+  object Narrative_GT10 {
+    This technique uses a story to provide users with context for a higher meaning when interacting with a company, product, or website
+  }
+  Narrative_GT10 --> GameMechanic : "instance of"
+  Narrative_GT10 --> Epic_Meaning_and_Calling : "categorized into"
+
+  object Humanity_Hero_GT27 {
+    Incorporating a world mission into offerings can gain buy-in during the Onboarding process, such as TOM's Shoes donating a pair of shoes for every purchase
+  }
+  Humanity_Hero_GT27 --> GameMechanic : "instance of"
+  Humanity_Hero_GT27 --> Epic_Meaning_and_Calling : "categorized into"
+
+  object Elitism_GT26{
+    Allows users or customers to form a prideful group based on ethnicity, beliefs, or common interests, leading members to take specific actions to secure group pride and frustrate rivals
+  }
+  Elitism_GT26 --> GameMechanic : "instance of"
+  Elitism_GT26 --> Epic_Meaning_and_Calling : "categorized into"
+
+  object Beginners_Luck_GT23 {
+    Makes people feel uniquely destined to do something, making them more likely to take action, especially after a fortunate initial experience
+  }
+  Beginners_Luck_GT23 --> GameMechanic : "instance of"
+  Beginners_Luck_GT23 --> Epic_Meaning_and_Calling : "categorized into"
+
+  object Free_Lunch_GT24 {
+    Giving free items (normally not free) to selected people in a way that connects them to a larger theme can make them feel special and encourage further action
+  }
+  Free_Lunch_GT24 --> GameMechanic : "instance of"
+  Free_Lunch_GT24 --> Epic_Meaning_and_Calling : "categorized into"
+
+
+
+  '//--------------------------------------------------------------Development_and_Accomplishment-----------------'-----------------------------------
+
+  object Development_and_Accomplishment {
+    CoreDrive2
+  }
+  Development_and_Accomplishment --> CoreDrive : "instance of"
+
+  object Combo_Mechanic {
+    Awarding extra points for sequential correct answers, like in Lumosity, reinforces the feeling of skill development and mastery, making users feel accomplished.
+  }
+  Combo_Mechanic --> GameMechanic : "instance of"
+  Combo_Mechanic --> Development_and_Accomplishment : "categorized into"
+
+  object Contextualizing_Messages_between_games {
+    Providing feedback or insights related to user performance helps them track their progress and feel a sense of development
+  }
+  Combo_Mechanic --> GameMechanic : "instance of"
+  Combo_Mechanic --> Development_and_Accomplishment : "categorized into"
+
+  object Daily_Challenges {
+    Offering specific objectives to complete each day taps into the intrinsic drive for making progress and achieving goals
+  }
+  Daily_Challenges --> GameMechanic : "instance of"
+  Daily_Challenges --> Development_and_Accomplishment : "categorized into"
+
+  object Daily_Scores {
+    Displays a user's best performance within a rolling 24-hour window, encouraging personal improvement and a sense of accomplishment in beating one's own records.
+  }
+  Daily_Scores --> GameMechanic : "instance of"
+  Daily_Scores --> Development_and_Accomplishment : "categorized into"
+
+  object Encouraging_Messages_Between_Games {
+    Positive reinforcement helps users feel recognized for their efforts and progress, maintaining their motivation to continue
+  }
+  Encouraging_Messages_Between_Games --> GameMechanic : "instance of"
+  Encouraging_Messages_Between_Games --> Development_and_Accomplishment : "categorized into"
+
+  object Ingame_Instructions_based_on_performance {
+    Dynamically showing or hiding instructions based on user performance (e.g., Lumosity) helps users feel supported in mastering challenges without feeling "dumb"
+  }
+  Ingame_Instructions_based_on_performance --> GameMechanic : "instance of"
+  Ingame_Instructions_based_on_performance --> Development_and_Accomplishment : "categorized into"
+
+  object Level_and_Experience_Point_System {
+    As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
+  }
+  Level_and_Experience_Point_System --> GameMechanic : "instance of"
+  Level_and_Experience_Point_System --> Development_and_Accomplishment : "categorized into"
+
+  object Minimalist_Features {
+    By simplifying interfaces and reducing decision paralysis, minimalist designs make it easier for users to complete tasks, thus enhancing their perceived ability and accomplishment
+  }
+  Minimalist_Features --> GameMechanic : "instance of"
+  Minimalist_Features --> Development_and_Accomplishment : "categorized into"
+
+  object Special_warning_for_Hard_Exercise {
+    Indicating a challenge is difficult can heighten the sense of accomplishment once it's overcome, making the achievement more meaningful
+  }
+  Special_warning_for_Hard_Exercise --> GameMechanic : "instance of"
+  Special_warning_for_Hard_Exercise --> Development_and_Accomplishment : "categorized into"
+
+  object Visual_Progress_Maps {
+    Similar to progress bars, these maps (e.g., in Khan Academy or Candy Crush) help users visualize their learning journey and overall progression, reinforcing a sense of mastery
+  }
+  Visual_Progress_Maps --> GameMechanic : "instance of"
+  Visual_Progress_Maps --> Development_and_Accomplishment : "categorized into"
+
+  object Progress_Bars_GT4 {
+    Simple visual indicators, like LinkedIn's profile completion bar, that show progress towards a goal, appealing to the brain's dislike of incomplete tasks
+  }
+  Progress_Bars_GT4 --> GameMechanic : "instance of"
+  Progress_Bars_GT4 --> Development_and_Accomplishment : "categorized into"
+
+  object Rockstar_Effect_GT92 {
+    Making users feel like everyone wants to interact with them, which fosters pride and encourages continued engagement to build a greater fanbase or status
+  }
+  Rockstar_Effect_GT92 --> GameMechanic : "instance of"
+  Rockstar_Effect_GT92 --> Development_and_Accomplishment : "categorized into"
+
+  object Achievement_Symbols_GT2 {
+    These are visual indicators, such as badges, that signify a user has overcome challenges or achieved goals, making users feel accomplished
+  }
+  Achievement_Symbols_GT2 --> GameMechanic : "instance of"
+  Achievement_Symbols_GT2 --> Development_and_Accomplishment : "categorized into"
+
+  object Status_Points_GT1 {
+    Points used for scorekeeping and tracking progress towards a win-state, providing feedback that motivates users in the right direction
+  }
+  Status_Points_GT1 --> GameMechanic : "instance of"
+  Status_Points_GT1 --> Development_and_Accomplishment : "categorized into"
+
+  object Leaderboards_GT3 {
+    Ranking users based on criteria influenced by their behaviors, designed to motivate by positioning the user in the middle of the display or by showing group efforts
+  }
+  Leaderboards_GT3 --> GameMechanic : "instance of"
+  Leaderboards_GT3 --> Development_and_Accomplishment : "categorized into"
+
+  object Social_Networking {
+    Rrovides functionality for users to connect, follow each other, and see profiles, directly tapping into the human need for social interaction and relatedness
+  }
+  Social_Networking --> GameMechanic : "instance of"
+  Social_Networking --> Development_and_Accomplishment : "categorized into"
+
+'//--------------------------------------------------------------Empowerment_of_Creativity_Feedback-----------------'-----------------------------------
+
+  object Empowerment_of_Creativity_Feedback {
+    CoreDrive3
+  }
+  Empowerment_of_Creativity_Feedback --> CoreDrive : "instance of"
+
+  object Custom_PLayer_Made_Content {
+    This allows users to actively contribute and express their unique ideas within the system
+  }
+  Custom_PLayer_Made_Content --> GameMechanic : "instance of"
+  Custom_PLayer_Made_Content --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Customization_Creative_Free {
+    Giving users the freedom to personalize aspects like avatar appearance or color schemes empowers them to make meaningful choices and express their individuality
+  }
+  Customization_Creative_Free --> GameMechanic : "instance of"
+  Customization_Creative_Free --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Self_Assigned_Targets {
+    Allowing users to define their own objectives provides autonomy and encourages creative strategizing to meet those goals
+  }
+  Self_Assigned_Targets --> GameMechanic : "instance of"
+  Self_Assigned_Targets --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Boosters_GT8 {
+    Temporary power-ups or tools that empower users with new, limited abilities, making the experience exhilarating and motivating desired actions
+  }
+  Boosters_GT8 --> GameMechanic : "instance of"
+  Boosters_GT8 --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Milestone_Unlock_GT19 {
+    Opening up exciting new possibilities or content once a specific milestone is reached, motivating players to continue playing beyond their intended "stop time"
+  }
+  Milestone_Unlock_GT19 --> GameMechanic : "instance of"
+  Milestone_Unlock_GT19 --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Plant_Picker_Meaningful_Choices_GT11 {
+    Providing choices that truly matter and reflect a user's style, preference, and strategy, allowing for diverse paths to a Win-State and fostering creativity
+  }
+  Plant_Picker_Meaningful_Choices_GT11 --> GameMechanic : "instance of"
+  Plant_Picker_Meaningful_Choices_GT11 --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+  object Basic_Components_Infinite_Combos {
+    This refers to providing a few fundamental building blocks that users can combine in countless ways, allowing for unbounded creativity and continuous engagement (e.g., Lego, Minecraft)
+  }
+  Basic_Components_Infinite_Combos --> GameMechanic : "instance of"
+  Basic_Components_Infinite_Combos --> Empowerment_of_Creativity_Feedback : "categorized into"
+
+
+  '//--------------------------------------------------------------Empowerment_of_Creativity_Feedback-----------------'-----------------------------------
+  object Ownership_and_Possession {
+    CoreDrive4
+  }
+  Ownership_and_Possession --> CoreDrive : "instance of"
+
+  object Momentum_System {
+    The Momentum System is a mechanic where a user gains momentum by consistently engaging with the platform. The state of this momentum is represented by different design elements. Crucially, if the user ceases engagement, their momentum decreases. A vivid example provided is that this momentum can be visually metaphorized by a plant that is "dying" if the user disengages
+  }
+  Customization_Based_on_Badges_Achievements --> GameMechanic : "instance of"
+  Customization_Based_on_Badges_Achievements --> Ownership_and_Possession : "categorized into"
+
+  object Customization_Based_on_Badges_Achievements {
+    Earning the ability to display earned badges or achievements through customization options enhances a user's feeling of ownership over their accomplishments and profile
+  }
+  Customization_Based_on_Badges_Achievements --> GameMechanic : "instance of"
+  Customization_Based_on_Badges_Achievements --> Ownership_and_Possession : "categorized into"
+
+  object IngameCurrency {
+    Accumulating virtual currency (like "gems" in the sources) fosters a sense of ownership over a valuable resource, motivating users to collect more and improve what they "own"
+  }
+  IngameCurrency --> GameMechanic : "instance of"
+  IngameCurrency --> Ownership_and_Possession : "categorized into"
+
+  object Build_From_Scratch_GT43 {
+    Involving users early in the development process to increase their vested ownership in a product or service
+  }
+  Build_From_Scratch_GT43 --> GameMechanic : "instance of"
+  Build_From_Scratch_GT43 --> Ownership_and_Possession : "categorized into"
+
+  object Collection_Sets_GT16 {
+    Giving users pieces of a larger set to create a desire to collect all elements and complete the set, which is a powerful and effective way to utilize this drive
+  }
+  Collection_Sets_GT16 --> GameMechanic : "instance of"
+  Collection_Sets_GT16 --> Ownership_and_Possession : "categorized into"
+
+  object Exchangable_Points_GT75 {
+    Points that users can strategically accumulate and redeem for other valuables, creating an in-system economy
+  }
+  Exchangable_Points_GT75 --> GameMechanic : "instance of"
+  Exchangable_Points_GT75 --> Ownership_and_Possession : "categorized into"
+
+  object Monitor_Attachment_GT42 {
+    Allowing people to constantly monitor or pay attention to something, leading them to develop more ownership and engagement towards its improvement (e.g., Google Analytics)
+  }
+  Monitor_Attachment_GT42 --> GameMechanic : "instance of"
+  Monitor_Attachment_GT42 --> Ownership_and_Possession : "categorized into"
+
+  object Personalized_workout_recommendations_Alfred_Effect_GT83 {
+    When a system learns about a user's preferences and customizes the experience to uniquely fit them, creating a strong attachment and loyalty (e.g., Waze's personalized suggestions)
+  }
+  Personalized_workout_recommendations_Alfred_Effect_GT83 --> GameMechanic : "instance of"
+  Personalized_workout_recommendations_Alfred_Effect_GT83 --> Ownership_and_Possession : "categorized into"
+
+
+
+  '//--------------------------------------------------------------Social_Influence_and_Relatedness-----------------'-----------------------------------
+  object Social_Influence_and_Relatedness {
+    CoreDrive5
+  }
+  Social_Influence_and_Relatedness --> CoreDrive : "instance of"
+
+  object Community_Insights {
+    Displaying activity and statistics of other users creates social proof and allows for comparison, fostering relatedness and potential competitive urges
+  }
+  Community_Insights --> GameMechanic : "instance of"
+  Community_Insights --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Buddy_system_Mentorship_GT61 {
+    Pairing users with "buddies" fosters collaboration. Leveraging the human desire to help others and feel important, allowing veteran users to guide new ones, which also helps retain veterans in the Endgame Phase
+  }
+  Buddy_system_Mentorship_GT61 --> GameMechanic : "instance of"
+  Buddy_system_Mentorship_GT61 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Social_Share_Brag_Buttons_GT57 {
+    Tools or mechanisms that allow users to explicitly and vocally broadcast their accomplishments on Facebook Whatsapp etc. and achievements, encouraging recruitment and continued activity
+  } 
+  Social_Share_Brag_Buttons_GT57 --> GameMechanic : "instance of"
+  Social_Share_Brag_Buttons_GT57 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Streak_Society {
+    Highlighting users with the longest streaks on a public display fosters a sense of social belonging and recognition for consistent effort, creating an "elite" group
+  } 
+  Streak_Society --> GameMechanic : "instance of"
+  Streak_Society --> Social_Influence_and_Relatedness : "categorized into"
+
+
+  object Trophy_Shelves_GT64 {
+    Mechanisms that allow users to implicitly show off what they have accomplished, often seen as crowns, badges, or exclusive avatar items in games
+  }
+  Trophy_Shelves_GT64 --> GameMechanic : "instance of"
+  Trophy_Shelves_GT64 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Group_Quests_GT22 {
+    Activities that require group participation before any individual can achieve a win-state, fostering collaboration and viral marketing
+  }
+  Group_Quests_GT22 --> GameMechanic : "instance of"
+  Group_Quests_GT22 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Social_Treasures_GT22 {
+    Gifts or rewards that can only be given to a user by friends or other players, encouraging social interaction and sharing
+  }
+  Social_Treasures_GT22 --> GameMechanic : "instance of"
+  Social_Treasures_GT22 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Social_Prods_GT62 {
+    Actions of minimal effort to create social interaction, such as Facebook Pokes/Likes or LinkedIn Endorsements, designed for easy execution and engagement
+  }
+  Social_Prods_GT62 --> GameMechanic : "instance of"
+  Social_Prods_GT62 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Conformity_Anchor_GT58 {
+    Displaying how close users are to a social norm through feedback mechanisms, leveraging social proof to influence behavior (e.g., Opower's energy consumption reports)
+  }
+  Conformity_Anchor_GT58 --> GameMechanic : "instance of"
+  Conformity_Anchor_GT58 --> Social_Influence_and_Relatedness : "categorized into"
+
+  object Water_Coolers_GT55 {
+    Creating spaces (like forums on a website) for community bonding and sharing, which can broadcast social norms and facilitate mentorship opportunities
+  }
+  Water_Coolers_GT55 --> GameMechanic : "instance of"
+  Water_Coolers_GT55 --> Social_Influence_and_Relatedness : "categorized into"
+
+
+  '//--------------------------------------------------------------Scarcity_and_Impatience-----------------'-----------------------------------
+
+  object Scarcity_and_Impatience {
+    CoreDrive6
+  }
+  Scarcity_and_Impatience --> CoreDrive : "instance of"
+
+  object Flash_Challenges {
+    Regularly showing users an appealing reward or goal that they desire but cannot immediately have, which builds desire over time
+  }
+  Flash_Challenges --> GameMechanic : "instance of"
+  Flash_Challenges --> Scarcity_and_Impatience : "categorized into"
+
+  object Anchored_Juxtaposition_GT69 {
+    Presenting two options side-by-side: one requiring money, the other requiring significant effort, to make the effort-based option more appealing (even if irrational
+  }
+  Anchored_Juxtaposition_GT69 --> GameMechanic : "instance of"
+  Anchored_Juxtaposition_GT69 --> Scarcity_and_Impatience : "categorized into"
+
+  object Magnetic_Caps_GT68 {
+    Placing limitations on how many times a user can commit certain desired actions, which paradoxically stimulates more motivation to commit them
+  }
+  Magnetic_Caps_GT68 --> GameMechanic : "instance of"
+  Magnetic_Caps_GT68 --> Scarcity_and_Impatience : "categorized into"
+
+  object Appointment_Dynamics_GT21 {
+    Utilizing a declared or recurring schedule where users must take desired actions to reach a win-state (e.g., Happy Hours, eMart's "Sunny Sale")
+  }
+  Appointment_Dynamics_GT21 --> GameMechanic : "instance of"
+  Appointment_Dynamics_GT21 --> Scarcity_and_Impatience : "categorized into"
+
+  object Torture_Breaks_GT66 {
+    Sudden, often triggered, pauses to desired actions that force users to wait, driving obsessive behavior and making them return to the product (e.g., waiting for crops to grow in Farmville)
+  }
+  Torture_Breaks_GT66 --> GameMechanic : "instance of"
+  Torture_Breaks_GT66 --> Scarcity_and_Impatience : "categorized into"
+
+  object Evolved_UI_GT81 {
+    Gradually introducing complexity and features as users master the basic interface, making the experience less overwhelming initially and providing a sense of growth
+  }
+  Evolved_UI_GT81 --> GameMechanic : "instance of"
+  Evolved_UI_GT81 --> Scarcity_and_Impatience : "categorized into"
+
+  '//--------------------------------------------------------------Unpredictability_and_Curiosity-----------------'-----------------------------------
+
+  object Unpredictability_and_Curiosity {
+    CoreDrive7
+  }
+  Unpredictability_and_Curiosity --> CoreDrive : "instance of"
+
+  object Themed_Events {
+    Introducing special, often time-limited events with unique graphics or content provides novelty and surprise, piquing user curiosity and providing a fresh experience
+  }
+  Themed_Events --> GameMechanic : "instance of"
+  Themed_Events --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Glowing_Choice_GT28 {
+    Visually highlighting a specific option or path to guide users, especially in the Onboarding Phase, by appealing to their curiosity and making them feel competent
+  }
+  Glowing_Choice_GT28 --> GameMechanic : "instance of"
+  Glowing_Choice_GT28 --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Mystery_Boxes_Random_Rewards_GT72 {
+    Reward structures where the participant receives an unknown reward upon completing a required action, leveraging the excitement of uncertainty (e.g., loot drops in games, subscription boxes)
+  }
+  Mystery_Boxes_Random_Rewards_GT72 --> GameMechanic : "instance of"
+  Mystery_Boxes_Random_Rewards_GT72 --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Easter_Eggs_Sudden_Rewards_GT30 {
+    Surprises given without the user acknowledging them beforehand, based on unexpected triggers, which creates excitement and speculation on how to replicate the experience
+  }
+  Easter_Eggs_Sudden_Rewards_GT30 --> GameMechanic : "instance of"
+  Easter_Eggs_Sudden_Rewards_GT30 --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Lottery_Rolling_Rewards_GT74 {
+    Reward systems where somebody is guaranteed to win during each period, increasing engagement because the chances of winning increase linearly as one "stays in the game"
+  }
+  Lottery_Rolling_Rewards_GT74 --> GameMechanic : "instance of"
+  Lottery_Rolling_Rewards_GT74 --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Oracle_Effect_GT71 {
+    A prediction about the future that causes the user to become fully engaged to see whether the "prophecy" will come true (e.g., Waze alerts about road incidents)
+  }
+  Oracle_Effect_GT71 --> GameMechanic : "instance of"
+  Oracle_Effect_GT71 --> Unpredictability_and_Curiosity : "categorized into"
+
+  object Wager {
+    Allowing users to make a bet on their performance introduces the risk of losing something (e.g., in-game currency), leveraging the strong human aversion to loss to motivate participation
+  }
+  Wager --> GameMechanic : "instance of"
+  Wager --> Unpredictability_and_Curiosity : "categorized into"
+
+
+
+  '//--------------------------------------------------------------Loss_and_Avoidance-----------------'-----------------------------------
+
+  object Loss_and_Avoidance {
+    CoreDrive8
+  }
+  Loss_and_Avoidance --> CoreDrive : "instance of"
+
+  object Rightful_Heritage_GT46 {
+    Making a user believe something rightfully belongs to them, then making them feel it will be taken away if they don't commit a desired action, leveraging loss aversion
+  }
+  Rightful_Heritage_GT46 --> GameMechanic : "instance of"
+  Rightful_Heritage_GT46 --> Loss_and_Avoidance : "categorized into"
+
+  object Flash_Challenges_Evanescent_Opportunities_GT86 {
+    These spontaneous, often time-limited challenges create urgency and impel immediate action, leveraging the fear of missing out on a temporary opportunity. Opportunities that will disappear if the user does not take a desired action immediately, creating urgency due to the fear of loss
+  }
+  Flash_Challenges_Evanescent_Opportunities_GT86 --> GameMechanic : "instance of"
+  Flash_Challenges_Evanescent_Opportunities_GT86 --> Loss_and_Avoidance : "categorized into"
+
+  object Re_engagement_Prompts_Push_Notifications {
+    Can trigger a sense of urgency, especially if it reminds users about a time-sensitive event or a dwindling opportunity (e.g., a streak ending), compelling them to act quickly
+  }
+  Re_engagement_Prompts_Push_Notifications --> GameMechanic : "instance of"
+  Re_engagement_Prompts_Push_Notifications --> Loss_and_Avoidance : "categorized into"
+
+  object Unlockable_Rare_Content {
+    Content that is deliberately made exclusive, difficult to obtain, or available for a limited time creates a strong desire due to its scarcity, increasing its perceived value
+  }
+  Unlockable_Rare_Content --> GameMechanic : "instance of"
+  Unlockable_Rare_Content --> Loss_and_Avoidance : "categorized into"
+
+  object Countdown_Timers_GT65 {
+    Simple feedback mechanisms that visually display a decreasing time limit, reinforcing Evanescent Opportunities and creating urgencyOpportunities that will disappear if the user does not take a desired action immediately, creating urgency due to the fear of loss
+  }
+  Countdown_Timers_GT65 --> GameMechanic : "instance of"
+  Countdown_Timers_GT65 --> Loss_and_Avoidance : "categorized into"
+
+  object Status_Quo_Sloth_GT85 {
+    The lazy tendency of behavioral inertia, where users are motivated to avoid changing their current behavior, especially in the Endgame phase
+  }
+  Status_Quo_Sloth_GT85 --> GameMechanic : "instance of"
+  Status_Quo_Sloth_GT85 --> Loss_and_Avoidance : "categorized into"
+
+  object FOMO_Punch {
+    Applying Core Drive 8 against itself by communicating what users would lose by not engaging, often effective in the Discovery Phase to counter Status Quo Sloth
+  }
+  FOMO_Punch --> GameMechanic : "instance of"
+  FOMO_Punch --> Loss_and_Avoidance : "categorized into"
+
+  object Sunk_Cost_Prison_GT50 {
+    A powerful mechanism where users continue to commit desired actions, even when no longer enjoyable, to avoid feeling the loss of their past investments of time, effort, or resources
+  }
+  Sunk_Cost_Prison_GT50 --> GameMechanic : "instance of"
+  Sunk_Cost_Prison_GT50 --> Loss_and_Avoidance : "categorized into"
+}
+@enduml7
+
