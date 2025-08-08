@@ -4,7 +4,7 @@ skinparam linetype polyline
 
 title Motiva Framework Ontology
 
-package Metrics_and_Measurements {
+package Metrics_and_Measurements #ffe8e8ff {
 
   class Metric {
     +id: int
@@ -12,6 +12,22 @@ package Metrics_and_Measurements {
     +timestamp: DateTime
     +value: float
   }
+
+  class GeneralMetric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+  
+  class MechanicMetric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+  GeneralMetric <|-- Metric 
+  MechanicMetric <|-- Metric
 
   class MetricComputation {
     +algorithm: String
@@ -25,45 +41,45 @@ package Metrics_and_Measurements {
   MechanicUsageRate : Metric
   MechanicUsageRate : userId = 1
   MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicUsageRate --> Metric : "instance of"
+  MechanicUsageRate --> MechanicMetric : "instance of"
 
   object MechanicDisplayRate
   MechanicDisplayRate : Metric
   MechanicDisplayRate : userId = 1
   MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicDisplayRate --> Metric : "instance of"
+  MechanicDisplayRate --> MechanicMetric : "instance of"
 
   object MechanicEngagement
   MechanicEngagement : Metric
   MechanicEngagement : userId = 1
   MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
-  MechanicEngagement --> Metric : "instance of"
+  MechanicEngagement --> MechanicMetric : "instance of"
 
   object SessionDuration
   SessionDuration : userId = 1
   SessionDuration : mechanicId = 101
   SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
-  SessionDuration --> Metric : "instance of"
+  SessionDuration --> GeneralMetric : "instance of"
 
   object ClickRate
   ClickRate : userId = 1
   ClickRate : mechanicId = 101
   ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> Metric : "intance of"
+  ClickRate --> GeneralMetric : "intance of"
 
   object Adherence
-  Adherence : Metric
+  Adherence : GeneralMetric
   Adherence : userId = 1
   Adherence : timestamp = 2023-10-01T12:00:00Z
-  Adherence --> Metric : "instance of"
+  Adherence --> GeneralMetric : "instance of"
 
   object HesitationTime
-  HesitationTime : Metric
+  HesitationTime : GeneralMetric
   HesitationTime : userId = 1
   HesitationTime : timestamp = 2023-10-01T12:00:00Z
-  HesitationTime --> Metric : "instance of"
+  HesitationTime --> GeneralMetric : "instance of"
 
   note as A1
   Percentage of the finished tasks out of the overall prescribed tasks
@@ -130,7 +146,7 @@ package Metrics_and_Measurements {
   end note
 }
 
-package KeySituations {
+package KeySituations #e8faffff {
 
 class KeySituation {
   +id: int
@@ -142,41 +158,72 @@ class KeySituation {
   +metadata: Map<String, String>
 }
 
+class MechanicKeySituation {
+  +id: int
+ 
+}
+class GeneralKeySituation {
+  +id: int
+  
+}
+class ProgramrelatedKeySituation {
+  +id: int
+}
+ProgramrelatedKeySituation <|-- GeneralKeySituation 
+
+class SessionRelatedKeySituation {
+  +id: int
+}
+SessionRelatedKeySituation <|-- GeneralKeySituation 
+
+GeneralKeySituation <|-- KeySituation 
+MechanicKeySituation <|-- KeySituation
+
 object TaskFinished
-TaskFinished : KeySituation
-TaskFinished --> KeySituation : "instance of"
+TaskFinished : ProgramrelatedKeySituation
+TaskFinished --> ProgramrelatedKeySituation : "instance of"
 
 object MechanicDisplayed
-MechanicDisplayed : KeySituation
-MechanicDisplayed --> KeySituation : "instance of"
+MechanicDisplayed : MechanicKeySituation
+MechanicDisplayed --> MechanicKeySituation : "instance of"
 
 object MechanicInteraction
-MechanicInteraction : KeySituation
-MechanicInteraction --> KeySituation : "instance of"
+MechanicInteraction : MechanicKeySituation
+MechanicInteraction --> MechanicKeySituation : "instance of"
 
 object SessionStarted
-SessionStarted : KeySituation
-SessionStarted --> KeySituation : "instance of"
+SessionStarted : SessionRelatedKeySituation
+SessionStarted --> SessionRelatedKeySituation : "instance of"
 
 object TaskStarted
-TaskStarted : KeySituation
-TaskStarted --> KeySituation : "instance of"
+TaskStarted : ProgramrelatedKeySituation
+TaskStarted --> ProgramrelatedKeySituation : "instance of"
 
 object TaskEnded
-TaskEnded : KeySituation
-TaskEnded --> KeySituation : "instance of"
+TaskEnded : ProgramrelatedKeySituation
+TaskEnded --> ProgramrelatedKeySituation : "instance of"
 
 object SessionEnded
-SessionEnded : KeySituation
-SessionEnded --> KeySituation : "instance of"
+SessionEnded : SessionRelatedKeySituation
+SessionEnded --> SessionRelatedKeySituation : "instance of"
 
 object ScreenEntered
-ScreenEntered : KeySituation
-ScreenEntered --> KeySituation : "instance of"
+ScreenEntered : GeneralKeySituation
+ScreenEntered --> GeneralKeySituation : "instance of"
 
 note left of KeySituation
 Generic KeySituation structure used for multiple behavioral logs,
 such as screen visits, mechanic usage, and session tracking.
+end note
+
+note left of GeneralKeySituation
+Used for logs unrelated to specific game mechanics, such as 
+screen visits, general engagement, or app usage.
+end note
+
+note left of MechanicKeySituation
+Used for mechanic-specific behavioral tracking, including
+mechanic activation, frequency, success/failure, and feedback.
 end note
 
 }
@@ -184,8 +231,7 @@ end note
 package Units {
 
   class Interval{
-    +start: DateTime
-    +end: DateTime
+    +date: DateTime
   }
 
   object DailyInterval 
@@ -196,16 +242,27 @@ package Units {
 
   object MonthlyInterval
   MonthlyInterval --> Interval : "instance of"
+
+  object HourlyInterval
+  HourlyInterval --> Interval : "instance of"
 }
 
-package Interventions {
+package Interventions #e8fcffff {
   class Intervention {
     +id: int
-    +userId: int
-    +timestamp: DateTime
-    +screen: String
-    +metadata: Map<String, String>
   }
+  Intervention --> KeySituation : "triggered by"
+  Intervention --> Interval : "triggered by"
+
+  class MechanicIntervention {
+    +id: int
+  }
+   class ImmediateIntervention  {
+    +id: int
+  }
+
+  ImmediateIntervention  <|-- Intervention 
+  MechanicIntervention <|-- Intervention
 
   note right of Intervention
   Represents a planned activity, stimulus, or interaction
@@ -217,10 +274,18 @@ package Interventions {
     +questionCount: int
     +estimatedTime: int
   }
+  class AlertMessage {
+    +questionCount: int
+    +estimatedTime: int
+  }
 
-  Questionnaire --> Intervention : "instance of"
-  Intervention --> KeySituation : "triggered by"
-  Intervention --> Interval : "triggered by"
+  note right of AlertMessage
+    Displays general information, warnings, or alerts intended 
+    to guide, inform, or prompt the user during interaction.
+  end note
+
+  Questionnaire --> ImmediateIntervention  : "instance of"
+  AlertMessage --> ImmediateIntervention  : "instance of"
 
   object Intrinsic_Motivation_Inventory 
   Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
@@ -233,7 +298,13 @@ package Interventions {
     +text: String
   }
   
-  MotivationalMessage --> Intervention : "instance of"
+  note right of MotivationalMessage
+    A mechanic that delivers messages to the user to motivate them. 
+    While active for all users, the content and tone adapt based on 
+    individual profiles, goals, or behavioral state.
+  end note
+
+  MotivationalMessage --> MechanicIntervention : "instance of"
 
   object MotivationalMessagePM_LOW
   MotivationalMessagePM_LOW : MotivationalMessage
@@ -241,11 +312,9 @@ package Interventions {
   MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
 }
 
+MotivationalMechanics.GameMechanic --|>  Interventions.MechanicIntervention 
 
-
-
-
-package UserActions{
+package UserActions #e8f0ffff{
 
   object Click  {
     +userId: int
@@ -281,7 +350,7 @@ package UserActions{
 
 }
 
-package Program_and_Tasks {
+package Program_and_Tasks #ebffe8ff {
 
   class Program #lightgreen {
     +id: int
@@ -365,7 +434,7 @@ package Program_and_Tasks {
 
 }
 
-package User_and_UserTraits {
+package UserModel #fde8ffff {
 
   class User #f59bff {
     +id: int
@@ -374,7 +443,60 @@ package User_and_UserTraits {
 
   User --> Program : "has assigned"
   User --> UserAction : "performs"
+  User --> UserTrait : "has"
 
+  class MotivationalState { 
+    - state: MotivationalStates
+    + isHigh(): boolean
+    + isMedium(): boolean
+    + isLow(): boolean
+  }
+
+  MotivationalState --> Metric : "calculated from"
+  MotivationalState --> Program : "calculated from"
+  MotivationalState <-- MotivationalMessage : "selected based on"
+
+  object Low
+  Low : MotivationalState
+  Low : userId = 1
+  Low --> MotivationalState : "instance of"
+
+  object Medium
+  Medium : MotivationalState
+  Medium : userId = 1
+  Medium --> MotivationalState : "instance of"
+
+  object High
+  High : MotivationalState
+  High : userId = 1
+  High --> MotivationalState : "instance of"
+
+
+  class CognitiveLoadState {
+  }
+
+  CognitiveLoadState --> Metric : "calculated from"
+
+  object UnderchallengedState
+  UnderchallengedState : CognitiveLoadState
+  UnderchallengedState : userId = 1
+  UnderchallengedState --> CognitiveLoadState : "instance of"
+
+  object OptimalLoadState
+  OptimalLoadState : CognitiveLoadState
+  OptimalLoadState : userId = 1
+  OptimalLoadState --> CognitiveLoadState : "instance of"
+
+  object OverloadedState
+  OverloadedState : CognitiveLoadState
+  OverloadedState : userId = 1
+  OverloadedState --> CognitiveLoadState : "instance of"
+
+}
+
+package UserTraits #fcffe8ff {
+
+  left to right direction
   class UserTrait {
     +id: int
     +name: string
@@ -472,56 +594,6 @@ package User_and_UserTraits {
   }
 }
 
-package MotivationalState_and_CognitiveLoadState {
-
-  class MotivationalState { 
-    - state: MotivationalStates
-    + isHigh(): boolean
-    + isMedium(): boolean
-    + isLow(): boolean
-  }
-
-  MotivationalState --> Metric : "calculated from"
-  MotivationalState --> Program : "calculated from"
-  MotivationalState <-- MotivationalMessage : "selected based on"
-
-  object Low
-  Low : MotivationalState
-  Low : userId = 1
-  Low --> MotivationalState : "instance of"
-
-  object Medium
-  Medium : MotivationalState
-  Medium : userId = 1
-  Medium --> MotivationalState : "instance of"
-
-  object High
-  High : MotivationalState
-  High : userId = 1
-  High --> MotivationalState : "instance of"
-
-
-  class CognitiveLoadState {
-  }
-
-  CognitiveLoadState --> Metric : "calculated from"
-
-  object UnderchallengedState
-  UnderchallengedState : CognitiveLoadState
-  UnderchallengedState : userId = 1
-  UnderchallengedState --> CognitiveLoadState : "instance of"
-
-  object OptimalLoadState
-  OptimalLoadState : CognitiveLoadState
-  OptimalLoadState : userId = 1
-  OptimalLoadState --> CognitiveLoadState : "instance of"
-
-  object OverloadedState
-  OverloadedState : CognitiveLoadState
-  OverloadedState : userId = 1
-  OverloadedState --> CognitiveLoadState : "instance of"
-}
-
 package Usertrait_Mechanic_Mapping {
 
   class MechanicTraitWeight #9bfbff {
@@ -553,7 +625,7 @@ HesitationTime --> Time : "computed from"
 HesitationTime --> Click : "computed from"
 HesitationTime --> ScreenEntered : "computed from"
 
-package "MotivationalMechanics" {
+package MotivationalMechanics #fff6e8ff {
 
   left to right direction
   class MechanicCategory
@@ -623,10 +695,11 @@ package "MotivationalMechanics" {
   object Social_Networking {
     MechanicCategory
   }
+  Social_Networking --> MechanicCategory : "instance of"
   object Community_Insights {
     Display others’ behaviors for comparison.
   }
-  Community_Insights --> MechanicCategory : "instance of"
+  
   Community_Insights --> GameMechanic : "instance of"
   Community_Insights --> Social_Networking : "categorized into"
 
@@ -634,10 +707,11 @@ package "MotivationalMechanics" {
   object Surprises_and_Events {
     MechanicCategory
   }
+  Surprises_and_Events --> MechanicCategory : "instance of"
   object Mystery_Boxes {
     Loot boxes with random content.
   }
-  Mystery_Boxes --> MechanicCategory : "instance of"
+  
   Mystery_Boxes --> GameMechanic : "instance of"
   Mystery_Boxes --> Surprises_and_Events : "categorized into"
 
@@ -645,10 +719,10 @@ package "MotivationalMechanics" {
   object Motivational_Messages {
     MechanicCategory
   }
+  Motivational_Messages --> MechanicCategory : "instance of"
   object Encouraging_Messages {
     Positive reinforcement to sustain motivation.
   }
-  Encouraging_Messages --> MechanicCategory : "instance of"
   Encouraging_Messages --> GameMechanic : "instance of"
   Encouraging_Messages --> Motivational_Messages : "categorized into"
 
@@ -656,10 +730,10 @@ package "MotivationalMechanics" {
   object Time_Based_Challenges {
     MechanicCategory
   }
+  Time_Based_Challenges --> MechanicCategory : "instance of"
   object Appointment_Dynamics {
     Scheduled events like Happy Hour.
   }
-  Appointment_Dynamics --> MechanicCategory : "instance of"
   Appointment_Dynamics --> GameMechanic : "instance of"
   Appointment_Dynamics --> Time_Based_Challenges : "categorized into"
 
@@ -667,10 +741,10 @@ package "MotivationalMechanics" {
   object Rewards_and_Unlocks {
     MechanicCategory
   }
+  Rewards_and_Unlocks --> MechanicCategory : "instance of"
   object In_Game_Currency {
     Accumulation of virtual money/resources.
   }
-  In_Game_Currency --> MechanicCategory : "instance of"
   In_Game_Currency --> GameMechanic : "instance of"
   In_Game_Currency --> Rewards_and_Unlocks : "categorized into"
 
