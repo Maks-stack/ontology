@@ -1,11 +1,17 @@
-package Interventions {
+package Interventions #e8fcffff {
   class Intervention {
     +id: int
-    +userId: int
-    +timestamp: DateTime
-    +screen: String
-    +metadata: Map<String, String>
   }
+
+  class MechanicIntervention {
+    +id: int
+  }
+   class ImmediateIntervention  {
+    +id: int
+  }
+
+  ImmediateIntervention  <|-- Intervention 
+  MechanicIntervention <|-- Intervention
 
   note right of Intervention
   Represents a planned activity, stimulus, or interaction
@@ -17,10 +23,18 @@ package Interventions {
     +questionCount: int
     +estimatedTime: int
   }
+  class AlertMessage {
+    +questionCount: int
+    +estimatedTime: int
+  }
 
-  Questionnaire --> Intervention : "instance of"
-  Intervention --> KeySituation : "triggered by"
-  Intervention --> Interval : "triggered by"
+  note right of AlertMessage
+    Displays general information, warnings, or alerts intended 
+    to guide, inform, or prompt the user during interaction.
+  end note
+
+  Questionnaire --> ImmediateIntervention  : "instance of"
+  AlertMessage --> ImmediateIntervention  : "instance of"
 
   object Intrinsic_Motivation_Inventory 
   Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
@@ -33,10 +47,21 @@ package Interventions {
     +text: String
   }
   
-  MotivationalMessage --> Intervention : "instance of"
+  note right of MotivationalMessage
+    A mechanic that delivers messages to the user to motivate them. 
+    While active for all users, the content and tone adapt based on 
+    individual profiles, goals, or behavioral state.
+  end note
+
+  MotivationalMessage --> MechanicIntervention : "instance of"
 
   object MotivationalMessagePM_LOW
   MotivationalMessagePM_LOW : MotivationalMessage
   MotivationalMessagePM_LOW : userId = 1
   MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
 }
+Intervention --> KeySituation : "triggered by"
+Intervention --> Interval : "triggered by"
+
+MotivationalMechanics.GameMechanic --|>  Interventions.MechanicIntervention 
+Interventions.MechanicIntervention --> MotivationalMechanics.GameMechanic : "triggered by"

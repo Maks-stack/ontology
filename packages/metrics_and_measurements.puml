@@ -1,4 +1,4 @@
-package Metrics_and_Measurements {
+package Metrics_and_Measurements #ffe8e8ff {
 
   class Metric {
     +id: int
@@ -6,6 +6,22 @@ package Metrics_and_Measurements {
     +timestamp: DateTime
     +value: float
   }
+
+  class GeneralMetric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+  
+  class MechanicMetric {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +value: float
+  }
+  GeneralMetric <|-- Metric 
+  MechanicMetric <|-- Metric
 
   class MetricComputation {
     +algorithm: String
@@ -19,45 +35,45 @@ package Metrics_and_Measurements {
   MechanicUsageRate : Metric
   MechanicUsageRate : userId = 1
   MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicUsageRate --> Metric : "instance of"
+  MechanicUsageRate --> MechanicMetric : "instance of"
 
   object MechanicDisplayRate
   MechanicDisplayRate : Metric
   MechanicDisplayRate : userId = 1
   MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicDisplayRate --> Metric : "instance of"
+  MechanicDisplayRate --> MechanicMetric : "instance of"
 
   object MechanicEngagement
   MechanicEngagement : Metric
   MechanicEngagement : userId = 1
   MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
-  MechanicEngagement --> Metric : "instance of"
+  MechanicEngagement --> MechanicMetric : "instance of"
 
   object SessionDuration
   SessionDuration : userId = 1
   SessionDuration : mechanicId = 101
   SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
-  SessionDuration --> Metric : "instance of"
+  SessionDuration --> GeneralMetric : "instance of"
 
   object ClickRate
   ClickRate : userId = 1
   ClickRate : mechanicId = 101
   ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> Metric : "intance of"
+  ClickRate --> GeneralMetric : "intance of"
 
   object Adherence
-  Adherence : Metric
+  Adherence : GeneralMetric
   Adherence : userId = 1
   Adherence : timestamp = 2023-10-01T12:00:00Z
-  Adherence --> Metric : "instance of"
+  Adherence --> GeneralMetric : "instance of"
 
   object HesitationTime
-  HesitationTime : Metric
+  HesitationTime : GeneralMetric
   HesitationTime : userId = 1
   HesitationTime : timestamp = 2023-10-01T12:00:00Z
-  HesitationTime --> Metric : "instance of"
+  HesitationTime --> GeneralMetric : "instance of"
 
   note as A1
   Percentage of the finished tasks out of the overall prescribed tasks

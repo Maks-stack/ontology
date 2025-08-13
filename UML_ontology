@@ -136,7 +136,7 @@ package Metrics_and_Measurements #ffe8e8ff {
   mechanicInteraction : impressionCount = 2
   mechanicInteaction : timestamp = 2025-04-21T09:00:00Z
 
-  mechanicInteractio --> Measurement : "instance of"
+  mechanicInteraction --> Measurement : "instance of"
 
   note bottom of mechanicInteraction
   Captures a one-time measurement of how often
@@ -147,117 +147,102 @@ package Metrics_and_Measurements #ffe8e8ff {
 }
 
 package KeySituations #e8faffff {
-
-class KeySituation {
-  +id: int
-  +userId: int
-  +timestamp: DateTime
-  +mechanicId: int
-  +screen: String
-  +value: float
-  +metadata: Map<String, String>
-}
-
-class MechanicKeySituation {
-  +id: int
- 
-}
-class GeneralKeySituation {
-  +id: int
-  
-}
-class ProgramrelatedKeySituation {
-  +id: int
-}
-ProgramrelatedKeySituation <|-- GeneralKeySituation 
-
-class SessionRelatedKeySituation {
-  +id: int
-}
-SessionRelatedKeySituation <|-- GeneralKeySituation 
-
-GeneralKeySituation <|-- KeySituation 
-MechanicKeySituation <|-- KeySituation
-
-object TaskFinished
-TaskFinished : ProgramrelatedKeySituation
-TaskFinished --> ProgramrelatedKeySituation : "instance of"
-
-object MechanicDisplayed
-MechanicDisplayed : MechanicKeySituation
-MechanicDisplayed --> MechanicKeySituation : "instance of"
-
-object MechanicInteraction
-MechanicInteraction : MechanicKeySituation
-MechanicInteraction --> MechanicKeySituation : "instance of"
-
-object SessionStarted
-SessionStarted : SessionRelatedKeySituation
-SessionStarted --> SessionRelatedKeySituation : "instance of"
-
-object TaskStarted
-TaskStarted : ProgramrelatedKeySituation
-TaskStarted --> ProgramrelatedKeySituation : "instance of"
-
-object TaskEnded
-TaskEnded : ProgramrelatedKeySituation
-TaskEnded --> ProgramrelatedKeySituation : "instance of"
-
-object SessionEnded
-SessionEnded : SessionRelatedKeySituation
-SessionEnded --> SessionRelatedKeySituation : "instance of"
-
-object ScreenEntered
-ScreenEntered : GeneralKeySituation
-ScreenEntered --> GeneralKeySituation : "instance of"
-
-note left of KeySituation
-Generic KeySituation structure used for multiple behavioral logs,
-such as screen visits, mechanic usage, and session tracking.
-end note
-
-note left of GeneralKeySituation
-Used for logs unrelated to specific game mechanics, such as 
-screen visits, general engagement, or app usage.
-end note
-
-note left of MechanicKeySituation
-Used for mechanic-specific behavioral tracking, including
-mechanic activation, frequency, success/failure, and feedback.
-end note
-
-}
-
-package Units {
-
-  class Interval{
-    +date: DateTime
+  class KeySituation {
+    +id: int
+    +userId: int
+    +timestamp: DateTime
+    +mechanicId: int
+    +screen: String
+    +value: float
+    +metadata: Map<String, String>
   }
 
-  object DailyInterval 
-  DailyInterval --> Interval : "instance of"
+  class MechanicKeySituation {
+    +id: int
+  
+  }
+  class GeneralKeySituation {
+    +id: int
+    
+  }
+  class ProgramrelatedKeySituation {
+    +id: int
+  }
+  ProgramrelatedKeySituation <|-- GeneralKeySituation 
 
-  object WeeklyInterval 
-  WeeklyInterval --> Interval : "instance of"
+  class SessionRelatedKeySituation {
+    +id: int
+  }
+  SessionRelatedKeySituation <|-- GeneralKeySituation 
 
-  object MonthlyInterval
-  MonthlyInterval --> Interval : "instance of"
+  GeneralKeySituation <|-- KeySituation 
+  MechanicKeySituation <|-- KeySituation
 
-  object HourlyInterval
-  HourlyInterval --> Interval : "instance of"
+  object TaskFinished
+  TaskFinished : ProgramrelatedKeySituation
+  TaskFinished --> ProgramrelatedKeySituation : "instance of"
+
+  object MechanicDisplayed
+  MechanicDisplayed : MechanicKeySituation
+  MechanicDisplayed --> MechanicKeySituation : "instance of"
+
+  object MechanicInteraction
+  MechanicInteraction : MechanicKeySituation
+  MechanicInteraction --> MechanicKeySituation : "instance of"
+
+  object SessionStarted
+  SessionStarted : SessionRelatedKeySituation
+  SessionStarted --> SessionRelatedKeySituation : "instance of"
+
+  object TaskStarted
+  TaskStarted : ProgramrelatedKeySituation
+  TaskStarted --> ProgramrelatedKeySituation : "instance of"
+
+  object TaskEnded
+  TaskEnded : ProgramrelatedKeySituation
+  TaskEnded --> ProgramrelatedKeySituation : "instance of"
+
+  object SessionEnded
+  SessionEnded : SessionRelatedKeySituation
+  SessionEnded --> SessionRelatedKeySituation : "instance of"
+
+  object ScreenEntered
+  ScreenEntered : GeneralKeySituation
+  ScreenEntered --> GeneralKeySituation : "instance of"
+
+  note left of KeySituation
+  Generic KeySituation structure used for multiple behavioral logs,
+  such as screen visits, mechanic usage, and session tracking.
+  end note
+
+  note left of GeneralKeySituation
+  Used for logs unrelated to specific game mechanics, such as 
+  screen visits, general engagement, or app usage.
+  end note
+
+  note left of MechanicKeySituation
+  Used for mechanic-specific behavioral tracking, including
+  mechanic activation, frequency, success/failure, and feedback.
+  end note
 }
 
-package Interventions #e8fcffff {
+Program_and_Tasks.Program --> KeySituation : "triggers"
+Metrics_and_Measurements.Adherence --> Program_and_Tasks.Task : "calculatedFrom"
+Metrics_and_Measurements.Adherence --> Program_and_Tasks.TaskRequirement : "calculatedFrom"
+Metrics_and_Measurements.Adherence --> KeySituations.TaskFinished : "informedBy"
+
+
+package Interventions #e8e8ffff {
   class Intervention {
     +id: int
   }
-  Intervention --> KeySituation : "triggered by"
-  Intervention --> Interval : "triggered by"
+  KeySituation --> Intervention: "triggers"
+  Interval --> Intervention : "triggers"
 
   class MechanicIntervention {
     +id: int
   }
-   class ImmediateIntervention  {
+    class ImmediateIntervention  {
     +id: int
   }
 
@@ -310,11 +295,28 @@ package Interventions #e8fcffff {
   MotivationalMessagePM_LOW : MotivationalMessage
   MotivationalMessagePM_LOW : userId = 1
   MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+
+  class Interval{
+    +date: DateTime
+  }
+
+  object DailyInterval 
+  DailyInterval --> Interval : "instance of"
+
+  object WeeklyInterval 
+  WeeklyInterval --> Interval : "instance of"
+
+  object MonthlyInterval
+  MonthlyInterval --> Interval : "instance of"
+
+  object HourlyInterval
+  HourlyInterval --> Interval : "instance of"
 }
 
 MotivationalMechanics.GameMechanic --|>  Interventions.MechanicIntervention 
+MotivationalMechanics.GameMechanic --> Interventions.MechanicIntervention : "triggers"
 
-package UserActions #e8f0ffff{
+package UserActions #f1f1f1ff{
 
   object Click  {
     +userId: int
@@ -402,7 +404,7 @@ package Program_and_Tasks #ebffe8ff {
 
   class TaskAssignment #lightgreen {
     task: Task
-
+    taskRequirement: TaskRequirement
   }
 
   note right of TaskAssignment
@@ -441,9 +443,8 @@ package UserModel #fde8ffff {
     +UserTraitWeights: List<UserTraitWeight>
   }
 
-  User --> Program : "has assigned"
+  User --> Program : "has"
   User --> UserAction : "performs"
-  User --> UserTrait : "has"
 
   class MotivationalState { 
     - state: MotivationalStates
@@ -454,7 +455,7 @@ package UserModel #fde8ffff {
 
   MotivationalState --> Metric : "calculated from"
   MotivationalState --> Program : "calculated from"
-  MotivationalState <-- MotivationalMessage : "selected based on"
+  MotivationalMessage --> MotivationalState : "selectedByCurrentState"
 
   object Low
   Low : MotivationalState
@@ -492,7 +493,23 @@ package UserModel #fde8ffff {
   OverloadedState : userId = 1
   OverloadedState --> CognitiveLoadState : "instance of"
 
+  class UserTraitWeight #f59bff {
+    +trait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "0..*" UserTraitWeight : "has"
+
+  class UserTraitWeight #f59bff{
+    +userId: int
+    +traitId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
 }
+UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
+UserModel.MotivationalState --> Metrics_and_Measurements.Adherence : "derivedFrom"
+UserModel.MotivationalState --> Program_and_Tasks.Program : "derivedFrom"
 
 package UserTraits #fcffe8ff {
 
@@ -577,50 +594,7 @@ package UserTraits #fcffe8ff {
     Helpful for adjusting challenge levels and support mechanisms.
     end note
   }
-
-  class UserTraitWeight #f59bff {
-    +trait: UserTrait
-    +weight: float  ' (0.0 – 1.0) '
-  }
-
-  User --> "0..*" UserTraitWeight : "has"
-  UserTraitWeight --> UserTrait : "references"
-
-  class UserTraitWeight #f59bff{
-    +userId: int
-    +traitId: int
-    +userTrait: UserTrait
-    +weight: float  ' (0.0 – 1.0) '
-  }
 }
-
-package Usertrait_Mechanic_Mapping {
-
-  class MechanicTraitWeight #9bfbff {
-    +mechanicId: int
-    +userTrait: UserTrait
-    +weight: float  ' (0.0 – 1.0) '
-  }
-
-  class Mapping {
-    Trait : UserTrait
-    Mechanic: MotivationalMechanic
-    weight: float
-  }
-  Mapping --> UserTrait : "has"
-
-  object Narrative_GT10_to_Philantropist {
-    Trait = Philantropist
-    Mechanic = Narrative_GT10
-    weight = 0.8
-  }
-  Narrative_GT10_to_Philantropist : Mapping
-  Narrative_GT10_to_Philantropist --> Mapping : "instance of"
-
-  Narrative_GT10_to_Philantropist --> Philanthropist : "corresponds to"
-  Narrative_GT10_to_Philantropist --> Narrative_GT10 : "corresponds by"
-}
-
 HesitationTime --> Time : "computed from"
 HesitationTime --> Click : "computed from"
 HesitationTime --> ScreenEntered : "computed from"
@@ -630,10 +604,7 @@ package MotivationalMechanics #fff6e8ff {
   left to right direction
   class MechanicCategory
   class GameMechanic 
-
-  GameMechanic --> Mapping: "selected based on"
   
-
   '//----------------------------------Progress Indicators---------------------------------------------'
   object Progress_Indicators {
     MechanicCategory
@@ -748,6 +719,34 @@ package MotivationalMechanics #fff6e8ff {
   In_Game_Currency --> GameMechanic : "instance of"
   In_Game_Currency --> Rewards_and_Unlocks : "categorized into"
 
-}
-@enduml7
+  package Usertrait_Mechanic_Mapping {
 
+    class MechanicTraitWeight #9bfbff {
+      +mechanicId: int
+      +userTrait: UserTrait
+      +weight: float  ' (0.0 – 1.0) '
+    }
+
+    class Mapping {
+      Trait : UserTrait
+      Mechanic: MotivationalMechanic
+      weight: float
+    }
+    Mapping --> UserTrait : "has"
+
+    object Narrative_GT10_to_Philantropist {
+      Trait = Philantropist
+      Mechanic = Narrative_GT10
+      weight = 0.8
+    }
+    Narrative_GT10_to_Philantropist : Mapping
+    Narrative_GT10_to_Philantropist --> Mapping : "instance of"
+
+    Narrative_GT10_to_Philantropist --> Philanthropist : "corresponds to"
+    Narrative_GT10_to_Philantropist --> Narrative_GT10 : "corresponds by"
+  }
+}
+MotivationalMechanics.GameMechanic --> KeySituations.MechanicKeySituation: "triggers"
+MotivationalMechanics.GameMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
+
+@enduml7
