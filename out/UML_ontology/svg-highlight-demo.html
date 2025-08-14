@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>SVG Highlighter — elements & packages</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    .wrap { display: grid; gap: 12px; }
+    .note { font-size: 14px; opacity: .8; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Hover to highlight connections (elements + packages)</h1>
+    <div class="note">
+      - Hover an element (<code>g#elem_*</code>) to highlight its connected links (<code>g#link_*</code>).<br/>
+      - Hover a package/cluster (<code>g#cluster_*</code>) to highlight <em>every element visually inside it</em> and <em>all</em> connections of those elements.
+    </div>
+    <object id="svgObj" type="image/svg+xml" data="./UML_ontology.svg" width="100%" style="border:1px solid #ccc; max-height: 80vh;"></object>
+  </div>
+
+  <script>
+  // Helpers
+  function normalizeId(str) {
+    return (str || '')
+      .replace(/^elem_/, '')
+      .replace(/^link_/, '')
+      .replace(/^cluster_/, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,'');
+  }
+
+  function tokensFromId(id) {
+    // Split link ids like link_A_to_B or link_A_B_C into tokens
+    return (id || '').split(/_to_|_/).map(normalizeId).filter(Boolean);
+  }
+
+  function bboxContains(outer, inner, padding = 0) {
+    return (
+      inner.x >= outer.x - padding &&
+      inner.y >= outer.y - padding &&
+      inner.x + inner.width  <= outer.x + outer.width  + padding &&
+      inner.y + inner.height <= outer.y + outer.height + padding
+    );
+  }
+
+  const svgObj = document.getElementById('svgObj');
+  svgObj.addEventListener('load', () => {
+    const svgDoc = svgObj.contentDocument;
+    const svgRoot = svgDoc.documentElement;
+
+    // Inject a style tag inside the SVG so stroke/fill changes apply
+    const style = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
+    style.textContent = `
+      .is-node-highlight rect, .is-node-highlight path, .is-node-highlight polygon {
+        stroke-width: 3 !important;
+        filter: saturate(1.1);
+      }
+      .is-link-highlight path, .is-link-highlight line, .is-link-highlight polygon {
+        stroke-width: 3 !important;
+      }
+      .is-dimmed { opacity: .2; transition: opacity .15s; }
+      g[id^="elem_"], g[id^="cluster_"] { cursor: pointer; }
+    `;
+    svgRoot.appendChild(style);
+
+    const elemGroups = Array.from(svgDoc.querySelectorAll('g[id^="elem_"]'));
+    const clusterGroups = Array.from(svgDoc.querySelectorAll('g[id^="cluster_"]'));
+    const linkGroups = Array.from(svgDoc.querySelectorAll('g[id^="link_"]'));
+    const allNodeGroups = [...elemGroups, ...clusterGroups];
+
+    // Pre-tokenize links for quick matching
+    linkGroups.forEach(g => g.dataset.tokens = JSON.stringify(tokensFromId(g.id)));
+
+    // Precompute bboxes for all elems & clusters (one time)
+    const elemBBox = new Map();
+    const clusterBBox = new Map();
+    elemGroups.forEach(g => {
+      try { elemBBox.set(g, g.getBBox()); } catch { /* some elements might not have bbox */ }
+    });
+    clusterGroups.forEach(g => {
+      try { clusterBBox.set(g, g.getBBox()); } catch { }
+    });
+
+    // Build cluster -> { elems: [<g>...], tokens: Set<string> } using geometry
+    const clusterInfo = new Map();
+    // padding makes matching more forgiving for borders/shadows
+    const INSIDE_PADDING = 2; 
+    clusterGroups.forEach(cluster => {
+      const cb = clusterBBox.get(cluster);
+      const insideElems = [];
+      if (cb) {
+        elemGroups.forEach(el => {
+          const eb = elemBBox.get(el);
+          if (eb && bboxContains(cb, eb, INSIDE_PADDING)) insideElems.push(el);
+        });
+      }
+      const tokenSet = new Set(insideElems.map(g => normalizeId(g.id)));
+      clusterInfo.set(cluster.id, { elems: insideElems, tokens: tokenSet });
+    });
+
+    function setDimmed(dim) {
+      const cls = 'is-dimmed';
+      [...allNodeGroups, ...linkGroups].forEach(g => g.classList.toggle(cls, dim));
+    }
+
+    function clearHighlight() {
+      setDimmed(false);
+      allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
+      linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
+    }
+
+    function highlightFor(targetId) {
+      const isCluster = targetId.startsWith('cluster_');
+      let nodeTokens;
+      let clusterElems = [];
+
+      if (isCluster) {
+        const info = clusterInfo.get(targetId) || { elems: [], tokens: new Set() };
+        nodeTokens = Array.from(info.tokens);
+        clusterElems = info.elems;
+      } else {
+        nodeTokens = [normalizeId(targetId)];
+      }
+
+      // Which links touch any of these tokens?
+      const connectedLinks = linkGroups.filter(link => {
+        try {
+          const toks = JSON.parse(link.dataset.tokens || '[]');
+          return toks.some(t => nodeTokens.includes(t));
+        } catch { return false; }
+      });
+
+      // Collect tokens seen in connected links (to undim connected nodes too)
+      const connectedNodeTokens = new Set();
+      connectedLinks.forEach(link => {
+        try {
+          JSON.parse(link.dataset.tokens || '[]').forEach(t => connectedNodeTokens.add(t));
+        } catch { /* ignore */ }
+      });
+
+      // Reset styles
+      allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
+      linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
+      setDimmed(true);
+
+      // Highlight hovered group
+      const hovered = allNodeGroups.find(g => g.id === targetId);
+      if (hovered) hovered.classList.add('is-node-highlight');
+
+      // If hovering a cluster, ALSO highlight *every* element inside it
+      if (isCluster) {
+        clusterElems.forEach(el => el.classList.add('is-node-highlight'));
+      }
+
+      // Highlight links
+      connectedLinks.forEach(g => g.classList.add('is-link-highlight'));
+
+      // Undim: hovered group
+      if (hovered) hovered.classList.remove('is-dimmed');
+
+      // Undim: all elements inside the cluster (if any)
+      if (isCluster) {
+        clusterElems.forEach(el => el.classList.remove('is-dimmed'));
+      }
+
+      // Undim: elements whose tokens are in connected links
+      elemGroups.forEach(g => {
+        if (connectedNodeTokens.has(normalizeId(g.id))) g.classList.remove('is-dimmed');
+      });
+
+      // Undim: clusters that contain any of those connected elements
+      clusterGroups.forEach(cluster => {
+        const info = clusterInfo.get(cluster.id) || { tokens: new Set() };
+        for (const t of connectedNodeTokens) {
+          if (info.tokens.has(t)) { cluster.classList.remove('is-dimmed'); break; }
+        }
+      });
+
+      // Undim: the links themselves
+      connectedLinks.forEach(g => g.classList.remove('is-dimmed'));
+    }
+
+    // Wire events
+    allNodeGroups.forEach(g => {
+      g.addEventListener('mouseenter', () => highlightFor(g.id));
+      g.addEventListener('mouseleave', clearHighlight);
+    });
+  });
+  </script>
+</body>
+</html>
