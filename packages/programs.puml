@@ -1,5 +1,5 @@
 @startuml
-package Program_and_Tasks {
+package Program_and_Tasks #ebffe8ff {
 
   class Program #lightgreen {
     +id: int
@@ -8,7 +8,7 @@ package Program_and_Tasks {
   }
 
   note right of Program
-  A succession of task blocks (composites).
+  A succession of task blocks.
   end note
 
   class Task #lightgreen {
@@ -51,7 +51,7 @@ package Program_and_Tasks {
 
   class TaskAssignment #lightgreen {
     task: Task
-
+    taskRequirement: TaskRequirement
   }
 
   note right of TaskAssignment
@@ -82,5 +82,4 @@ package Program_and_Tasks {
   TaskBlock --> "1..*" TaskAssignment : "contains"
 
 }
-
 @enduml

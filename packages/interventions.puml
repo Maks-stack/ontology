@@ -1,12 +1,20 @@
-package Interventions #e8fcffff {
+@startuml
+skinparam defaultFontSize 20
+skinparam nodesep 30
+skinparam ranksep 30
+
+
+package Interventions #e8e8ffff {
   class Intervention {
     +id: int
   }
+  KeySituation --> Intervention: "triggers"
+  Interval --> Intervention : "triggers"
 
   class MechanicIntervention {
     +id: int
   }
-   class ImmediateIntervention  {
+    class ImmediateIntervention  {
     +id: int
   }
 
@@ -59,9 +67,24 @@ package Interventions #e8fcffff {
   MotivationalMessagePM_LOW : MotivationalMessage
   MotivationalMessagePM_LOW : userId = 1
   MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+
+  class Interval{
+    +date: DateTime
+  }
+
+  object DailyInterval 
+  DailyInterval --> Interval : "instance of"
+
+  object WeeklyInterval 
+  WeeklyInterval --> Interval : "instance of"
+
+  object MonthlyInterval
+  MonthlyInterval --> Interval : "instance of"
+
+  object HourlyInterval
+  HourlyInterval --> Interval : "instance of"
 }
-Intervention --> KeySituation : "triggered by"
-Intervention --> Interval : "triggered by"
 
 MotivationalMechanics.GameMechanic --|>  Interventions.MechanicIntervention 
-Interventions.MechanicIntervention --> MotivationalMechanics.GameMechanic : "triggered by"
+MotivationalMechanics.GameMechanic --> Interventions.MechanicIntervention : "triggers"
+@enduml

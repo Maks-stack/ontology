@@ -1,3 +1,4 @@
+@startuml
 package Metrics_and_Measurements #ffe8e8ff {
 
   class Metric {
@@ -128,7 +129,7 @@ package Metrics_and_Measurements #ffe8e8ff {
   mechanicInteraction : userId = 1
   mechanicInteraction : mechanicId = 101
   mechanicInteraction : impressionCount = 2
-  mechanicInteraction : timestamp = 2025-04-21T09:00:00Z
+  mechanicInteaction : timestamp = 2025-04-21T09:00:00Z
 
   mechanicInteraction --> Measurement : "instance of"
 
@@ -139,3 +140,8 @@ package Metrics_and_Measurements #ffe8e8ff {
   Helps evaluate the effectiveness of mechanic engagement.
   end note
 }
+
+Metrics_and_Measurements.Adherence --> Program_and_Tasks.Task : "calculatedFrom"
+Metrics_and_Measurements.Adherence --> Program_and_Tasks.TaskRequirement : "calculatedFrom"
+Metrics_and_Measurements.Adherence --> KeySituations.TaskFinished : "informedBy"
+@enduml

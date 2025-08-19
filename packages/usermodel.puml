@@ -1,0 +1,76 @@
+@startuml
+package UserModel #fde8ffff {
+
+  class User #f59bff {
+    +id: int
+    +UserTraitWeights: List<UserTraitWeight>
+  }
+
+  User --> Program : "has"
+  User --> UserAction : "performs"
+
+  class MotivationalState { 
+    - state: MotivationalStates
+    + isHigh(): boolean
+    + isMedium(): boolean
+    + isLow(): boolean
+  }
+
+  MotivationalState --> Metric : "calculated from"
+  MotivationalState --> Program : "calculated from"
+  MotivationalMessage --> MotivationalState : "selectedByCurrentState"
+
+  object Low
+  Low : MotivationalState
+  Low : userId = 1
+  Low --> MotivationalState : "instance of"
+
+  object Medium
+  Medium : MotivationalState
+  Medium : userId = 1
+  Medium --> MotivationalState : "instance of"
+
+  object High
+  High : MotivationalState
+  High : userId = 1
+  High --> MotivationalState : "instance of"
+
+
+  class CognitiveLoadState {
+  }
+
+  CognitiveLoadState --> Metric : "calculated from"
+
+  object UnderchallengedState
+  UnderchallengedState : CognitiveLoadState
+  UnderchallengedState : userId = 1
+  UnderchallengedState --> CognitiveLoadState : "instance of"
+
+  object OptimalLoadState
+  OptimalLoadState : CognitiveLoadState
+  OptimalLoadState : userId = 1
+  OptimalLoadState --> CognitiveLoadState : "instance of"
+
+  object OverloadedState
+  OverloadedState : CognitiveLoadState
+  OverloadedState : userId = 1
+  OverloadedState --> CognitiveLoadState : "instance of"
+
+  class UserTraitWeight #f59bff {
+    +trait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "0..*" UserTraitWeight : "has"
+
+  class UserTraitWeight #f59bff{
+    +userId: int
+    +traitId: int
+    +userTrait: UserTrait
+    +weight: float  ' (0.0 – 1.0) '
+  }
+}
+UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
+UserModel.MotivationalState --> Metrics_and_Measurements.Adherence : "derivedFrom"
+UserModel.MotivationalState --> Program_and_Tasks.Program : "derivedFrom"
+@enduml
