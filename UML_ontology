@@ -5,27 +5,19 @@ skinparam linetype polyline
 title Motiva Framework Ontology
 
 package Metrics_and_Measurements #ffe8e8ff {
-
   class Metric {
     +id: int
     +userId: int
     +timestamp: DateTime
     +value: float
   }
-
-  class GeneralMetric {
-    +id: int
-    +userId: int
-    +timestamp: DateTime
-    +value: float
-  }
   
-  class MechanicMetric {
-    +id: int
-    +userId: int
-    +timestamp: DateTime
-    +value: float
+  class GeneralMetric {
   }
+
+  class MechanicMetric {
+  }
+
   GeneralMetric <|-- Metric 
   MechanicMetric <|-- Metric
 
@@ -134,7 +126,7 @@ package Metrics_and_Measurements #ffe8e8ff {
   mechanicInteraction : userId = 1
   mechanicInteraction : mechanicId = 101
   mechanicInteraction : impressionCount = 2
-  mechanicInteaction : timestamp = 2025-04-21T09:00:00Z
+  mechanicInteraction : timestamp = 2025-04-21T09:00:00Z
 
   mechanicInteraction --> Measurement : "instance of"
 
@@ -190,10 +182,22 @@ package KeySituations #e8faffff {
   MechanicInteraction : MechanicKeySituation
   MechanicInteraction --> MechanicKeySituation : "instance of"
 
+  object MilestoneReached
+  MilestoneReached : MechanicKeySituation
+  MilestoneReached --> MechanicKeySituation : "instance of"
+
+  object DailyChallengePosed
+  DailyChallengePosed : SessionRelatedKeySituathttps://file+.vscode-resource.vscode-cdn.net/Users/maks/Documents/PHD/UML/out/UML_ontology/UML_ontology.svg?version%3D1756735835609ion
+  DailyChallengePosed --> SessionRelatedKeySituation : "instance of"
+
   object SessionStarted
   SessionStarted : SessionRelatedKeySituation
   SessionStarted --> SessionRelatedKeySituation : "instance of"
 
+  object DayRollOver
+  DayRollOver : SessionRelatedKeySituation
+  DayRollOver --> SessionRelatedKeySituation : "instance of"
+  
   object TaskStarted
   TaskStarted : ProgramrelatedKeySituation
   TaskStarted --> ProgramrelatedKeySituation : "instance of"
@@ -246,8 +250,8 @@ package Interventions #e8e8ffff {
     +id: int
   }
 
-  ImmediateIntervention  <|-- Intervention 
-  MechanicIntervention <|-- Intervention
+  ImmediateIntervention  --|> Intervention 
+  MechanicIntervention --|> Intervention
 
   note right of Intervention
   Represents a planned activity, stimulus, or interaction
@@ -313,8 +317,10 @@ package Interventions #e8e8ffff {
   HourlyInterval --> Interval : "instance of"
 }
 
-MotivationalMechanics.GameMechanic --|>  Interventions.MechanicIntervention 
-MotivationalMechanics.GameMechanic --> Interventions.MechanicIntervention : "triggers"
+MotivationalMechanics.MotivationalMechanic --|>  Interventions.MechanicIntervention 
+MotivationalMechanics.MotivationalMechanic --> Interventions.MechanicIntervention : "triggers"
+
+Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
 
 package UserActions #f1f1f1ff{
 
@@ -338,10 +344,6 @@ package UserActions #f1f1f1ff{
 
 
   object Action {
-    +userId: int
-    +timestamp: DateTime
-    +screen: String
-    +metadata: Map<String, String>
   } 
   Action : UserAction
   Action --> UserAction : "instance of"
@@ -444,6 +446,8 @@ package UserModel #fde8ffff {
   }
 
   User --> Program : "has"
+  User --> MotivationalState : "has"
+  User --> CognitiveLoadState : "has"
   User --> UserAction : "performs"
 
   class MotivationalState { 
@@ -455,7 +459,6 @@ package UserModel #fde8ffff {
 
   MotivationalState --> Metric : "calculated from"
   MotivationalState --> Program : "calculated from"
-  MotivationalMessage --> MotivationalState : "selectedByCurrentState"
 
   object Low
   Low : MotivationalState
@@ -603,121 +606,81 @@ package MotivationalMechanics #fff6e8ff {
 
   left to right direction
   class MechanicCategory
-  class GameMechanic 
+  class MotivationalMechanic 
   
   '//----------------------------------Progress Indicators---------------------------------------------'
-  object Progress_Indicators {
-    MechanicCategory
-  }
-  Progress_Indicators --> MechanicCategory : "instance of"
-    object Level_and_Experience_Point_System {
+  class Progress_Indicators extends MotivationalMechanic
+
+  object Level_and_Experience_Point_System {
     As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
   }
-  Level_and_Experience_Point_System --> GameMechanic : "instance of"
-  Level_and_Experience_Point_System --> Progress_Indicators : "categorized into"
+  Level_and_Experience_Point_System --> Progress_Indicators : "instance of"
 
   
   '//----------------------------------Competition with others---------------------------------------------'
-  object Competition_with_others {
-    MechanicCategory
-  }
-  Competition_with_others --> MechanicCategory : "instance of"
-    object Leaderboards {
+  class Competition_with_others extends MotivationalMechanic
+
+  object Leaderboards {
     As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
   }
-  Leaderboards --> GameMechanic : "instance of"
-  Leaderboards --> Competition_with_others : "categorized into"
+  Leaderboards --> Competition_with_others : "instance of"
 
   '//---------------------------------Personal Goals---------------------------------------------'
-  object Personal_Goals {
-    MechanicCategory
-  }
-  Personal_Goals --> MechanicCategory : "instance of"
+  class Personal_Goals extends MotivationalMechanic
+
   object Self_Assigned_Targets {
     Users define their own objectives.
   }
-  Self_Assigned_Targets --> GameMechanic : "instance of"
-  Self_Assigned_Targets --> Personal_Goals : "categorized into"
+  Self_Assigned_Targets --> Personal_Goals : "instance of"
 
   '//---------------------------------Personalization and Creativity---------------------------------------------'
-  object Personalization_and_Creativity {
-    MechanicCategory
-  }
-  Personalization_and_Creativity --> MechanicCategory : "instance of"
+  class Personalization_and_Creativity extends MotivationalMechanic
+  
   object Custom_Player_Made_Content {
     User-generated content in-system.
   }
-  Custom_Player_Made_Content --> GameMechanic : "instance of"
-  Custom_Player_Made_Content --> Personalization_and_Creativity : "categorized into"
-
-  '//---------------------------------Sharing Achievements with Others---------------------------------------------'
-  object Sharing_Achievements {
-    MechanicCategory
-  }
-  Sharing_Achievements --> MechanicCategory : "instance of"
+  Custom_Player_Made_Content --> Personalization_and_Creativity : "instance of"
   
+  '//---------------------------------Sharing Achievements with Others---------------------------------------------'
+  class Sharing_Achievements extends MotivationalMechanic
   object Social_Share_Buttons {
     Sharing accomplishments externally.
   }
-  Social_Share_Buttons --> GameMechanic : "instance of"
-  Social_Share_Buttons --> Sharing_Achievements : "categorized into"
-
+  Social_Share_Buttons --> Sharing_Achievements : "instance of"
+  
   '//---------------------------------Social Networking---------------------------------------------'
-  object Social_Networking {
-    MechanicCategory
-  }
-  Social_Networking --> MechanicCategory : "instance of"
+  class Social_Networking extends MotivationalMechanic
   object Community_Insights {
     Display others’ behaviors for comparison.
   }
-  
-  Community_Insights --> GameMechanic : "instance of"
-  Community_Insights --> Social_Networking : "categorized into"
+
+  Community_Insights --> Social_Networking : "instance of"
 
   '//---------------------------------Surprises and Special Events---------------------------------------------'
-  object Surprises_and_Events {
-    MechanicCategory
-  }
-  Surprises_and_Events --> MechanicCategory : "instance of"
+  class Surprises_and_Events extends MotivationalMechanic
   object Mystery_Boxes {
     Loot boxes with random content.
   }
+  Mystery_Boxes --> Surprises_and_Events : "instance of"
   
-  Mystery_Boxes --> GameMechanic : "instance of"
-  Mystery_Boxes --> Surprises_and_Events : "categorized into"
-
   '//---------------------------------Motivational Messages---------------------------------------------'
-  object Motivational_Messages {
-    MechanicCategory
-  }
-  Motivational_Messages --> MechanicCategory : "instance of"
+  class Motivational_Messages extends MotivationalMechanic
   object Encouraging_Messages {
     Positive reinforcement to sustain motivation.
   }
-  Encouraging_Messages --> GameMechanic : "instance of"
-  Encouraging_Messages --> Motivational_Messages : "categorized into"
-
+  Encouraging_Messages --> Motivational_Messages : "instance of"
   '//---------------------------------Time-Based Challenges---------------------------------------------'
-  object Time_Based_Challenges {
-    MechanicCategory
-  }
-  Time_Based_Challenges --> MechanicCategory : "instance of"
+  class Time_Based_Challenges extends MotivationalMechanic
   object Appointment_Dynamics {
     Scheduled events like Happy Hour.
   }
-  Appointment_Dynamics --> GameMechanic : "instance of"
-  Appointment_Dynamics --> Time_Based_Challenges : "categorized into"
-
+  Appointment_Dynamics --> Time_Based_Challenges : "instance of"
   '//----------------------------------Rewards and Unlocks---------------------------------------------'
-  object Rewards_and_Unlocks {
-    MechanicCategory
-  }
-  Rewards_and_Unlocks --> MechanicCategory : "instance of"
+  class Rewards_and_Unlocks extends MotivationalMechanic
   object In_Game_Currency {
     Accumulation of virtual money/resources.
   }
-  In_Game_Currency --> GameMechanic : "instance of"
-  In_Game_Currency --> Rewards_and_Unlocks : "categorized into"
+  In_Game_Currency --> Rewards_and_Unlocks : "instance of"
 
   package Usertrait_Mechanic_Mapping {
 
@@ -746,7 +709,7 @@ package MotivationalMechanics #fff6e8ff {
     Narrative_GT10_to_Philantropist --> Narrative_GT10 : "corresponds by"
   }
 }
-MotivationalMechanics.GameMechanic --> KeySituations.MechanicKeySituation: "triggers"
-MotivationalMechanics.GameMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
+MotivationalMechanics.MotivationalMechanic --> KeySituations.MechanicKeySituation: "triggers"
+MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
 
 @enduml7
