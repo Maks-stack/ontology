@@ -4,10 +4,13 @@ skinparam linetype polyline
 
 title Motiva Framework Ontology
 
+hide empty methods
+hide empty attributes
+hide empty members
+
+
 package Metrics_and_Measurements #ffe8e8ff {
   class Metric {
-    +id: int
-    +userId: int
     +timestamp: DateTime
     +value: float
   }
@@ -318,9 +321,9 @@ package Interventions #e8e8ffff {
 }
 
 MotivationalMechanics.MotivationalMechanic --|>  Interventions.MechanicIntervention 
-MotivationalMechanics.MotivationalMechanic --> Interventions.MechanicIntervention : "triggers"
 
 Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
+Interventions.Intervention --> MotivationalMechanics.MotivationalMechanic : "toggles on/off"
 
 package UserActions #f1f1f1ff{
 
@@ -451,33 +454,13 @@ package UserModel #fde8ffff {
   User --> UserAction : "performs"
 
   class MotivationalState { 
-    - state: MotivationalStates
-    + isHigh(): boolean
-    + isMedium(): boolean
-    + isLow(): boolean
+    +timestamp: DateTime
   }
 
   MotivationalState --> Metric : "calculated from"
   MotivationalState --> Program : "calculated from"
 
-  object Low
-  Low : MotivationalState
-  Low : userId = 1
-  Low --> MotivationalState : "instance of"
-
-  object Medium
-  Medium : MotivationalState
-  Medium : userId = 1
-  Medium --> MotivationalState : "instance of"
-
-  object High
-  High : MotivationalState
-  High : userId = 1
-  High --> MotivationalState : "instance of"
-
-
-  class CognitiveLoadState {
-  }
+  class CognitiveLoadState
 
   CognitiveLoadState --> Metric : "calculated from"
 
@@ -502,17 +485,11 @@ package UserModel #fde8ffff {
   }
 
   User --> "0..*" UserTraitWeight : "has"
-
-  class UserTraitWeight #f59bff{
-    +userId: int
-    +traitId: int
-    +userTrait: UserTrait
-    +weight: float  ' (0.0 – 1.0) '
-  }
 }
 UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
 UserModel.MotivationalState --> Metrics_and_Measurements.Adherence : "derivedFrom"
 UserModel.MotivationalState --> Program_and_Tasks.Program : "derivedFrom"
+UserModel.User --> "0..*" Metric   : "has"
 
 package UserTraits #fcffe8ff {
 
@@ -522,10 +499,12 @@ package UserTraits #fcffe8ff {
     +name: string
   }
   together {
+    
     class MotivationalTrait extends UserTrait
     note bottom of MotivationalTrait
     MotivationalTrait is a representation of a user's motivational characteristics.
     end note
+    hide MotivationalTrait members
 
     class PlayerType extends UserTrait
     note bottom of PlayerType
@@ -564,30 +543,35 @@ package UserTraits #fcffe8ff {
 
 
     class DigitalLiteracy extends UserTrait
+    hide DigitalLiteracy members
     note bottom of DigitalLiteracy
     Describes a user's familiarity and comfort with digital technologies,
     including software tools, navigation, and basic troubleshooting.
     end note
 
     class CognitiveAbility extends UserTrait
+    hide CognitiveAbility members
     note bottom of CognitiveAbility
     Represents a user's capacity for logical reasoning, memory, and 
     problem-solving. Important for adapting the complexity of tasks.
     end note
 
     class AttentionSpan extends UserTrait
+    hide AttentionSpan members
     note bottom of AttentionSpan
     Describes the user's ability to maintain focus over time. 
     Useful for pacing content and avoiding cognitive overload.
     end note
 
     class SelfDiscipline extends UserTrait
+    hide SelfDiscipline members
     note bottom of SelfDiscipline
     Indicates the user's ability to stay consistent, resist distractions, 
     and complete tasks independently.
     end note
 
     object FrustrationTolerance
+    hide FrustrationTolerance members
     FrustrationTolerance : UserTrait
     FrustrationTolerance : userId = 1
     FrustrationTolerance --> UserTrait : "instance of"
@@ -605,11 +589,14 @@ HesitationTime --> ScreenEntered : "computed from"
 package MotivationalMechanics #fff6e8ff {
 
   left to right direction
-  class MechanicCategory
+
   class MotivationalMechanic 
+  hide MotivationalMechanic members
+
   
   '//----------------------------------Progress Indicators---------------------------------------------'
   class Progress_Indicators extends MotivationalMechanic
+  hide Progress_Indicators members
 
   object Level_and_Experience_Point_System {
     As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
@@ -619,6 +606,7 @@ package MotivationalMechanics #fff6e8ff {
   
   '//----------------------------------Competition with others---------------------------------------------'
   class Competition_with_others extends MotivationalMechanic
+  hide Competition_with_others members
 
   object Leaderboards {
     As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
@@ -627,6 +615,7 @@ package MotivationalMechanics #fff6e8ff {
 
   '//---------------------------------Personal Goals---------------------------------------------'
   class Personal_Goals extends MotivationalMechanic
+  hide Personal_Goals members
 
   object Self_Assigned_Targets {
     Users define their own objectives.
@@ -635,6 +624,7 @@ package MotivationalMechanics #fff6e8ff {
 
   '//---------------------------------Personalization and Creativity---------------------------------------------'
   class Personalization_and_Creativity extends MotivationalMechanic
+  hide Personalization_and_Creativity members
   
   object Custom_Player_Made_Content {
     User-generated content in-system.
@@ -643,6 +633,7 @@ package MotivationalMechanics #fff6e8ff {
   
   '//---------------------------------Sharing Achievements with Others---------------------------------------------'
   class Sharing_Achievements extends MotivationalMechanic
+  hide Sharing_Achievements members
   object Social_Share_Buttons {
     Sharing accomplishments externally.
   }
@@ -650,6 +641,7 @@ package MotivationalMechanics #fff6e8ff {
   
   '//---------------------------------Social Networking---------------------------------------------'
   class Social_Networking extends MotivationalMechanic
+  hide Social_Networking members
   object Community_Insights {
     Display others’ behaviors for comparison.
   }
@@ -658,6 +650,7 @@ package MotivationalMechanics #fff6e8ff {
 
   '//---------------------------------Surprises and Special Events---------------------------------------------'
   class Surprises_and_Events extends MotivationalMechanic
+  hide Surprises_and_Events members
   object Mystery_Boxes {
     Loot boxes with random content.
   }
@@ -665,18 +658,21 @@ package MotivationalMechanics #fff6e8ff {
   
   '//---------------------------------Motivational Messages---------------------------------------------'
   class Motivational_Messages extends MotivationalMechanic
+  hide Motivational_Messages members
   object Encouraging_Messages {
     Positive reinforcement to sustain motivation.
   }
   Encouraging_Messages --> Motivational_Messages : "instance of"
   '//---------------------------------Time-Based Challenges---------------------------------------------'
   class Time_Based_Challenges extends MotivationalMechanic
+  hide Time_Based_Challenges members
   object Appointment_Dynamics {
     Scheduled events like Happy Hour.
   }
   Appointment_Dynamics --> Time_Based_Challenges : "instance of"
   '//----------------------------------Rewards and Unlocks---------------------------------------------'
   class Rewards_and_Unlocks extends MotivationalMechanic
+  hide Rewards_and_Unlocks members
   object In_Game_Currency {
     Accumulation of virtual money/resources.
   }

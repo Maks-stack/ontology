@@ -35,12 +35,18 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>Hover to highlight connections (elements + packages)</h1>
+    <h1>Highlight and select elements</h1>
     <div class="note">
-      - Hover an element to highlight its connected links.<br/>
-      - Hover a package to highlight <em>every element visually inside it</em> and <em>all</em> connections of those elements.<br/>
-      - Scroll to zoom (smooth), drag to pan, double-click to zoom in, use the buttons to reset.
+      - Click an element to select and highlight it.<br/>
+      - Click on the white or empty area to deselect.<br/>
+      - Scroll to zoom, drag to pan, double-click to zoom in, use the buttons to reset.
+      - use searchbar to quickly find elements
     </div>
+    <input id="searchBox" list="graphTerms" placeholder="Search element…"
+       style="margin-left:auto; padding:6px 8px; border:1px solid #ccc; border-radius:8px; min-width:240px;">
+<datalist id="graphTerms"></datalist>
+
+
     <object id="svgObj" type="image/svg+xml" data="./UML_ontology.svg"
             width="100%" style="border:1px solid #ccc; max-height: 80vh;"></object>
   </div>
@@ -53,6 +59,7 @@
   </div>
 
   <script>
+  let downTime = 0;
   // ====== Helpers ======
   function normalizeId(str) {
     return (str || '')
@@ -201,6 +208,8 @@
       zoomAt(svgRoot, state, pt, 1/1.5);
     });
 
+    
+
     // ====== Drag to pan — rAF-coalesced, measured in SCREEN space ======
     svgRoot.classList.add('is-grab');
 
@@ -310,6 +319,40 @@
       }
       .is-dimmed { opacity: .2; transition: opacity .15s; }
       g[id^="elem_"], g[id^="cluster_"] { cursor: pointer; }
+      /* Larger, non-scaling hit area for links */
+      g[id^="link_"] .hit {
+        stroke: black;              /* needed for hit-testing */
+        stroke-opacity: 0.001;      /* effectively invisible */
+        stroke-width: 100;
+        fill: none;
+        vector-effect: non-scaling-stroke;
+        pointer-events: stroke;     /* only stroke is clickable */
+      }
+      /* clickable but invisible hit corridor (constant px width) */
+      g[id^="link_"] .hit {
+        stroke: #000;                 /* needed for hit-testing */
+        stroke-opacity: 0.001;        /* effectively invisible */
+        stroke-width: 140;
+        fill: none;
+        vector-effect: non-scaling-stroke;
+        pointer-events: stroke;
+      }
+
+      /* visible link geometry scales normally and doesn't grab events */
+      g[id^="link_"] path:not(.hit),
+      g[id^="link_"] line:not(.hit),
+      g[id^="link_"] polyline:not(.hit) {
+        pointer-events: none;         /* clicks go to .hit */
+        /* IMPORTANT: no vector-effect here */
+      }
+
+      /* highlight visuals, exclude .hit */
+      .is-link-highlight path:not(.hit),
+      .is-link-highlight line:not(.hit),
+      .is-link-highlight polyline:not(.hit) {
+        stroke-width: 3 !important;
+      }
+        
     `;
     svgRoot.appendChild(style);
 
@@ -320,6 +363,95 @@
     const allNodeGroups = [...elemGroups, ...clusterGroups];
 
     linkGroups.forEach(g => g.dataset.tokens = JSON.stringify(tokensFromId(g.id)));
+    // Add invisible hit-stroke clones to each link
+    linkGroups.forEach(g => {
+      g.querySelectorAll('path,line,polyline').forEach(el => {
+        const hit = el.cloneNode(false);
+        hit.classList.add('hit');
+        // strip markers so the hit area doesn’t extend arrowheads
+        hit.removeAttribute('marker-start');
+        hit.removeAttribute('marker-mid');
+        hit.removeAttribute('marker-end');
+        g.appendChild(hit); // append so it sits above but remains invisible
+      });
+    });
+
+    // --- index elements for search (by id and visible text) ---
+const nameToId = new Map();
+function addName(id, text) {
+  const key = normalizeId(text);
+  if (key) nameToId.set(key, id);
+}
+[...elemGroups, ...clusterGroups].forEach(g => {
+  addName(g.id, g.id);                                // raw id
+  const t = g.querySelector('text');                  // first <text> label if any
+  if (t) addName(g.id, t.textContent || '');
+});
+
+// center and highlight a target
+function focusAndHighlight(targetId) {
+  // highlight
+  highlightFor(targetId);
+
+  // pan/zoom to it
+  try {
+    const node = [...elemGroups, ...clusterGroups].find(x => x.id === targetId);
+    if (!node) return;
+    const b = node.getBBox();
+    const pad = Math.max(b.width, b.height) * 0.5 || 20;
+    const nx = b.x - pad, ny = b.y - pad;
+    const nw = b.width + pad*2, nh = b.height + pad*2;
+
+    // set viewBox with aspect fit
+    const vb = { ...state.vb };
+    const aspect = state.vb.width / state.vb.height;
+    let tw = nw, th = nh;
+    if (nw / nh > aspect) th = nw / aspect; else tw = nh * aspect;
+
+    state.vb = { x: nx - (tw - nw)/2, y: ny - (th - nh)/2, width: tw, height: th };
+    setViewBox(svgRoot, state.vb);
+  } catch {}
+}
+
+// wire search input
+const searchBox = document.getElementById('searchBox');
+function runSearch(q) {
+  const key = normalizeId(q);
+  if (!key) return;
+  // exact match first, else prefix, else contains
+  let target = nameToId.get(key);
+  if (!target) {
+    const pref = [...nameToId.keys()].find(k => k.startsWith(key));
+    if (pref) target = nameToId.get(pref);
+  }
+  if (!target) {
+    const cont = [...nameToId.keys()].find(k => k.includes(key));
+    if (cont) target = nameToId.get(cont);
+  }
+  if (target) focusAndHighlight(target);
+}
+
+searchBox.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') runSearch(searchBox.value);
+});
+searchBox.addEventListener('input', (e) => {
+  // optional instant search on >=3 chars
+  if (e.target.value.length >= 3) runSearch(e.target.value);
+});
+
+// build visible suggestions from labels or ids
+const suggestions = new Set();
+[...elemGroups, ...clusterGroups].forEach(g => {
+  const label = (g.querySelector('text')?.textContent || g.id.replace(/^elem_|^cluster_/,'')).trim();
+  if (label) suggestions.add(label);
+});
+// also add raw ids as a fallback
+[...elemGroups, ...clusterGroups].forEach(g => suggestions.add(g.id));
+
+// populate datalist in the outer document
+const dl = document.getElementById('graphTerms');
+dl.innerHTML = [...suggestions].sort((a,b)=>a.localeCompare(b)).map(s => `<option value="${s}">`).join('');
+
 
     const elemBBox = new Map();
     const clusterBBox = new Map();
@@ -351,6 +483,7 @@
       linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
     }
     function highlightFor(targetId) {
+      
       const isCluster = targetId.startsWith('cluster_');
       let nodeTokens;
       let clusterElems = [];
@@ -407,13 +540,113 @@
 
       connectedLinks.forEach(g => g.classList.remove('is-dimmed'));
     }
+    function highlightLink(linkId) {
+      // tokens = endpoints of the link
+      let toks = [];
+      try { toks = JSON.parse(svgDoc.getElementById(linkId)?.dataset.tokens || '[]'); } catch {}
+      const tokenSet = new Set(toks);
 
+      // dim everything
+      const allNodeGroups = [...elemGroups, ...clusterGroups];
+      const everything = [...allNodeGroups, ...linkGroups];
+      everything.forEach(g => g.classList.add('is-dimmed'));
+      allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
+      linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
+
+      // highlight the clicked link
+      const link = svgDoc.getElementById(linkId);
+      if (link) {
+        link.classList.add('is-link-highlight');
+        link.classList.remove('is-dimmed');
+      }
+
+      // highlight endpoint nodes and any clusters containing them
+      elemGroups.forEach(g => {
+        if (tokenSet.has(normalizeId(g.id))) {
+          g.classList.add('is-node-highlight');
+          g.classList.remove('is-dimmed');
+        }
+      });
+      clusterGroups.forEach(cluster => {
+        const info = clusterInfo.get(cluster.id) || { tokens: new Set() };
+        for (const t of tokenSet) {
+          if (info.tokens.has(t)) { cluster.classList.remove('is-dimmed'); break; }
+        }
+      });
+    }
+
+    // allNodeGroups.forEach(g => {
+    //   g.addEventListener('mouseenter', () => {
+    //     highlightFor(g.id)
+    //   });
+    //   g.addEventListener('mouseleave', clearHighlight);
+    // });
     allNodeGroups.forEach(g => {
-      g.addEventListener('mouseenter', () => highlightFor(g.id));
-      g.addEventListener('mouseleave', clearHighlight);
+        g.addEventListener('click', () => {
+        if (Date.now() - downTime > 120) {
+          console.log("no click");
+          return
+        }
+        highlightFor(g.id)
+        console.log(g.id)
+      });
+      //g.addEventListener('mouseleave', clearHighlight);
     });
+    linkGroups.forEach(g => {
+      g.addEventListener('click', (e) => {
+        if (Date.now() - downTime > 120) {
+          console.log("no click");
+          return
+        }
+        e.stopPropagation();
+        highlightLink(g.id);
+      });
+    });
+    
 
     console.info('SVG pan/zoom initialized. viewBox=', state.vb);
+
+    
+
+    const onClick = (e) => {
+      const el = e.target;
+      const g  = el.closest?.('g[id^="elem_"], g[id^="cluster_"]');
+      console.log('clicked element:', el, 'id:', el.id, 'group:', g?.id);
+      if (el === svgDoc || el === svgRoot) {
+        clearHighlight();
+      }
+    };
+
+    // bubble + capture to be safe
+    svgDoc.addEventListener('click', (e)=> { 
+      console.log(downTime)
+      // ignore if button was held longer than 50 ms
+      console.log(Date.now() - downTime)
+      if (Date.now() - downTime > 120) {
+        console.log("no click");
+        return
+      }
+      else{
+        onClick(e)
+      }
+    });
+    svgRoot.addEventListener('click', (e)=> { 
+      console.log(downTime)
+      // ignore if button was held longer than 50 ms
+      console.log(Date.now() - downTime)
+      if (Date.now() - downTime > 120) {
+        console.log("no click")
+        return
+      }
+      else{
+        onClick(e)
+      }
+      
+      
+    }, true);
+    svgRoot.addEventListener('pointerdown', () => {
+      downTime = Date.now();
+    });
   });
 
   // Basic load error feedback
