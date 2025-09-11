@@ -8,32 +8,39 @@
     .wrap { display: grid; gap: 12px; }
     .note { font-size: 14px; opacity: .8; }
     .toolbar {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      display: grid;
-      gap: 8px;
-      z-index: 9999;
+      position: fixed; right: 18px; bottom: 18px;
+      display: grid; gap: 8px; z-index: 9999;
     }
     .toolbtn {
-      border: 1px solid #ccc;
-      background: #fff;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font: inherit;
-      cursor: pointer;
+      border: 1px solid #ccc; background: #fff;
+      padding: 8px 10px; border-radius: 8px; font: inherit; cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,.08);
     }
     .toolbtn:active { transform: translateY(1px); }
     .is-grab { cursor: grab; }
     .is-grabbing { cursor: grabbing; }
-    /* Let us handle gestures on touch */
     object, object:focus { touch-action: none; }
-    /* Kill text selection while dragging */
     html, body { user-select: none; -webkit-user-select: none; }
+
+    .pkgbar {
+      position: fixed; left: 18px; top: 18px;
+      display: grid; gap: 6px; z-index: 9999;
+      max-height: calc(100vh - 36px); overflow: auto; padding-right: 4px; margin-top: 200px;
+    }
+    .pkgbtn {
+      border: 1px solid #ccc; background: #fff; padding: 6px 10px;
+      border-radius: 8px; font: 13px system-ui, sans-serif; cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08); text-align: left; white-space: nowrap;
+    }
+    .pkgbtn:active { transform: translateY(1px); }
+    .pkgbtn.is-active { border-color: #4b9cff; box-shadow: 0 0 0 2px rgba(75,156,255,.2); }
   </style>
 </head>
 <body>
+  <div class="pkgbar" id="pkgPanel">
+    <button class="pkgbtn" id="clearPkgBtn" title="Clear highlight">Clear</button>
+  </div>
+
   <div class="wrap">
     <h1>Highlight and select elements</h1>
     <div class="note">
@@ -41,17 +48,29 @@
       - Click on the white or empty area to deselect.<br/>
       - Scroll to zoom, drag to pan, double-click to zoom in, use the buttons to reset.
       - use searchbar to quickly find elements
+      <ul>
+        <b>Latest Changes:</b>
+        <li>Renamed <code>GameMechanic</code> → <code>MotivationalMechanic</code>.</li>
+        <li><code>Interventions.Intervention --&gt; UserModel.MotivationalState : "selectedByCurrentState"</code></li>
+        <li><code>Interventions.Intervention "0..*" --&gt; "0..*" Metrics.Metric : "considers"</code></li>
+        <li><code>Interventions.Intervention --&gt; "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"</code></li>
+        <li>Removed mechanic categories as classes; all motivational mechanics are now instances of the former category class.</li>
+        <li>User relations added: <code>User --&gt; MotivationalState</code> / <code>User --&gt; CognitiveLoadState</code> (<em>has</em>).</li>
+        <li><code>UserModel.User --&gt; "0..*" Metrics.Metric : "has"</code></li>
+        <li><code>class Metric { +timestamp: DateTime }</code></li>
+        <li>Simplified <code>UserTraitWeight</code>: only <code>trait</code> and <code>weight</code> kept.</li>
+        <li><code>KeySituations.KeySituation "0..*" --&gt; "0..*" Interventions.Intervention : triggers</code></li>
+      </ul>
     </div>
+
     <input id="searchBox" list="graphTerms" placeholder="Search element…"
        style="margin-left:auto; padding:6px 8px; border:1px solid #ccc; border-radius:8px; min-width:240px;">
-<datalist id="graphTerms"></datalist>
-
+    <datalist id="graphTerms"></datalist>
 
     <object id="svgObj" type="image/svg+xml" data="./UML_ontology.svg"
             width="100%" style="border:1px solid #ccc; max-height: 80vh;"></object>
   </div>
 
-  <!-- Zoom controls -->
   <div class="toolbar" aria-label="Zoom controls">
     <button class="toolbtn" id="zoomInBtn"  title="Zoom in ( + )">+</button>
     <button class="toolbtn" id="zoomOutBtn" title="Zoom out ( – )">−</button>
@@ -59,99 +78,67 @@
   </div>
 
   <script>
-  let downTime = 0;
   // ====== Helpers ======
   function normalizeId(str) {
-    return (str || '')
-      .replace(/^elem_/, '')
-      .replace(/^link_/, '')
-      .replace(/^cluster_/, '')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g,'');
+    return (str || '').replace(/^elem_/,'').replace(/^link_/,'').replace(/^cluster_/,'')
+      .toLowerCase().replace(/[^a-z0-9]+/g,'');
   }
-  function tokensFromId(id) {
-    return (id || '').split(/_to_|_/).map(normalizeId).filter(Boolean);
-  }
+  function tokensFromId(id) { return (id || '').split(/_to_|_/).map(normalizeId).filter(Boolean); }
   function bboxContains(outer, inner, padding = 0) {
-    return (
-      inner.x >= outer.x - padding &&
-      inner.y >= outer.y - padding &&
-      inner.x + inner.width  <= outer.x + outer.width  + padding &&
-      inner.y + inner.height <= outer.y + outer.height + padding
-    );
+    return (inner.x >= outer.x - padding &&
+            inner.y >= outer.y - padding &&
+            inner.x + inner.width  <= outer.x + outer.width  + padding &&
+            inner.y + inner.height <= outer.y + outer.height + padding);
   }
 
   // ====== Pan/zoom utilities ======
   function unionContentBBox(svg) {
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, any = false;
-    svg.querySelectorAll('*').forEach(node => {
-      if (node instanceof SVGGraphicsElement && typeof node.getBBox === 'function') {
-        try {
-          const b = node.getBBox();
-          if (isFinite(b.x) && isFinite(b.y) && isFinite(b.width) && isFinite(b.height)) {
-            minX = Math.min(minX, b.x);
-            minY = Math.min(minY, b.y);
-            maxX = Math.max(maxX, b.x + b.width);
-            maxY = Math.max(maxY, b.y + b.height);
-            any = true;
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity, any=false;
+    svg.querySelectorAll('*').forEach(node=>{
+      if (node instanceof SVGGraphicsElement && typeof node.getBBox==='function') {
+        try{
+          const b=node.getBBox();
+          if([b.x,b.y,b.width,b.height].every(Number.isFinite)){
+            minX=Math.min(minX,b.x); minY=Math.min(minY,b.y);
+            maxX=Math.max(maxX,b.x+b.width); maxY=Math.max(maxY,b.y+b.height);
+            any=true;
           }
-        } catch {}
+        }catch{}
       }
     });
-    if (!any) return null;
-    return { x: minX, y: minY, width: Math.max(1, maxX - minX), height: Math.max(1, maxY - minY) };
+    if(!any) return null;
+    return { x:minX, y:minY, width:Math.max(1,maxX-minX), height:Math.max(1,maxY-minY) };
   }
-
-  function ensureViewBox(svg) {
+  function ensureViewBox(svg){
     const vb = svg.viewBox && svg.viewBox.baseVal;
-    if (vb && vb.width > 0 && vb.height > 0) {
-      return { x: vb.x, y: vb.y, width: vb.width, height: vb.height };
-    }
-    const u = unionContentBBox(svg);
-    if (u) {
-      svg.setAttribute('viewBox', `${u.x} ${u.y} ${u.width} ${u.height}`);
-      return u;
-    }
-    const w = parseFloat(svg.getAttribute('width'))  || 100;
-    const h = parseFloat(svg.getAttribute('height')) || 100;
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    return { x: 0, y: 0, width: w, height: h };
+    if (vb && vb.width>0 && vb.height>0) return { x:vb.x, y:vb.y, width:vb.width, height:vb.height };
+    const u=unionContentBBox(svg);
+    if(u){ svg.setAttribute('viewBox', `${u.x} ${u.y} ${u.width} ${u.height}`); return u; }
+    const w=parseFloat(svg.getAttribute('width'))||100, h=parseFloat(svg.getAttribute('height'))||100;
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`); return { x:0, y:0, width:w, height:h };
   }
-  function setViewBox(svg, vb) {
-    svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.width} ${vb.height}`);
+  function setViewBox(svg, vb){ svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.width} ${vb.height}`); }
+  function clientPointToSvg(svg, clientX, clientY){
+    const pt=svg.createSVGPoint(); pt.x=clientX; pt.y=clientY;
+    const ctm=svg.getScreenCTM(); if(!ctm) return {x:0,y:0};
+    const p=pt.matrixTransform(ctm.inverse()); return { x:p.x, y:p.y };
   }
-  function clientPointToSvg(svg, clientX, clientY) {
-    const pt = svg.createSVGPoint();
-    pt.x = clientX; pt.y = clientY;
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return { x: 0, y: 0 };
-    const inv = ctm.inverse();
-    const p = pt.matrixTransform(inv);
-    return { x: p.x, y: p.y };
-  }
-  function zoomAt(svg, state, center, factor) {
+  function zoomAt(svg, state, center, factor){
     const { vb0, vb } = state;
     const newW = vb.width * factor;
-    const minW = vb0.width / 10; // 10× in
-    const maxW = vb0.width * 5;  // 5× out
+    const minW = vb0.width / 10, maxW = vb0.width * 5;
     const clampedW = Math.min(Math.max(newW, minW), maxW);
     const scaleAdj = clampedW / vb.width;
     const newH = vb.height * scaleAdj;
-
     const sx = (center.x - vb.x) / vb.width;
     const sy = (center.y - vb.y) / vb.height;
-
     vb.x = center.x - sx * clampedW;
     vb.y = center.y - sy * newH;
     vb.width = clampedW;
     vb.height = newH;
     setViewBox(svg, vb);
   }
-  function panBy(svg, state, dx, dy) {
-    state.vb.x += dx;
-    state.vb.y += dy;
-    setViewBox(svg, state.vb);
-  }
+  function panBy(svg, state, dx, dy){ state.vb.x += dx; state.vb.y += dy; setViewBox(svg, state.vb); }
 
   const svgObj = document.getElementById('svgObj');
 
@@ -168,191 +155,117 @@
 
     // Init pan/zoom state
     const vbInit = ensureViewBox(svgRoot);
-    const state = {
-      vb0: { ...vbInit },
-      vb:  { ...vbInit }
-    };
+    const state = { vb0: { ...vbInit }, vb:  { ...vbInit } };
 
-    // ====== Jitter-free wheel zoom (rAF + normalization) ======
-    let wheelFrame = null;
-    let wheelAccum = 0;
-    let lastWheelCenter = null;
-
-    function normalizeDeltaY(e) {
-      if (e.deltaMode === 1) return e.deltaY * 16;
-      if (e.deltaMode === 2) return e.deltaY * 800;
-      return e.deltaY;
-    }
+    // ====== Wheel zoom ======
+    let wheelFrame = null, wheelAccum = 0, lastWheelCenter = null;
+    function normalizeDeltaY(e){ if(e.deltaMode===1)return e.deltaY*16; if(e.deltaMode===2)return e.deltaY*800; return e.deltaY; }
     const ZOOM_SENS = 0.0015;
-
-    function onWheelSmooth(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    function onWheelSmooth(e){
+      e.preventDefault(); e.stopPropagation();
       lastWheelCenter = clientPointToSvg(svgRoot, e.clientX, e.clientY);
       wheelAccum += normalizeDeltaY(e);
-      if (!wheelFrame) {
-        wheelFrame = requestAnimationFrame(() => {
-          const factor = Math.exp(ZOOM_SENS * wheelAccum);
-          zoomAt(svgRoot, state, lastWheelCenter, factor);
-          wheelAccum = 0;
-          wheelFrame = null;
+      if(!wheelFrame){
+        wheelFrame = requestAnimationFrame(()=>{
+          zoomAt(svgRoot, state, lastWheelCenter, Math.exp(ZOOM_SENS*wheelAccum));
+          wheelAccum=0; wheelFrame=null;
         });
       }
     }
     svgRoot.addEventListener('wheel', onWheelSmooth, { passive: false });
 
-    // ====== Double-click to zoom in ======
-    svgRoot.addEventListener('dblclick', (e) => {
-      e.preventDefault();
-      const pt = clientPointToSvg(svgRoot, e.clientX, e.clientY);
-      zoomAt(svgRoot, state, pt, 1/1.5);
-    });
-
-    
-
-    // ====== Drag to pan — rAF-coalesced, measured in SCREEN space ======
+    // ====== Drag to pan with click/drag separation ======
     svgRoot.classList.add('is-grab');
+    let isDragging=false, pointerId=null, lastClientX=0, lastClientY=0, panDX=0, panDY=0, panFrame=null;
+    let movedPx=0; const DRAG_THRESHOLD=5;
 
-    let isDragging = false;
-    let pointerId = null;
-    let lastClientX = 0, lastClientY = 0;
-    let panDX = 0, panDY = 0;     // accumulated screen-space delta
-    let panFrame = null;
-
-    function flushPan() {
-      panFrame = null;
-      if (!isDragging || (panDX === 0 && panDY === 0)) return;
-
-      // Convert screen-space pixels to SVG units using current viewBox scale
-      const rect = svgRoot.getBoundingClientRect();
-      const sx = state.vb.width  / rect.width;   // svg units per CSS px
-      const sy = state.vb.height / rect.height;
-
-      const dxSVG = panDX * sx;
-      const dySVG = panDY * sy;
-
-      panDX = 0; panDY = 0;
-      panBy(svgRoot, state, -dxSVG, -dySVG); // negative because dragging moves content opposite pointer
+    function flushPan(){
+      panFrame=null;
+      if(!isDragging || (panDX===0 && panDY===0)) return;
+      const rect=svgRoot.getBoundingClientRect();
+      const sx=state.vb.width/rect.width, sy=state.vb.height/rect.height;
+      const dxSVG=panDX*sx, dySVG=panDY*sy;
+      panDX=0; panDY=0; panBy(svgRoot, state, -dxSVG, -dySVG);
     }
-
-    function onPointerDown(e) {
-      if (e.button !== undefined && e.button !== 0) return; // left mouse only
+    function onPointerDown(e){
+      if(e.button!==undefined && e.button!==0) return;
       e.preventDefault();
-      pointerId = e.pointerId;
-      isDragging = true;
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
-      svgRoot.classList.remove('is-grab');
-      svgRoot.classList.add('is-grabbing');
-      try { (e.target.setPointerCapture || svgRoot.setPointerCapture)?.call(e.target, e.pointerId); } catch {}
+      pointerId=e.pointerId; isDragging=true; movedPx=0;
+      lastClientX=e.clientX; lastClientY=e.clientY;
+      svgRoot.classList.remove('is-grab'); svgRoot.classList.add('is-grabbing');
+      try{(e.target.setPointerCapture||svgRoot.setPointerCapture)?.call(e.target,e.pointerId);}catch{}
     }
-
-    function onPointerMove(e) {
-      if (!isDragging || (pointerId !== null && e.pointerId !== pointerId)) return;
-      // Accumulate *screen* deltas to avoid CTM feedback jitter
-      const dx = e.clientX - lastClientX;
-      const dy = e.clientY - lastClientY;
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
-      panDX += dx;
-      panDY += dy;
-
-      if (!panFrame) {
-        panFrame = requestAnimationFrame(flushPan);
-      }
+    function onPointerMove(e){
+      if(!isDragging || (pointerId!==null && e.pointerId!==pointerId)) return;
+      const dx=e.clientX-lastClientX, dy=e.clientY-lastClientY;
+      lastClientX=e.clientX; lastClientY=e.clientY;
+      movedPx += Math.hypot(dx,dy);
+      panDX+=dx; panDY+=dy;
+      if(!panFrame){ panFrame=requestAnimationFrame(flushPan); }
     }
-
-    function onPointerUpOrCancel(e) {
-      if (!isDragging || (pointerId !== null && e.pointerId !== pointerId)) return;
-      isDragging = false;
-      pointerId = null;
-      flushPan();
-      svgRoot.classList.remove('is-grabbing');
-      svgRoot.classList.add('is-grab');
-      try { (e.target.releasePointerCapture || svgRoot.releasePointerCapture)?.call(e.target, e.pointerId); } catch {}
+    function onPointerUpOrCancel(e){
+      if(!isDragging || (pointerId!==null && e.pointerId!==pointerId)) return;
+      isDragging=false; pointerId=null; flushPan();
+      svgRoot.classList.remove('is-grabbing'); svgRoot.classList.add('is-grab');
+      try{(e.target.releasePointerCapture||svgRoot.releasePointerCapture)?.call(e.target,e.pointerId);}catch{}
     }
-
-    svgRoot.addEventListener('pointerdown', onPointerDown, { passive: false });
-    svgRoot.ownerDocument.addEventListener('pointermove', onPointerMove, { passive: false });
-    svgRoot.ownerDocument.addEventListener('pointerup', onPointerUpOrCancel, { passive: false });
-    svgRoot.ownerDocument.addEventListener('pointercancel', onPointerUpOrCancel, { passive: false });
+    svgRoot.addEventListener('pointerdown', onPointerDown, { passive:false });
+    svgRoot.ownerDocument.addEventListener('pointermove', onPointerMove, { passive:false });
+    svgRoot.ownerDocument.addEventListener('pointerup', onPointerUpOrCancel, { passive:false });
+    svgRoot.ownerDocument.addEventListener('pointercancel', onPointerUpOrCancel, { passive:false });
 
     // ====== Keyboard shortcuts ======
     svgRoot.ownerDocument.addEventListener('keydown', (e) => {
       if (e.key === '+') {
-        const r = svgRoot.getBoundingClientRect();
-        const c = clientPointToSvg(svgRoot, r.left + r.width/2, r.top + r.height/2);
+        const r=svgRoot.getBoundingClientRect(); const c=clientPointToSvg(svgRoot,r.left+r.width/2,r.top+r.height/2);
         zoomAt(svgRoot, state, c, 1/1.1);
       } else if (e.key === '-') {
-        const r = svgRoot.getBoundingClientRect();
-        const c = clientPointToSvg(svgRoot, r.left + r.width/2, r.top + r.height/2);
+        const r=svgRoot.getBoundingClientRect(); const c=clientPointToSvg(svgRoot,r.left+r.width/2,r.top+r.height/2);
         zoomAt(svgRoot, state, c, 1.1);
       } else if (e.key === '0') {
-        state.vb = { ...state.vb0 };
-        setViewBox(svgRoot, state.vb);
+        state.vb = { ...state.vb0 }; setViewBox(svgRoot, state.vb);
       }
     });
-
-    // ====== Buttons ======
-    const zoomInBtn  = document.getElementById('zoomInBtn');
-    const zoomOutBtn = document.getElementById('zoomOutBtn');
-    const resetBtn   = document.getElementById('resetBtn');
-    function zoomAtCenter(factor) {
-      const r = svgRoot.getBoundingClientRect();
-      const c = clientPointToSvg(svgRoot, r.left + r.width/2, r.top + r.height/2);
-      zoomAt(svgRoot, state, c, factor);
-    }
-    zoomInBtn.addEventListener('click',  () => zoomAtCenter(1/1.1));
-    zoomOutBtn.addEventListener('click', () => zoomAtCenter(1.1));
-    resetBtn.addEventListener('click',   () => { state.vb = { ...state.vb0 }; setViewBox(svgRoot, state.vb); });
 
     // ====== Injected styles for highlighting ======
     const style = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
     style.textContent = `
-      svg { touch-action: none; user-select: none; -webkit-user-select: none; }
-      .is-node-highlight rect, .is-node-highlight path, .is-node-highlight polygon {
-        stroke-width: 3 !important;
-        filter: saturate(1.1);
-      }
-      .is-link-highlight path, .is-link-highlight line, .is-link-highlight polygon {
-        stroke-width: 3 !important;
-      }
-      .is-dimmed { opacity: .2; transition: opacity .15s; }
-      g[id^="elem_"], g[id^="cluster_"] { cursor: pointer; }
-      /* Larger, non-scaling hit area for links */
-      g[id^="link_"] .hit {
-        stroke: black;              /* needed for hit-testing */
-        stroke-opacity: 0.001;      /* effectively invisible */
-        stroke-width: 100;
-        fill: none;
-        vector-effect: non-scaling-stroke;
-        pointer-events: stroke;     /* only stroke is clickable */
-      }
-      /* clickable but invisible hit corridor (constant px width) */
-      g[id^="link_"] .hit {
-        stroke: #000;                 /* needed for hit-testing */
-        stroke-opacity: 0.001;        /* effectively invisible */
-        stroke-width: 140;
-        fill: none;
-        vector-effect: non-scaling-stroke;
-        pointer-events: stroke;
+      svg { touch-action:none; user-select:none; -webkit-user-select:none; }
+      .is-dimmed { opacity:.4; transition:opacity .12s; }
+
+      .is-node-highlight rect,
+      .is-node-highlight path,
+      .is-node-highlight polygon {
+        stroke:#000 !important;
+        stroke-width:3 !important;
       }
 
-      /* visible link geometry scales normally and doesn't grab events */
-      g[id^="link_"] path:not(.hit),
-      g[id^="link_"] line:not(.hit),
-      g[id^="link_"] polyline:not(.hit) {
-        pointer-events: none;         /* clicks go to .hit */
-        /* IMPORTANT: no vector-effect here */
-      }
-
-      /* highlight visuals, exclude .hit */
       .is-link-highlight path:not(.hit),
       .is-link-highlight line:not(.hit),
       .is-link-highlight polyline:not(.hit) {
-        stroke-width: 3 !important;
+        stroke:#000 !important;
+        stroke-width:2.5 !important;
       }
-        
+
+      .is-node-highlight text {
+        font-weight:700;
+        paint-order:stroke;
+        stroke:#fff;
+        stroke-width:1.5;
+        stroke-opacity:.9;
+      }
+
+      g[id^="elem_"], g[id^="cluster_"] { cursor: pointer; }
+
+      /* Oversized invisible hit geometry for links */
+      g[id^="link_"] .hit {
+        stroke:#000; stroke-opacity:0.001; stroke-width:300;
+        fill:none; vector-effect:non-scaling-stroke; pointer-events: stroke; cursor: pointer;
+      }
+      g[id^="link_"] path:not(.hit),
+      g[id^="link_"] line:not(.hit),
+      g[id^="link_"] polyline:not(.hit),
+      g[id^="link_"] polygon:not(.hit) { pointer-events: none; }
     `;
     svgRoot.appendChild(style);
 
@@ -362,131 +275,73 @@
     const linkGroups    = Array.from(svgDoc.querySelectorAll('g[id^="link_"]'));
     const allNodeGroups = [...elemGroups, ...clusterGroups];
 
+    // Build hit geometry for all link primitives
     linkGroups.forEach(g => g.dataset.tokens = JSON.stringify(tokensFromId(g.id)));
-    // Add invisible hit-stroke clones to each link
     linkGroups.forEach(g => {
-      g.querySelectorAll('path,line,polyline').forEach(el => {
+      g.querySelectorAll('path,line,polyline,polygon').forEach(el => {
         const hit = el.cloneNode(false);
         hit.classList.add('hit');
-        // strip markers so the hit area doesn’t extend arrowheads
-        hit.removeAttribute('marker-start');
-        hit.removeAttribute('marker-mid');
-        hit.removeAttribute('marker-end');
-        g.appendChild(hit); // append so it sits above but remains invisible
+        hit.removeAttribute('marker-start'); hit.removeAttribute('marker-mid'); hit.removeAttribute('marker-end');
+        g.appendChild(hit); // on top for clicks
       });
     });
 
-    // --- index elements for search (by id and visible text) ---
-const nameToId = new Map();
-function addName(id, text) {
-  const key = normalizeId(text);
-  if (key) nameToId.set(key, id);
-}
-[...elemGroups, ...clusterGroups].forEach(g => {
-  addName(g.id, g.id);                                // raw id
-  const t = g.querySelector('text');                  // first <text> label if any
-  if (t) addName(g.id, t.textContent || '');
-});
-
-// center and highlight a target
-function focusAndHighlight(targetId) {
-  // highlight
-  highlightFor(targetId);
-
-  // pan/zoom to it
-  try {
-    const node = [...elemGroups, ...clusterGroups].find(x => x.id === targetId);
-    if (!node) return;
-    const b = node.getBBox();
-    const pad = Math.max(b.width, b.height) * 0.5 || 20;
-    const nx = b.x - pad, ny = b.y - pad;
-    const nw = b.width + pad*2, nh = b.height + pad*2;
-
-    // set viewBox with aspect fit
-    const vb = { ...state.vb };
-    const aspect = state.vb.width / state.vb.height;
-    let tw = nw, th = nh;
-    if (nw / nh > aspect) th = nw / aspect; else tw = nh * aspect;
-
-    state.vb = { x: nx - (tw - nw)/2, y: ny - (th - nh)/2, width: tw, height: th };
-    setViewBox(svgRoot, state.vb);
-  } catch {}
-}
-
-// wire search input
-const searchBox = document.getElementById('searchBox');
-function runSearch(q) {
-  const key = normalizeId(q);
-  if (!key) return;
-  // exact match first, else prefix, else contains
-  let target = nameToId.get(key);
-  if (!target) {
-    const pref = [...nameToId.keys()].find(k => k.startsWith(key));
-    if (pref) target = nameToId.get(pref);
-  }
-  if (!target) {
-    const cont = [...nameToId.keys()].find(k => k.includes(key));
-    if (cont) target = nameToId.get(cont);
-  }
-  if (target) focusAndHighlight(target);
-}
-
-searchBox.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') runSearch(searchBox.value);
-});
-searchBox.addEventListener('input', (e) => {
-  // optional instant search on >=3 chars
-  if (e.target.value.length >= 3) runSearch(e.target.value);
-});
-
-// build visible suggestions from labels or ids
-const suggestions = new Set();
-[...elemGroups, ...clusterGroups].forEach(g => {
-  const label = (g.querySelector('text')?.textContent || g.id.replace(/^elem_|^cluster_/,'')).trim();
-  if (label) suggestions.add(label);
-});
-// also add raw ids as a fallback
-[...elemGroups, ...clusterGroups].forEach(g => suggestions.add(g.id));
-
-// populate datalist in the outer document
-const dl = document.getElementById('graphTerms');
-dl.innerHTML = [...suggestions].sort((a,b)=>a.localeCompare(b)).map(s => `<option value="${s}">`).join('');
-
-
-    const elemBBox = new Map();
-    const clusterBBox = new Map();
-    elemGroups.forEach(g => { try { elemBBox.set(g, g.getBBox()); } catch {} });
-    clusterGroups.forEach(g => { try { clusterBBox.set(g, g.getBBox()); } catch {} });
-
-    const clusterInfo = new Map();
-    const INSIDE_PADDING = 2;
-    clusterGroups.forEach(cluster => {
-      const cb = clusterBBox.get(cluster);
-      const insideElems = [];
-      if (cb) {
-        elemGroups.forEach(el => {
-          const eb = elemBBox.get(el);
-          if (eb && bboxContains(cb, eb, INSIDE_PADDING)) insideElems.push(el);
-        });
-      }
-      const tokenSet = new Set(insideElems.map(g => normalizeId(g.id)));
-      clusterInfo.set(cluster.id, { elems: insideElems, tokens: tokenSet });
+    // --- index elements for search ---
+    const nameToId = new Map();
+    function addName(id, text){ const key=normalizeId(text); if(key) nameToId.set(key, id); }
+    [...elemGroups, ...clusterGroups].forEach(g => {
+      addName(g.id, g.id);
+      const t=g.querySelector('text'); if(t) addName(g.id, t.textContent||'');
     });
 
+    function setViewToBBox(b){
+      const pad = Math.max(b.width, b.height) * 0.4 || 20;
+      const nx = b.x - pad, ny = b.y - pad;
+      const nw = b.width + pad*2, nh = b.height + pad*2;
+      const aspect = state.vb.width / state.vb.height;
+      let tw = nw, th = nh;
+      if (nw / nh > aspect) th = nw / aspect; else tw = nh * aspect;
+      state.vb = { x: nx - (tw - nw)/2, y: ny - (th - nh)/2, width: tw, height: th };
+      setViewBox(svgRoot, state.vb);
+    }
+
+    function clearHighlight() {
+      [...allNodeGroups, ...linkGroups].forEach(g => g.classList.remove('is-node-highlight','is-link-highlight','is-dimmed'));
+    }
     function setDimmed(dim) {
-      const cls = 'is-dimmed';
+      const cls='is-dimmed';
       [...allNodeGroups, ...linkGroups].forEach(g => g.classList.toggle(cls, dim));
     }
-    function clearHighlight() {
-      setDimmed(false);
-      allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
-      linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
+    function undimWithAncestors(node){
+      let n = node;
+      while (n && n !== n.ownerSVGElement) {
+        if (n.classList && n.classList.contains('is-dimmed')) n.classList.remove('is-dimmed');
+        n = n.parentElement;
+      }
     }
+
     function highlightFor(targetId) {
-      
       const isCluster = targetId.startsWith('cluster_');
-      let nodeTokens;
-      let clusterElems = [];
+      let nodeTokens, clusterElems=[];
+      const elemBBox = new Map(), clusterBBox = new Map();
+      elemGroups.forEach(g => { try{ elemBBox.set(g, g.getBBox()); }catch{} });
+      clusterGroups.forEach(g => { try{ clusterBBox.set(g, g.getBBox()); }catch{} });
+
+      // map cluster -> elements inside
+      const clusterInfo = new Map();
+      const INSIDE_PADDING = 2;
+      clusterGroups.forEach(cluster => {
+        const cb = clusterBBox.get(cluster);
+        const insideElems = [];
+        if (cb) {
+          elemGroups.forEach(el => {
+            const eb = elemBBox.get(el);
+            if (eb && bboxContains(cb, eb, INSIDE_PADDING)) insideElems.push(el);
+          });
+        }
+        const tokenSet = new Set(insideElems.map(g => normalizeId(g.id)));
+        clusterInfo.set(cluster.id, { elems: insideElems, tokens: tokenSet });
+      });
 
       if (isCluster) {
         const info = clusterInfo.get(targetId) || { elems: [], tokens: new Set() };
@@ -497,159 +352,114 @@ dl.innerHTML = [...suggestions].sort((a,b)=>a.localeCompare(b)).map(s => `<optio
       }
 
       const connectedLinks = linkGroups.filter(link => {
-        try {
-          const toks = JSON.parse(link.dataset.tokens || '[]');
-          return toks.some(t => nodeTokens.includes(t));
-        } catch { return false; }
+        try { return JSON.parse(link.dataset.tokens||'[]').some(t => nodeTokens.includes(t)); } catch { return false; }
       });
-
       const connectedNodeTokens = new Set();
-      connectedLinks.forEach(link => {
-        try { JSON.parse(link.dataset.tokens || '[]').forEach(t => connectedNodeTokens.add(t)); } catch {}
-      });
+      connectedLinks.forEach(link => { try { JSON.parse(link.dataset.tokens||'[]').forEach(t => connectedNodeTokens.add(t)); } catch {} });
 
       allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
       linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
       setDimmed(true);
 
       const hovered = allNodeGroups.find(g => g.id === targetId);
-      if (hovered) hovered.classList.add('is-node-highlight');
+      if (hovered) { hovered.classList.add('is-node-highlight'); undimWithAncestors(hovered); }
+      if (isCluster) clusterElems.forEach(el => { el.classList.add('is-node-highlight'); undimWithAncestors(el); });
+      connectedLinks.forEach(g => { g.classList.add('is-link-highlight'); undimWithAncestors(g); });
+      elemGroups.forEach(g => { if (connectedNodeTokens.has(normalizeId(g.id))) undimWithAncestors(g); });
 
-      if (isCluster) {
-        clusterElems.forEach(el => el.classList.add('is-node-highlight'));
-      }
-
-      connectedLinks.forEach(g => g.classList.add('is-link-highlight'));
-
-      if (hovered) hovered.classList.remove('is-dimmed');
-
-      if (isCluster) {
-        clusterElems.forEach(el => el.classList.remove('is-dimmed'));
-      }
-
-      elemGroups.forEach(g => {
-        if (connectedNodeTokens.has(normalizeId(g.id))) g.classList.remove('is-dimmed');
-      });
-
-      clusterGroups.forEach(cluster => {
-        const info = clusterInfo.get(cluster.id) || { tokens: new Set() };
-        for (const t of connectedNodeTokens) {
-          if (info.tokens.has(t)) { cluster.classList.remove('is-dimmed'); break; }
-        }
-      });
-
-      connectedLinks.forEach(g => g.classList.remove('is-dimmed'));
+      try {
+        const node = [...elemGroups, ...clusterGroups].find(x => x.id === targetId);
+        if (node) setViewToBBox(node.getBBox());
+      } catch {}
     }
+
     function highlightLink(linkId) {
-      // tokens = endpoints of the link
-      let toks = [];
-      try { toks = JSON.parse(svgDoc.getElementById(linkId)?.dataset.tokens || '[]'); } catch {}
-      const tokenSet = new Set(toks);
+      let toks=[]; try{ toks=JSON.parse(svgDoc.getElementById(linkId)?.dataset.tokens||'[]'); }catch{}
+      const tokenSet=new Set(toks);
+      const everything=[...elemGroups, ...clusterGroups, ...linkGroups];
 
-      // dim everything
-      const allNodeGroups = [...elemGroups, ...clusterGroups];
-      const everything = [...allNodeGroups, ...linkGroups];
-      everything.forEach(g => g.classList.add('is-dimmed'));
-      allNodeGroups.forEach(g => g.classList.remove('is-node-highlight'));
-      linkGroups.forEach(g => g.classList.remove('is-link-highlight'));
+      everything.forEach(g=>g.classList.add('is-dimmed'));
+      elemGroups.forEach(g=>g.classList.remove('is-node-highlight'));
+      linkGroups.forEach(g=>g.classList.remove('is-link-highlight'));
 
-      // highlight the clicked link
-      const link = svgDoc.getElementById(linkId);
-      if (link) {
-        link.classList.add('is-link-highlight');
-        link.classList.remove('is-dimmed');
-      }
+      const link=svgDoc.getElementById(linkId);
+      if(link){ link.classList.add('is-link-highlight'); undimWithAncestors(link); }
 
-      // highlight endpoint nodes and any clusters containing them
-      elemGroups.forEach(g => {
-        if (tokenSet.has(normalizeId(g.id))) {
+      elemGroups.forEach(g=>{
+        if(tokenSet.has(normalizeId(g.id))){
           g.classList.add('is-node-highlight');
-          g.classList.remove('is-dimmed');
-        }
-      });
-      clusterGroups.forEach(cluster => {
-        const info = clusterInfo.get(cluster.id) || { tokens: new Set() };
-        for (const t of tokenSet) {
-          if (info.tokens.has(t)) { cluster.classList.remove('is-dimmed'); break; }
+          undimWithAncestors(g);
         }
       });
     }
 
-    // allNodeGroups.forEach(g => {
-    //   g.addEventListener('mouseenter', () => {
-    //     highlightFor(g.id)
-    //   });
-    //   g.addEventListener('mouseleave', clearHighlight);
-    // });
+    // ====== Click wiring using movement threshold ======
     allNodeGroups.forEach(g => {
-        g.addEventListener('click', () => {
-        if (Date.now() - downTime > 120) {
-          console.log("no click");
-          return
-        }
-        highlightFor(g.id)
-        console.log(g.id)
+      g.addEventListener('click', () => {
+        if (movedPx > DRAG_THRESHOLD) return;
+        highlightFor(g.id);
       });
-      //g.addEventListener('mouseleave', clearHighlight);
     });
     linkGroups.forEach(g => {
       g.addEventListener('click', (e) => {
-        if (Date.now() - downTime > 120) {
-          console.log("no click");
-          return
-        }
+        if (movedPx > DRAG_THRESHOLD) return;
         e.stopPropagation();
         highlightLink(g.id);
       });
     });
-    
+    svgDoc.addEventListener('click', (e) => {
+      if (movedPx > DRAG_THRESHOLD) return;
+      if (e.target === svgDoc || e.target === svgRoot) clearHighlight();
+    });
+
+    // ====== Search wiring ======
+    function focusAndHighlight(targetId){ highlightFor(targetId); }
+    const searchBox = document.getElementById('searchBox');
+    function runSearch(q){
+      const key = normalizeId(q); if(!key) return;
+      let target = nameToId.get(key);
+      if(!target){ const pref=[...nameToId.keys()].find(k=>k.startsWith(key)); if(pref) target=nameToId.get(pref); }
+      if(!target){ const cont=[...nameToId.keys()].find(k=>k.includes(key)); if(cont) target=nameToId.get(cont); }
+      if(target) focusAndHighlight(target);
+    }
+    searchBox.addEventListener('keydown', (e)=>{ if(e.key==='Enter') runSearch(searchBox.value); });
+    searchBox.addEventListener('input', (e)=>{ if(e.target.value.length>=3) runSearch(e.target.value); });
+    const suggestions=new Set();
+    [...elemGroups, ...clusterGroups].forEach(g=>{
+      const label=(g.querySelector('text')?.textContent || g.id.replace(/^elem_|^cluster_/,'')).trim();
+      if(label) suggestions.add(label);
+    });
+    [...elemGroups, ...clusterGroups].forEach(g => suggestions.add(g.id));
+    const dl=document.getElementById('graphTerms');
+    dl.innerHTML=[...suggestions].sort((a,b)=>a.localeCompare(b)).map(s=>`<option value="${s}">`).join('');
+
+    // ====== Left buttons for top-level clusters ======
+    const pkgPanel = document.getElementById('pkgPanel');
+    const clearBtn = document.getElementById('clearPkgBtn');
+    clearBtn.addEventListener('click', () => {
+      clearHighlight();
+      pkgPanel.querySelectorAll('.pkgbtn').forEach(b => b.classList.remove('is-active'));
+    });
+
+    const topLevelClusters = clusterGroups.filter(g => !g.parentElement.closest('g[id^="cluster_"]'));
+    function labelForCluster(g){ return g.querySelector('text')?.textContent?.trim() || g.id.replace(/^cluster_/,''); }
+    topLevelClusters.forEach(cl => {
+      const btn = document.createElement('button');
+      btn.className = 'pkgbtn';
+      btn.textContent = labelForCluster(cl);
+      btn.dataset.targetId = cl.id;
+      btn.title = `Highlight ${btn.textContent}`;
+      btn.addEventListener('click', () => {
+        pkgPanel.querySelectorAll('.pkgbtn').forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        focusAndHighlight(cl.id);
+      });
+      pkgPanel.appendChild(btn);
+    });
 
     console.info('SVG pan/zoom initialized. viewBox=', state.vb);
-
-    
-
-    const onClick = (e) => {
-      const el = e.target;
-      const g  = el.closest?.('g[id^="elem_"], g[id^="cluster_"]');
-      console.log('clicked element:', el, 'id:', el.id, 'group:', g?.id);
-      if (el === svgDoc || el === svgRoot) {
-        clearHighlight();
-      }
-    };
-
-    // bubble + capture to be safe
-    svgDoc.addEventListener('click', (e)=> { 
-      console.log(downTime)
-      // ignore if button was held longer than 50 ms
-      console.log(Date.now() - downTime)
-      if (Date.now() - downTime > 120) {
-        console.log("no click");
-        return
-      }
-      else{
-        onClick(e)
-      }
-    });
-    svgRoot.addEventListener('click', (e)=> { 
-      console.log(downTime)
-      // ignore if button was held longer than 50 ms
-      console.log(Date.now() - downTime)
-      if (Date.now() - downTime > 120) {
-        console.log("no click")
-        return
-      }
-      else{
-        onClick(e)
-      }
-      
-      
-    }, true);
-    svgRoot.addEventListener('pointerdown', () => {
-      downTime = Date.now();
-    });
   });
 
-  // Basic load error feedback
   svgObj.addEventListener('error', () => {
     console.error('Failed to load UML_ontology.svg. Check path and server.');
   });

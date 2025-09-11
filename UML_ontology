@@ -21,8 +21,8 @@ package Metrics_and_Measurements #ffe8e8ff {
   class MechanicMetric {
   }
 
-  GeneralMetric <|-- Metric 
-  MechanicMetric <|-- Metric
+  GeneralMetric --|> Metric 
+  MechanicMetric --|> Metric
 
   class MetricComputation {
     +algorithm: String
@@ -34,45 +34,38 @@ package Metrics_and_Measurements #ffe8e8ff {
 
   object MechanicUsageRate
   MechanicUsageRate : Metric
-  MechanicUsageRate : userId = 1
   MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
   MechanicUsageRate --> MechanicMetric : "instance of"
 
   object MechanicDisplayRate
   MechanicDisplayRate : Metric
-  MechanicDisplayRate : userId = 1
   MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
   MechanicDisplayRate --> MechanicMetric : "instance of"
 
   object MechanicEngagement
   MechanicEngagement : Metric
-  MechanicEngagement : userId = 1
   MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
   MechanicEngagement --> MechanicMetric : "instance of"
 
   object SessionDuration
-  SessionDuration : userId = 1
   SessionDuration : mechanicId = 101
   SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
   SessionDuration --> GeneralMetric : "instance of"
 
   object ClickRate
-  ClickRate : userId = 1
   ClickRate : mechanicId = 101
   ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> GeneralMetric : "intance of"
+  ClickRate --> GeneralMetric : "instance of"
 
   object Adherence
   Adherence : GeneralMetric
-  Adherence : userId = 1
   Adherence : timestamp = 2023-10-01T12:00:00Z
   Adherence --> GeneralMetric : "instance of"
 
   object HesitationTime
   HesitationTime : GeneralMetric
-  HesitationTime : userId = 1
   HesitationTime : timestamp = 2023-10-01T12:00:00Z
   HesitationTime --> GeneralMetric : "instance of"
 
@@ -83,10 +76,7 @@ package Metrics_and_Measurements #ffe8e8ff {
   A1 .. Adherence
 
   class Measurement {
-    +id: int
-    +userId: int
     +timestamp: DateTime
-    +measurementType: MeasurementType
     +value: float
   }
 
@@ -143,39 +133,31 @@ package Metrics_and_Measurements #ffe8e8ff {
 
 package KeySituations #e8faffff {
   class KeySituation {
-    +id: int
-    +userId: int
     +timestamp: DateTime
-    +mechanicId: int
     +screen: String
-    +value: float
-    +metadata: Map<String, String>
   }
 
-  class MechanicKeySituation {
-    +id: int
-  
+  class MechanicKeySituation {  
   }
   class GeneralKeySituation {
-    +id: int
     
   }
-  class ProgramrelatedKeySituation {
-    +id: int
+  class ProgramRelatedKeySituation {
+
   }
-  ProgramrelatedKeySituation <|-- GeneralKeySituation 
+  ProgramRelatedKeySituation --|> GeneralKeySituation 
 
   class SessionRelatedKeySituation {
-    +id: int
-  }
-  SessionRelatedKeySituation <|-- GeneralKeySituation 
 
-  GeneralKeySituation <|-- KeySituation 
-  MechanicKeySituation <|-- KeySituation
+  }
+  SessionRelatedKeySituation --|> GeneralKeySituation 
+
+  GeneralKeySituation --|> KeySituation 
+  MechanicKeySituation --|> KeySituation
 
   object TaskFinished
-  TaskFinished : ProgramrelatedKeySituation
-  TaskFinished --> ProgramrelatedKeySituation : "instance of"
+  TaskFinished : ProgramRelatedKeySituation
+  TaskFinished --> ProgramRelatedKeySituation : "instance of"
 
   object MechanicDisplayed
   MechanicDisplayed : MechanicKeySituation
@@ -190,7 +172,7 @@ package KeySituations #e8faffff {
   MilestoneReached --> MechanicKeySituation : "instance of"
 
   object DailyChallengePosed
-  DailyChallengePosed : SessionRelatedKeySituathttps://file+.vscode-resource.vscode-cdn.net/Users/maks/Documents/PHD/UML/out/UML_ontology/UML_ontology.svg?version%3D1756735835609ion
+  DailyChallengePosed : SessionRelatedKeySituation
   DailyChallengePosed --> SessionRelatedKeySituation : "instance of"
 
   object SessionStarted
@@ -202,12 +184,12 @@ package KeySituations #e8faffff {
   DayRollOver --> SessionRelatedKeySituation : "instance of"
   
   object TaskStarted
-  TaskStarted : ProgramrelatedKeySituation
-  TaskStarted --> ProgramrelatedKeySituation : "instance of"
+  TaskStarted : ProgramRelatedKeySituation
+  TaskStarted --> ProgramRelatedKeySituation : "instance of"
 
   object TaskEnded
-  TaskEnded : ProgramrelatedKeySituation
-  TaskEnded --> ProgramrelatedKeySituation : "instance of"
+  TaskEnded : ProgramRelatedKeySituation
+  TaskEnded --> ProgramRelatedKeySituation : "instance of"
 
   object SessionEnded
   SessionEnded : SessionRelatedKeySituation
@@ -233,7 +215,9 @@ package KeySituations #e8faffff {
   end note
 }
 
-Program_and_Tasks.Program --> KeySituation : "triggers"
+KeySituations.KeySituation "0..*" --> "0..*" Interventions.Intervention : triggers
+
+Program_and_Tasks.Program --> "0..*" KeySituation : "triggers"
 Metrics_and_Measurements.Adherence --> Program_and_Tasks.Task : "calculatedFrom"
 Metrics_and_Measurements.Adherence --> Program_and_Tasks.TaskRequirement : "calculatedFrom"
 Metrics_and_Measurements.Adherence --> KeySituations.TaskFinished : "informedBy"
@@ -241,16 +225,15 @@ Metrics_and_Measurements.Adherence --> KeySituations.TaskFinished : "informedBy"
 
 package Interventions #e8e8ffff {
   class Intervention {
-    +id: int
+    
   }
-  KeySituation --> Intervention: "triggers"
-  Interval --> Intervention : "triggers"
+  Interval "0..*" --> "1..*" Intervention : schedules
 
   class MechanicIntervention {
-    +id: int
+   
   }
     class ImmediateIntervention  {
-    +id: int
+    
   }
 
   ImmediateIntervention  --|> Intervention 
@@ -285,8 +268,7 @@ package Interventions #e8e8ffff {
   object User_Engagement_Scale
   User_Engagement_Scale --> Questionnaire : "instance of"
 
-  class MotivationalMessage #cdeaff {
-    +id: int
+  class MotivationalMessage #cdeaff extends MechanicIntervention {
     +text: String
   }
   
@@ -296,7 +278,6 @@ package Interventions #e8e8ffff {
     individual profiles, goals, or behavioral state.
   end note
 
-  MotivationalMessage --> MechanicIntervention : "instance of"
 
   object MotivationalMessagePM_LOW
   MotivationalMessagePM_LOW : MotivationalMessage
@@ -318,31 +299,29 @@ package Interventions #e8e8ffff {
 
   object HourlyInterval
   HourlyInterval --> Interval : "instance of"
+
+  object "…" as OtherIntervals
+  OtherIntervals --> Interval : "instance of"
 }
 
-MotivationalMechanics.MotivationalMechanic --|>  Interventions.MechanicIntervention 
-
 Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
-Interventions.Intervention --> MotivationalMechanics.MotivationalMechanic : "toggles on/off"
+Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
+
+Interventions.Intervention "0..*" --> "0..*" Metrics_and_Measurements.Metric : "considers"
+Interventions.Intervention"0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
 
 package UserActions #f1f1f1ff{
-
   object Click  {
-    +userId: int
     +timestamp: DateTime
-    +screen: String
-    +metadata: Map<String, String>
+    +element
   } 
   Click : UserAction
   Click --> UserAction : "instance of"
 
 
   class UserAction {
-    +id: int
-    +userId: int
     +timestamp: DateTime
-    +screen: String
-    +metadata: Map<String, String>
+    +element
   }
 
 
@@ -355,12 +334,12 @@ package UserActions #f1f1f1ff{
   KeySituation --> Measurement : "triggers"
   Measurement --> Metric : "triggers"
 
+
 }
 
 package Program_and_Tasks #ebffe8ff {
 
   class Program #lightgreen {
-    +id: int
     +name: String
     +description: String
   }
@@ -370,24 +349,17 @@ package Program_and_Tasks #ebffe8ff {
   end note
 
   class Task #lightgreen {
-    +id: int
     +title: String
     +description: String
-    +isMandatory: Boolean
-    +completed: Boolean
   }
 
   class Level #lightgreen {
-    +id: int
     +name: String
     +difficulty: Int
-    +unlocked: Boolean
   }
 
   class Repetitions #lightgreen {
-    +id: int
     +count: Int
-    +completed: Boolean
   }
 
   note bottom of Level
@@ -418,7 +390,6 @@ package Program_and_Tasks #ebffe8ff {
   end note
 
   class TaskBlock #lightgreen {
-    +id: int
     +title: String
     +description: String
     +startDate: DateTime
@@ -435,49 +406,58 @@ package Program_and_Tasks #ebffe8ff {
   TaskRequirement --> "0..1" Level : optional
   TaskRequirement --> "1..*" Repetitions : required
 
-  Program --> "1..*" TaskBlock
+  Program *--> "1..*" TaskBlock
 
-  TaskBlock --> "1..*" TaskAssignment : "contains"
+  TaskBlock *--> "1..*" TaskAssignment : "contains"
 
 }
 
 package UserModel #fde8ffff {
 
   class User #f59bff {
-    +id: int
     +UserTraitWeights: List<UserTraitWeight>
   }
 
-  User --> Program : "has"
-  User --> MotivationalState : "has"
-  User --> CognitiveLoadState : "has"
-  User --> UserAction : "performs"
+  User --> "1" Program : "has"
+  User --> "0..* {ordered}" MotivationalState : "has"
+  User --> "0..* {ordered}" CognitiveLoadState : "has"
+  User --> "0..*" UserAction : "performs"
 
   class MotivationalState { 
     +timestamp: DateTime
   }
+  together {
+    object "…" as OtherMotivationalStates
+    object Low
+    object Medium
+    object High
+  }
+
+  Low --> MotivationalState : instance of
+  Medium --> MotivationalState : instance of
+  High --> MotivationalState : instance of
+  OtherMotivationalStates --> MotivationalState : instance of
 
   MotivationalState --> Metric : "calculated from"
   MotivationalState --> Program : "calculated from"
 
-  class CognitiveLoadState
+  class CognitiveLoadState { 
+    +timestamp: DateTime 
+  }
 
   CognitiveLoadState --> Metric : "calculated from"
 
-  object UnderchallengedState
-  UnderchallengedState : CognitiveLoadState
-  UnderchallengedState : userId = 1
-  UnderchallengedState --> CognitiveLoadState : "instance of"
+  together {
+    object "…" as OtherCognitiveLoadStates
+    object Underchallenged
+    object OptimalLoad
+    object Overloaded
+  }
 
-  object OptimalLoadState
-  OptimalLoadState : CognitiveLoadState
-  OptimalLoadState : userId = 1
-  OptimalLoadState --> CognitiveLoadState : "instance of"
-
-  object OverloadedState
-  OverloadedState : CognitiveLoadState
-  OverloadedState : userId = 1
-  OverloadedState --> CognitiveLoadState : "instance of"
+  Underchallenged --> CognitiveLoadState : instance of
+  OptimalLoad --> CognitiveLoadState : instance of
+  Overloaded --> CognitiveLoadState : instance of
+  OtherCognitiveLoadStates --> CognitiveLoadState : instance of
 
   class UserTraitWeight #f59bff {
     +trait: UserTrait
@@ -489,13 +469,13 @@ package UserModel #fde8ffff {
 UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
 UserModel.MotivationalState --> Metrics_and_Measurements.Adherence : "derivedFrom"
 UserModel.MotivationalState --> Program_and_Tasks.Program : "derivedFrom"
-UserModel.User --> "0..*" Metric   : "has"
+UserModel.User --> "1..*" Metrics_and_Measurements.Metric   : "has"
+UserModel.User --> "1..*" Interventions.Intervention   : "receives"
 
 package UserTraits #fcffe8ff {
 
   left to right direction
   class UserTrait {
-    +id: int
     +name: string
   }
   together {
@@ -598,7 +578,7 @@ package MotivationalMechanics #fff6e8ff {
   class Progress_Indicators extends MotivationalMechanic
   hide Progress_Indicators members
 
-  object Level_and_Experience_Point_System {
+  object GT {
     As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
   }
   Level_and_Experience_Point_System --> Progress_Indicators : "instance of"
@@ -693,19 +673,18 @@ package MotivationalMechanics #fff6e8ff {
     }
     Mapping --> UserTrait : "has"
 
-    object Narrative_GT10_to_Philantropist {
-      Trait = Philantropist
+    object Level_and_Experience_Point_System_to_Player {
+      Trait = Player
       Mechanic = Narrative_GT10
       weight = 0.8
     }
-    Narrative_GT10_to_Philantropist : Mapping
-    Narrative_GT10_to_Philantropist --> Mapping : "instance of"
+    Level_and_Experience_Point_System_to_Player : Mapping
+    Level_and_Experience_Point_System_to_Player --> Mapping : "instance of"
 
-    Narrative_GT10_to_Philantropist --> Philanthropist : "corresponds to"
-    Narrative_GT10_to_Philantropist --> Narrative_GT10 : "corresponds by"
+    Level_and_Experience_Point_System_to_Player --> Player : "corresponds to"
+    Level_and_Experience_Point_System_to_Player --> Level_and_Experience_Point_System : "corresponds by"
   }
 }
-MotivationalMechanics.MotivationalMechanic --> KeySituations.MechanicKeySituation: "triggers"
 MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
 
 @enduml7
