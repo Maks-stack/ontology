@@ -1,4 +1,4 @@
-@startuml7
+@startuml
 
 skinparam linetype polyline
 
@@ -14,15 +14,6 @@ package Metrics_and_Measurements #ffe8e8ff {
     +timestamp: DateTime
     +value: float
   }
-  
-  class GeneralMetric {
-  }
-
-  class MechanicMetric {
-  }
-
-  GeneralMetric --|> Metric 
-  MechanicMetric --|> Metric
 
   class MetricComputation {
     +algorithm: String
@@ -33,41 +24,38 @@ package Metrics_and_Measurements #ffe8e8ff {
   Measurement <-- MetricComputation : "reads"
 
   object MechanicUsageRate
-  MechanicUsageRate : Metric
   MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicUsageRate --> MechanicMetric : "instance of"
+  MechanicUsageRate --> Metric : "instance of"
 
   object MechanicDisplayRate
-  MechanicDisplayRate : Metric
   MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicDisplayRate --> MechanicMetric : "instance of"
+  MechanicDisplayRate --> Metric : "instance of"
 
   object MechanicEngagement
-  MechanicEngagement : Metric
   MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
-  MechanicEngagement --> MechanicMetric : "instance of"
+  MechanicEngagement --> Metric : "instance of"
 
   object SessionDuration
   SessionDuration : mechanicId = 101
   SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
-  SessionDuration --> GeneralMetric : "instance of"
+  SessionDuration --> Metric : "instance of"
 
   object ClickRate
   ClickRate : mechanicId = 101
   ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> GeneralMetric : "instance of"
+  ClickRate --> Metric : "instance of"
 
   object Adherence
-  Adherence : GeneralMetric
+  Adherence : Metric
   Adherence : timestamp = 2023-10-01T12:00:00Z
-  Adherence --> GeneralMetric : "instance of"
+  Adherence --> Metric : "instance of"
 
   object HesitationTime
-  HesitationTime : GeneralMetric
+  HesitationTime : Metric
   HesitationTime : timestamp = 2023-10-01T12:00:00Z
-  HesitationTime --> GeneralMetric : "instance of"
+  HesitationTime --> Metric : "instance of"
 
   note as A1
   Percentage of the finished tasks out of the overall prescribed tasks
@@ -105,7 +93,22 @@ package Metrics_and_Measurements #ffe8e8ff {
   a specific motivational mechanic was shown or visible 
   to the user at a given point in time.
   Used to support decisions on reinforcing or deactivating it.
+  end note  object mechanicImpression
+  mechanicImpression : Measurement
+  mechanicImpression : userId = 1
+  mechanicImpression : mechanicId = 101
+  mechanicImpression : impressionCount = 5
+  mechanicImpression : timestamp = 2025-04-21T09:00:00Z
+
+  mechanicImpression ---> Measurement :"instance of"
+
+  note bottom of mechanicImpression
+  Captures a one-time measurement of how often
+  a specific motivational mechanic was shown or visible 
+  to the user at a given point in time.
+  Used to support decisions on reinforcing or deactivating it.
   end note
+
 
   object Time
   Time : userId = 1
@@ -137,107 +140,43 @@ package KeySituations #e8faffff {
     +screen: String
   }
 
-  class MechanicKeySituation {  
-  }
-  class GeneralKeySituation {
-    
-  }
-  class ProgramRelatedKeySituation {
+  object MechanicDisplayedKeySituation
+  MechanicDisplayedKeySituation --> KeySituation : "instance of"
 
-  }
-  ProgramRelatedKeySituation --|> GeneralKeySituation 
+  object MechanicInteractionKeySituation
+  MechanicInteractionKeySituation --> KeySituation : "instance of"
 
-  class SessionRelatedKeySituation {
+  object MilestoneReachedKeySituation
+  MilestoneReachedKeySituation --> KeySituation : "instance of"
 
-  }
-  SessionRelatedKeySituation --|> GeneralKeySituation 
+  object DailyChallengePosedKeySituation
+  DailyChallengePosedKeySituation --> KeySituation : "instance of"
 
-  GeneralKeySituation --|> KeySituation 
-  MechanicKeySituation --|> KeySituation
-
-  object TaskFinished
-  TaskFinished : ProgramRelatedKeySituation
-  TaskFinished --> ProgramRelatedKeySituation : "instance of"
-
-  object MechanicDisplayed
-  MechanicDisplayed : MechanicKeySituation
-  MechanicDisplayed --> MechanicKeySituation : "instance of"
-
-  object MechanicInteraction
-  MechanicInteraction : MechanicKeySituation
-  MechanicInteraction --> MechanicKeySituation : "instance of"
-
-  object MilestoneReached
-  MilestoneReached : MechanicKeySituation
-  MilestoneReached --> MechanicKeySituation : "instance of"
-
-  object DailyChallengePosed
-  DailyChallengePosed : SessionRelatedKeySituation
-  DailyChallengePosed --> SessionRelatedKeySituation : "instance of"
-
-  object SessionStarted
-  SessionStarted : SessionRelatedKeySituation
-  SessionStarted --> SessionRelatedKeySituation : "instance of"
-
-  object DayRollOver
-  DayRollOver : SessionRelatedKeySituation
-  DayRollOver --> SessionRelatedKeySituation : "instance of"
+  object SessionStartedKeySituation
+  SessionStartedKeySituation --> KeySituation : "instance of"
   
-  object TaskStarted
-  TaskStarted : ProgramRelatedKeySituation
-  TaskStarted --> ProgramRelatedKeySituation : "instance of"
+  object TaskStartedKeySituation
+  TaskStartedKeySituation --> KeySituation : "instance of"
 
-  object TaskEnded
-  TaskEnded : ProgramRelatedKeySituation
-  TaskEnded --> ProgramRelatedKeySituation : "instance of"
+  object TaskFinishedKeySituation
+  TaskFinishedKeySituation --> KeySituation : "instance of"
 
-  object SessionEnded
-  SessionEnded : SessionRelatedKeySituation
-  SessionEnded --> SessionRelatedKeySituation : "instance of"
-
-  object ScreenEntered
-  ScreenEntered : GeneralKeySituation
-  ScreenEntered --> GeneralKeySituation : "instance of"
+  object SessionEndedKeySituation
+  SessionEndedKeySituation --> KeySituation : "instance of"
 
   note left of KeySituation
   Generic KeySituation structure used for multiple behavioral logs,
   such as screen visits, mechanic usage, and session tracking.
   end note
-
-  note left of GeneralKeySituation
-  Used for logs unrelated to specific game mechanics, such as 
-  screen visits, general engagement, or app usage.
-  end note
-
-  note left of MechanicKeySituation
-  Used for mechanic-specific behavioral tracking, including
-  mechanic activation, frequency, success/failure, and feedback.
-  end note
 }
 
 KeySituations.KeySituation "0..*" --> "0..*" Interventions.Intervention : triggers
-
-Program_and_Tasks.Program --> "0..*" KeySituation : "triggers"
-Metrics_and_Measurements.Adherence --> Program_and_Tasks.Task : "calculatedFrom"
-Metrics_and_Measurements.Adherence --> Program_and_Tasks.TaskRequirement : "calculatedFrom"
-Metrics_and_Measurements.Adherence --> KeySituations.TaskFinished : "informedBy"
-
 
 package Interventions #e8e8ffff {
   class Intervention {
     
   }
   Interval "0..*" --> "1..*" Intervention : schedules
-
-  class MechanicIntervention {
-   
-  }
-    class ImmediateIntervention  {
-    
-  }
-
-  ImmediateIntervention  --|> Intervention 
-  MechanicIntervention --|> Intervention
 
   note right of Intervention
   Represents a planned activity, stimulus, or interaction
@@ -259,8 +198,8 @@ package Interventions #e8e8ffff {
     to guide, inform, or prompt the user during interaction.
   end note
 
-  Questionnaire --> ImmediateIntervention  : "instance of"
-  AlertMessage --> ImmediateIntervention  : "instance of"
+  Questionnaire --> Intervention  : "instance of"
+  AlertMessage --> Intervention  : "instance of"
 
   object Intrinsic_Motivation_Inventory 
   Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
@@ -268,21 +207,11 @@ package Interventions #e8e8ffff {
   object User_Engagement_Scale
   User_Engagement_Scale --> Questionnaire : "instance of"
 
-  class MotivationalMessage #cdeaff extends MechanicIntervention {
-    +text: String
-  }
-  
-  note right of MotivationalMessage
-    A mechanic that delivers messages to the user to motivate them. 
-    While active for all users, the content and tone adapt based on 
-    individual profiles, goals, or behavioral state.
-  end note
+  object SystemNotice
+  SystemNotice --> AlertMessage : "instance of"
 
-
-  object MotivationalMessagePM_LOW
-  MotivationalMessagePM_LOW : MotivationalMessage
-  MotivationalMessagePM_LOW : userId = 1
-  MotivationalMessagePM_LOW --> MotivationalMessage : "instance of"
+  object PromptMessage
+  PromptMessage --> AlertMessage : "instance of"
 
   class Interval{
     +date: DateTime
@@ -310,32 +239,62 @@ Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic
 Interventions.Intervention "0..*" --> "0..*" Metrics_and_Measurements.Metric : "considers"
 Interventions.Intervention"0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
 
-package UserActions #f1f1f1ff{
-  object Click  {
-    +timestamp: DateTime
-    +element
-  } 
-  Click : UserAction
-  Click --> UserAction : "instance of"
+package Observations #f1f1f1ff{
 
-
-  class UserAction {
+  legend top right
+  Observations: evaluated user/system actions.
+  relation to user with user being actor
+  observation can trigger a keysituation
+  observation produces a measurement
+  end legend
+  
+  class Observation {
     +timestamp: DateTime
     +element
   }
 
+  class UserObservation extends Observation {
+  }
 
-  object Action {
+  class SystemObservation extends Observation {
+  }
+  
+  note top of Observation
+  Observation of User Action, recorded and evaluated by application.
+  Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
+  end note
+
+  object ClickObservation  {
   } 
-  Action : UserAction
-  Action --> UserAction : "instance of"
 
-  UserAction --> KeySituation : "triggers"
-  KeySituation --> Measurement : "triggers"
-  Measurement --> Metric : "triggers"
+  ClickObservation : UserObservation
+  ClickObservation --> UserObservation : "instance of"
 
+  object LoginObservation {
+  } 
+  LoginObservation : UserObservation
+  LoginObservation --> UserObservation : "instance of"
 
+  object TaskFinishedObservation {
+  } 
+  TaskFinishedObservation : UserObservation
+  TaskFinishedObservation --> UserObservation : "instance of"
+
+  object ErrorCommittedObservation {
+  } 
+  ErrorCommittedObservation : UserObservation
+  ErrorCommittedObservation --> UserObservation : "instance of"
+
+  object WeekFinishedObservation {
+  }
+  WeekFinishedObservation : SystemObservation
+  WeekFinishedObservation --> SystemObservation : "instance of"
+
+  Observation --> KeySituation : "triggers"
 }
+
+Observations.Observation --> Metrics_and_Measurements.Measurement : "produces" 
+Metrics_and_Measurements.Measurement --> Metrics_and_Measurements.MetricComputation : "triggers" 
 
 package Program_and_Tasks #ebffe8ff {
 
@@ -415,15 +374,15 @@ package Program_and_Tasks #ebffe8ff {
 package UserModel #fde8ffff {
 
   class User #f59bff {
-    +UserTraitWeights: List<UserTraitWeight>
   }
 
   User --> "1" Program : "has"
   User --> "0..* {ordered}" MotivationalState : "has"
   User --> "0..* {ordered}" CognitiveLoadState : "has"
-  User --> "0..*" UserAction : "performs"
+  User --> "1" Observation : "actor"
 
-  class MotivationalState { 
+
+  class MotivationalState #f59bff { 
     +timestamp: DateTime
   }
   together {
@@ -441,7 +400,7 @@ package UserModel #fde8ffff {
   MotivationalState --> Metric : "calculated from"
   MotivationalState --> Program : "calculated from"
 
-  class CognitiveLoadState { 
+  class CognitiveLoadState #f59bff { 
     +timestamp: DateTime 
   }
 
@@ -460,7 +419,6 @@ package UserModel #fde8ffff {
   OtherCognitiveLoadStates --> CognitiveLoadState : instance of
 
   class UserTraitWeight #f59bff {
-    +trait: UserTrait
     +weight: float  ' (0.0 – 1.0) '
   }
 
@@ -562,28 +520,18 @@ package UserTraits #fcffe8ff {
     end note
   }
 }
-HesitationTime --> Time : "computed from"
-HesitationTime --> Click : "computed from"
-HesitationTime --> ScreenEntered : "computed from"
 
 package MotivationalMechanics #fff6e8ff {
 
   left to right direction
 
   class MotivationalMechanic 
-  hide MotivationalMechanic members
-
   
   '//----------------------------------Progress Indicators---------------------------------------------'
   class Progress_Indicators extends MotivationalMechanic
-  hide Progress_Indicators members
 
-  object GT {
-    As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
-  }
   Level_and_Experience_Point_System --> Progress_Indicators : "instance of"
 
-  
   '//----------------------------------Competition with others---------------------------------------------'
   class Competition_with_others extends MotivationalMechanic
   hide Competition_with_others members
@@ -660,31 +608,20 @@ package MotivationalMechanics #fff6e8ff {
 
   package Usertrait_Mechanic_Mapping {
 
-    class MechanicTraitWeight #9bfbff {
-      +mechanicId: int
-      +userTrait: UserTrait
-      +weight: float  ' (0.0 – 1.0) '
-    }
-
     class Mapping {
-      Trait : UserTrait
-      Mechanic: MotivationalMechanic
       weight: float
     }
     Mapping --> UserTrait : "has"
 
     object Level_and_Experience_Point_System_to_Player {
-      Trait = Player
-      Mechanic = Narrative_GT10
       weight = 0.8
     }
-    Level_and_Experience_Point_System_to_Player : Mapping
     Level_and_Experience_Point_System_to_Player --> Mapping : "instance of"
 
-    Level_and_Experience_Point_System_to_Player --> Player : "corresponds to"
-    Level_and_Experience_Point_System_to_Player --> Level_and_Experience_Point_System : "corresponds by"
+    Mapping --> UserTrait : "references"
+    Mapping --> MotivationalMechanic : "references"
   }
 }
 MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
 
-@enduml7
+@enduml
