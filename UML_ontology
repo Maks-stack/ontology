@@ -16,7 +16,6 @@ package Metrics #ffe8e8ff {
     +value: float
   }
 
-  ' Concept specializations (optional but handy)
   object DailyAdherence
   DailyAdherence --> Metric : "instance of"
 
@@ -137,63 +136,69 @@ package Interventions #e8e8ffff {
   PromptMessage --> AlertMessage : "instance of"
 }
 
-package Observations #f1f1f1ff{
+package Telemetry #f1f1f1ff{
 
   legend top right
-  Observations: evaluated user/system actions.
+  Telemetry: evaluated user/system actions.
   relation to user with user being actor
-  observation can trigger a keysituation
-  observation produces a measurement
+  Event can trigger a keysituation
+  Event produces a measurement
   end legend
   
-  class Observation {
+  class Event {
     +timestamp: DateTime
     +element
   }
 
-  class UserObservation extends Observation {
+  class UserEvent extends Event {
   }
 
-  class SystemObservation extends Observation {
+  class SystemEvent extends Event {
   }
+
+  class EventCollection {
+    +aggregatedAt: DateTime
+  }
+
+  EventCollection "1..*" o-- Event : "stores"
   
-  note top of Observation
-  Observation of User Action or System event, recorded and evaluated by application.
+  note top of Event
+  Event of User Action or System event, recorded and evaluated by application.
   Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
   end note
 
-  object ClickObservation  {
+  object ClickEvent  {
   } 
-  ClickObservation --> UserObservation : "instance of"
+  ClickEvent --> UserEvent : "instance of"
 
-  object LoginObservation {
+  object LoginEvent {
   } 
-  LoginObservation --> UserObservation : "instance of"
+  LoginEvent --> UserEvent : "instance of"
 
-  object TaskFinishedObservation {
+  object TaskFinishedEvent {
   } 
-  TaskFinishedObservation --> UserObservation : "instance of"
+  TaskFinishedEvent --> UserEvent : "instance of"
 
-  object ErrorCommittedObservation {
+  object ErrorCommittedEvent {
   } 
-  ErrorCommittedObservation --> UserObservation : "instance of"
+  ErrorCommittedEvent --> UserEvent : "instance of"
 
-  object HourPassedObservation{
+  object HourPassedEvent{
 
   } 
-  HourPassedObservation --> SystemObservation : "instance of"
+  HourPassedEvent --> SystemEvent : "instance of"
 
-  object DayPassedObservation{ 
+  object DayPassedEvent{ 
   }
-  DayPassedObservation --> SystemObservation : "instance of"
+  DayPassedEvent --> SystemEvent : "instance of"
 
-  object WeekPassedObservation {
+  object WeekPassedEvent {
   }
-  WeekPassedObservation --> SystemObservation : "instance of"
+  WeekPassedEvent --> SystemEvent : "instance of"
 
   object MechanicInteraction {
   }
-  MechanicInteraction --> UserObservation : "instance of"
+  MechanicInteraction --> UserEvent : "instance of"
 }
 
 package Program_and_Tasks #ebffe8ff {
@@ -462,7 +467,7 @@ package MotivationalMechanics #fff6e8ff {
 
   Community_Insights --> Social_Networking : "instance of"
 
-  '//---------------------------------Surprises and Special Events---------------------------------------------'
+  '//---------------------------------Surprises and Special Telemetry---------------------------------------------'
   class Surprises_and_Events extends MotivationalMechanic
   hide Surprises_and_Events members
   object Mystery_Boxes {
@@ -503,15 +508,17 @@ package MotivationalMechanics #fff6e8ff {
     }
     Level_and_Experience_Point_System_to_Player --> Mapping : "instance of"
 
-    Mapping --> UserTraits.UserTrait : "has"
-    Mapping --> UserTraits.UserTrait : "references"
-    Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
 
   }
 }
 
+MotivationalMechanics.Mapping --> UserTraits.UserTrait : "has"
+MotivationalMechanics.Mapping --> UserTraits.UserTrait : "references"
+MotivationalMechanics.Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
+
 MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
-Observations.Observation --> Metrics.MetricComputation : "input"
+Telemetry.Event "1..*  " --> Metrics.MetricComputation : "triggers"
+Metrics.MetricComputation --> Telemetry.EventCollection : "uses"
 
 Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
 Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
@@ -519,7 +526,7 @@ Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic
 Interventions.Intervention "0..*" --> "0..*" Metrics.Metric : "considers"
 Interventions.Intervention "0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
 
-Observations.Observation --> KeySituations.KeySituation : "triggers"
+Telemetry.Event --> KeySituations.KeySituation : "triggers"
 
 UserModel.MotivationalState --> Metrics.Metric : "reads"
 UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
@@ -527,7 +534,7 @@ UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
 UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
 UserModel.User --> "1..*" Metrics.Metric   : "has"
 UserModel.User --> "1..*" Interventions.Intervention   : "receives"
-UserModel.User --> "0..*" Observations.Observation : "actor"
+UserModel.User --> "1..*" Telemetry.Event : "actor"
 
 UserModel.MotivationalState --> Metrics.WeeklyAdherence : "calculated from"
 
