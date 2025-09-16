@@ -8,20 +8,26 @@ hide empty methods
 hide empty attributes
 hide empty members
 
+left to right direction
 
-package Metrics_and_Measurements #ffe8e8ff {
+package Metrics #ffe8e8ff {
   class Metric {
     +timestamp: DateTime
     +value: float
   }
 
+  ' Concept specializations (optional but handy)
+  object DailyAdherence
+  DailyAdherence --> Metric : "instance of"
+
+  object WeeklyAdherence
+  WeeklyAdherence --> Metric : "instance of"
+
+  ' Computation is aware of the scope it targets
   class MetricComputation {
     +algorithm: String
   }
-
   MetricComputation --> Metric : "produces"
-
-  Measurement <-- MetricComputation : "reads"
 
   object MechanicUsageRate
   MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
@@ -37,101 +43,21 @@ package Metrics_and_Measurements #ffe8e8ff {
 
   object SessionDuration
   SessionDuration : mechanicId = 101
-  SessionDuration : impressionCount = 2
   SessionDuration : timestamp = 2025-04-21T09:00:00Z
   SessionDuration --> Metric : "instance of"
 
   object ClickRate
   ClickRate : mechanicId = 101
-  ClickRate : impressionCount = 2
   ClickRate : timestamp = 2025-04-21T09:00:00Z
   ClickRate --> Metric : "instance of"
 
   object Adherence
-  Adherence : Metric
   Adherence : timestamp = 2023-10-01T12:00:00Z
   Adherence --> Metric : "instance of"
 
   object HesitationTime
-  HesitationTime : Metric
   HesitationTime : timestamp = 2023-10-01T12:00:00Z
   HesitationTime --> Metric : "instance of"
-
-  note as A1
-  Percentage of the finished tasks out of the overall prescribed tasks
-  end note
-
-  A1 .. Adherence
-
-  class Measurement {
-    +timestamp: DateTime
-    +value: float
-  }
-
-  note top of Measurement
-  Represents a direct, single-point observation 
-  or quantitative recording of user behavior or 
-  state at a given moment in time.
-
-  Examples:
-  - Click rate
-  - Session duration
-  - Number of impressions
-  end note
-
-  object mechanicImpression
-  mechanicImpression : Measurement
-  mechanicImpression : userId = 1
-  mechanicImpression : mechanicId = 101
-  mechanicImpression : impressionCount = 5
-  mechanicImpression : timestamp = 2025-04-21T09:00:00Z
-
-  mechanicImpression ---> Measurement :"instance of"
-
-  note bottom of mechanicImpression
-  Captures a one-time measurement of how often
-  a specific motivational mechanic was shown or visible 
-  to the user at a given point in time.
-  Used to support decisions on reinforcing or deactivating it.
-  end note  object mechanicImpression
-  mechanicImpression : Measurement
-  mechanicImpression : userId = 1
-  mechanicImpression : mechanicId = 101
-  mechanicImpression : impressionCount = 5
-  mechanicImpression : timestamp = 2025-04-21T09:00:00Z
-
-  mechanicImpression ---> Measurement :"instance of"
-
-  note bottom of mechanicImpression
-  Captures a one-time measurement of how often
-  a specific motivational mechanic was shown or visible 
-  to the user at a given point in time.
-  Used to support decisions on reinforcing or deactivating it.
-  end note
-
-
-  object Time
-  Time : userId = 1
-  Time : mechanicId = 101
-  Time : impressionCount = 2
-  Time : timestamp = 2025-04-21T09:00:00Z
-  Time --> Measurement : "instance of"
-
-  ' 🔵 Interaction Object
-  object mechanicInteraction
-  mechanicInteraction : userId = 1
-  mechanicInteraction : mechanicId = 101
-  mechanicInteraction : impressionCount = 2
-  mechanicInteraction : timestamp = 2025-04-21T09:00:00Z
-
-  mechanicInteraction --> Measurement : "instance of"
-
-  note bottom of mechanicInteraction
-  Captures a one-time measurement of how often
-  a specific motivational mechanic was used or interacted with 
-  by the user at a specific moment.
-  Helps evaluate the effectiveness of mechanic engagement.
-  end note
 }
 
 package KeySituations #e8faffff {
@@ -170,13 +96,10 @@ package KeySituations #e8faffff {
   end note
 }
 
-KeySituations.KeySituation "0..*" --> "0..*" Interventions.Intervention : triggers
-
 package Interventions #e8e8ffff {
   class Intervention {
     
   }
-  Interval "0..*" --> "1..*" Intervention : schedules
 
   note right of Intervention
   Represents a planned activity, stimulus, or interaction
@@ -212,32 +135,7 @@ package Interventions #e8e8ffff {
 
   object PromptMessage
   PromptMessage --> AlertMessage : "instance of"
-
-  class Interval{
-    +date: DateTime
-  }
-
-  object DailyInterval 
-  DailyInterval --> Interval : "instance of"
-
-  object WeeklyInterval 
-  WeeklyInterval --> Interval : "instance of"
-
-  object MonthlyInterval
-  MonthlyInterval --> Interval : "instance of"
-
-  object HourlyInterval
-  HourlyInterval --> Interval : "instance of"
-
-  object "…" as OtherIntervals
-  OtherIntervals --> Interval : "instance of"
 }
-
-Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
-Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
-
-Interventions.Intervention "0..*" --> "0..*" Metrics_and_Measurements.Metric : "considers"
-Interventions.Intervention"0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
 
 package Observations #f1f1f1ff{
 
@@ -260,41 +158,43 @@ package Observations #f1f1f1ff{
   }
   
   note top of Observation
-  Observation of User Action, recorded and evaluated by application.
+  Observation of User Action or System event, recorded and evaluated by application.
   Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
   end note
 
   object ClickObservation  {
   } 
-
-  ClickObservation : UserObservation
   ClickObservation --> UserObservation : "instance of"
 
   object LoginObservation {
   } 
-  LoginObservation : UserObservation
   LoginObservation --> UserObservation : "instance of"
 
   object TaskFinishedObservation {
   } 
-  TaskFinishedObservation : UserObservation
   TaskFinishedObservation --> UserObservation : "instance of"
 
   object ErrorCommittedObservation {
   } 
-  ErrorCommittedObservation : UserObservation
   ErrorCommittedObservation --> UserObservation : "instance of"
 
-  object WeekFinishedObservation {
+  object HourPassedObservation{
+
+  } 
+  HourPassedObservation --> SystemObservation : "instance of"
+
+  object DayPassedObservation{ 
   }
-  WeekFinishedObservation : SystemObservation
-  WeekFinishedObservation --> SystemObservation : "instance of"
+  DayPassedObservation --> SystemObservation : "instance of"
 
-  Observation --> KeySituation : "triggers"
+  object WeekPassedObservation {
+  }
+  WeekPassedObservation --> SystemObservation : "instance of"
+
+  object MechanicInteraction {
+  }
+  MechanicInteraction --> UserObservation : "instance of"
 }
-
-Observations.Observation --> Metrics_and_Measurements.Measurement : "produces" 
-Metrics_and_Measurements.Measurement --> Metrics_and_Measurements.MetricComputation : "triggers" 
 
 package Program_and_Tasks #ebffe8ff {
 
@@ -379,8 +279,6 @@ package UserModel #fde8ffff {
   User --> "1" Program : "has"
   User --> "0..* {ordered}" MotivationalState : "has"
   User --> "0..* {ordered}" CognitiveLoadState : "has"
-  User --> "1" Observation : "actor"
-
 
   class MotivationalState #f59bff { 
     +timestamp: DateTime
@@ -397,14 +295,9 @@ package UserModel #fde8ffff {
   High --> MotivationalState : instance of
   OtherMotivationalStates --> MotivationalState : instance of
 
-  MotivationalState --> Metric : "calculated from"
-  MotivationalState --> Program : "calculated from"
-
   class CognitiveLoadState #f59bff { 
     +timestamp: DateTime 
   }
-
-  CognitiveLoadState --> Metric : "calculated from"
 
   together {
     object "…" as OtherCognitiveLoadStates
@@ -424,15 +317,9 @@ package UserModel #fde8ffff {
 
   User --> "0..*" UserTraitWeight : "has"
 }
-UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
-UserModel.MotivationalState --> Metrics_and_Measurements.Adherence : "derivedFrom"
-UserModel.MotivationalState --> Program_and_Tasks.Program : "derivedFrom"
-UserModel.User --> "1..*" Metrics_and_Measurements.Metric   : "has"
-UserModel.User --> "1..*" Interventions.Intervention   : "receives"
+
 
 package UserTraits #fcffe8ff {
-
-  left to right direction
   class UserTrait {
     +name: string
   }
@@ -478,7 +365,6 @@ package UserTraits #fcffe8ff {
       The Disruptor is motivated by Change. In general, they want to disrupt your system, either directly or through other users to force positive or negative change.
     }
     Disruptor --> PlayerType : "instance of"
-
 
     class DigitalLiteracy extends UserTrait
     hide DigitalLiteracy members
@@ -611,17 +497,39 @@ package MotivationalMechanics #fff6e8ff {
     class Mapping {
       weight: float
     }
-    Mapping --> UserTrait : "has"
-
+    
     object Level_and_Experience_Point_System_to_Player {
       weight = 0.8
     }
     Level_and_Experience_Point_System_to_Player --> Mapping : "instance of"
 
-    Mapping --> UserTrait : "references"
-    Mapping --> MotivationalMechanic : "references"
+    Mapping --> UserTraits.UserTrait : "has"
+    Mapping --> UserTraits.UserTrait : "references"
+    Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
+
   }
 }
-MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
 
+MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
+Observations.Observation --> Metrics.MetricComputation : "input"
+
+Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
+Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
+
+Interventions.Intervention "0..*" --> "0..*" Metrics.Metric : "considers"
+Interventions.Intervention "0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
+
+Observations.Observation --> KeySituations.KeySituation : "triggers"
+
+UserModel.MotivationalState --> Metrics.Metric : "reads"
+UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
+
+UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
+UserModel.User --> "1..*" Metrics.Metric   : "has"
+UserModel.User --> "1..*" Interventions.Intervention   : "receives"
+UserModel.User --> "0..*" Observations.Observation : "actor"
+
+UserModel.MotivationalState --> Metrics.WeeklyAdherence : "calculated from"
+
+KeySituations.KeySituation --> Interventions.Intervention : "triggers"
 @enduml
