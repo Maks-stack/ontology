@@ -16,11 +16,9 @@ package Metrics #ffe8e8ff {
     +value: float
   }
 
-  object DailyAdherence
-  DailyAdherence --> Metric : "instance of"
+  class DailyAdherence extends Metric
 
-  object WeeklyAdherence
-  WeeklyAdherence --> Metric : "instance of"
+  class WeeklyAdherence extends Metric
 
   ' Computation is aware of the scope it targets
   class MetricComputation {
@@ -28,66 +26,27 @@ package Metrics #ffe8e8ff {
   }
   MetricComputation --> Metric : "produces"
 
-  object MechanicUsageRate
-  MechanicUsageRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicUsageRate --> Metric : "instance of"
-
-  object MechanicDisplayRate
-  MechanicDisplayRate : timestamp = 2023-10-01T12:00:00Z
-  MechanicDisplayRate --> Metric : "instance of"
-
-  object MechanicEngagement
-  MechanicEngagement : timestamp = 2023-10-01T12:00:00Z
-  MechanicEngagement --> Metric : "instance of"
-
-  object SessionDuration
-  SessionDuration : mechanicId = 101
-  SessionDuration : timestamp = 2025-04-21T09:00:00Z
-  SessionDuration --> Metric : "instance of"
-
-  object ClickRate
-  ClickRate : mechanicId = 101
-  ClickRate : timestamp = 2025-04-21T09:00:00Z
-  ClickRate --> Metric : "instance of"
-
-  object Adherence
-  Adherence : timestamp = 2023-10-01T12:00:00Z
-  Adherence --> Metric : "instance of"
-
-  object HesitationTime
-  HesitationTime : timestamp = 2023-10-01T12:00:00Z
-  HesitationTime --> Metric : "instance of"
+  class MechanicUsageRate extends Metric
+  class MechanicDisplayRate extends Metric
+  class MechanicEngagement extends Metric
+  class SessionDuration extends Metric
+  class ClickRate extends Metric
+  class Adherence extends Metric
+  class HesitationTime extends Metric
 }
 
 package KeySituations #e8faffff {
-  class KeySituation {
-    +timestamp: DateTime
-    +screen: String
-  }
 
-  object MechanicDisplayedKeySituation
-  MechanicDisplayedKeySituation --> KeySituation : "instance of"
+  class KeySituation
 
-  object MechanicInteractionKeySituation
-  MechanicInteractionKeySituation --> KeySituation : "instance of"
-
-  object MilestoneReachedKeySituation
-  MilestoneReachedKeySituation --> KeySituation : "instance of"
-
-  object DailyChallengePosedKeySituation
-  DailyChallengePosedKeySituation --> KeySituation : "instance of"
-
-  object SessionStartedKeySituation
-  SessionStartedKeySituation --> KeySituation : "instance of"
-  
-  object TaskStartedKeySituation
-  TaskStartedKeySituation --> KeySituation : "instance of"
-
-  object TaskFinishedKeySituation
-  TaskFinishedKeySituation --> KeySituation : "instance of"
-
-  object SessionEndedKeySituation
-  SessionEndedKeySituation --> KeySituation : "instance of"
+  class MechanicDisplayedKeySituation extends KeySituation
+  class MechanicInteractionKeySituation extends KeySituation
+  class MilestoneReachedKeySituation extends KeySituation
+  class DailyChallengePosedKeySituation extends KeySituation
+  class SessionStartedKeySituation extends KeySituation
+  class TaskStartedKeySituation extends KeySituation
+  class TaskFinishedKeySituation extends KeySituation
+  class SessionEndedKeySituation extends KeySituation
 
   note left of KeySituation
   Generic KeySituation structure used for multiple behavioral logs,
@@ -97,7 +56,7 @@ package KeySituations #e8faffff {
 
 package Interventions #e8e8ffff {
   class Intervention {
-    
+    timestamp: DateTime
   }
 
   note right of Intervention
@@ -123,23 +82,19 @@ package Interventions #e8e8ffff {
   Questionnaire --> Intervention  : "instance of"
   AlertMessage --> Intervention  : "instance of"
 
-  object Intrinsic_Motivation_Inventory 
-  Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
+  class Intrinsic_Motivation_Inventory extends Questionnaire  
 
-  object User_Engagement_Scale
-  User_Engagement_Scale --> Questionnaire : "instance of"
+  class User_Engagement_Scale extends Questionnaire  
 
-  object SystemNotice
-  SystemNotice --> AlertMessage : "instance of"
+  class SystemNotice extends Questionnaire  
 
-  object PromptMessage
-  PromptMessage --> AlertMessage : "instance of"
+  class PromptMessage extends Questionnaire 
 }
 
-package Telemetry #f1f1f1ff{
+package EventRegistration #f1f1f1ff{
 
   legend top right
-  Telemetry: evaluated user/system actions.
+  EventRegistration: evaluated user/system actions.
   relation to user with user being actor
   Event can trigger a keysituation
   Event produces a measurement
@@ -167,38 +122,21 @@ package Telemetry #f1f1f1ff{
   Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
   end note
 
-  object ClickEvent  {
-  } 
-  ClickEvent --> UserEvent : "instance of"
+  class ClickEvent extends UserEvent 
 
-  object LoginEvent {
-  } 
-  LoginEvent --> UserEvent : "instance of"
+  class LoginEvent extends UserEvent 
 
-  object TaskFinishedEvent {
-  } 
-  TaskFinishedEvent --> UserEvent : "instance of"
+  class TaskFinishedEvent extends UserEvent 
 
-  object ErrorCommittedEvent {
-  } 
-  ErrorCommittedEvent --> UserEvent : "instance of"
+  class ErrorCommittedEvent extends UserEvent 
 
-  object HourPassedEvent{
+  class HourPassedEvent extends SystemEvent 
 
-  } 
-  HourPassedEvent --> SystemEvent : "instance of"
+  class DayPassedEvent extends SystemEvent
 
-  object DayPassedEvent{ 
-  }
-  DayPassedEvent --> SystemEvent : "instance of"
+  class WeekPassedEvent extends SystemEvent
 
-  object WeekPassedEvent {
-  }
-  WeekPassedEvent --> SystemEvent : "instance of"
-
-  object MechanicInteraction {
-  }
-  MechanicInteraction --> UserEvent : "instance of"
+  class MechanicInteraction extends UserEvent  
 }
 
 package Program_and_Tasks #ebffe8ff {
@@ -282,17 +220,17 @@ package UserModel #fde8ffff {
   }
 
   User --> "1" Program : "has"
-  User --> "0..* {ordered}" MotivationalState : "has"
-  User --> "0..* {ordered}" CognitiveLoadState : "has"
+  User --> "1..*" MotivationalState : "has"
+  User --> "1..*" CognitiveLoadState : "has"
 
   class MotivationalState #f59bff { 
     +timestamp: DateTime
   }
   together {
-    object "…" as OtherMotivationalStates
-    object Low
-    object Medium
-    object High
+    class "…" as OtherMotivationalStates
+    class Low extends MotivationalState
+    class Medium extends MotivationalState
+    class High extends MotivationalState
   }
 
   Low --> MotivationalState : instance of
@@ -305,10 +243,10 @@ package UserModel #fde8ffff {
   }
 
   together {
-    object "…" as OtherCognitiveLoadStates
-    object Underchallenged
-    object OptimalLoad
-    object Overloaded
+    class "…" as OtherCognitiveLoadStates
+    class Underchallenged extends CognitiveLoadState
+    class OptimalLoad extends CognitiveLoadState
+    class Overloaded extends CognitiveLoadState
   }
 
   Underchallenged --> CognitiveLoadState : instance of
@@ -320,7 +258,7 @@ package UserModel #fde8ffff {
     +weight: float  ' (0.0 – 1.0) '
   }
 
-  User --> "0..*" UserTraitWeight : "has"
+  User --> "1..*" UserTraitWeight : "has"
 }
 
 
@@ -421,6 +359,7 @@ package MotivationalMechanics #fff6e8ff {
   '//----------------------------------Progress Indicators---------------------------------------------'
   class Progress_Indicators extends MotivationalMechanic
 
+  object Level_and_Experience_Point_System
   Level_and_Experience_Point_System --> Progress_Indicators : "instance of"
 
   '//----------------------------------Competition with others---------------------------------------------'
@@ -467,7 +406,7 @@ package MotivationalMechanics #fff6e8ff {
 
   Community_Insights --> Social_Networking : "instance of"
 
-  '//---------------------------------Surprises and Special Telemetry---------------------------------------------'
+  '//---------------------------------Surprises and Special Events---------------------------------------------'
   class Surprises_and_Events extends MotivationalMechanic
   hide Surprises_and_Events members
   object Mystery_Boxes {
@@ -476,12 +415,12 @@ package MotivationalMechanics #fff6e8ff {
   Mystery_Boxes --> Surprises_and_Events : "instance of"
   
   '//---------------------------------Motivational Messages---------------------------------------------'
-  class Motivational_Messages extends MotivationalMechanic
-  hide Motivational_Messages members
-  object Encouraging_Messages {
+  class Motivational_Message extends MotivationalMechanic
+  hide Motivational_Message members
+  object Encouraging_Message {
     Positive reinforcement to sustain motivation.
   }
-  Encouraging_Messages --> Motivational_Messages : "instance of"
+  Encouraging_Message --> Motivational_Message : "instance of"
   '//---------------------------------Time-Based Challenges---------------------------------------------'
   class Time_Based_Challenges extends MotivationalMechanic
   hide Time_Based_Challenges members
@@ -498,17 +437,11 @@ package MotivationalMechanics #fff6e8ff {
   In_Game_Currency --> Rewards_and_Unlocks : "instance of"
 
   package Usertrait_Mechanic_Mapping {
-
-    class Mapping {
-      weight: float
-    }
     
     object Level_and_Experience_Point_System_to_Player {
       weight = 0.8
     }
-    Level_and_Experience_Point_System_to_Player --> Mapping : "instance of"
-
-
+    Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Mapping : "instance of"
   }
 }
 
@@ -517,16 +450,17 @@ MotivationalMechanics.Mapping --> UserTraits.UserTrait : "references"
 MotivationalMechanics.Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
 
 MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
-Telemetry.Event "1..*  " --> Metrics.MetricComputation : "triggers"
-Metrics.MetricComputation --> Telemetry.EventCollection : "uses"
+EventRegistration.Event "1..*  " --> Metrics.MetricComputation : "triggers"
+Metrics.MetricComputation --> EventRegistration.EventCollection : "uses"
 
 Interventions.Intervention --> UserModel.MotivationalState : "selectedByCurrentState"
 Interventions.Intervention --> "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
+Interventions.Intervention --> "0..*" UserModel.User : "targets"
 
-Interventions.Intervention "0..*" --> "0..*" Metrics.Metric : "considers"
-Interventions.Intervention "0..*" --> "0..*" UserModel.UserTraitWeight : "considers"
+Interventions.Intervention "1..*" --> "1..*" Metrics.Metric : "considers"
+Interventions.Intervention "1..*" --> "1..*" UserModel.UserTraitWeight : "considers"
 
-Telemetry.Event --> KeySituations.KeySituation : "triggers"
+EventRegistration.Event "*..*" --> "*..*" KeySituations.KeySituation : "triggers *"
 
 UserModel.MotivationalState --> Metrics.Metric : "reads"
 UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
@@ -534,9 +468,6 @@ UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
 UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
 UserModel.User --> "1..*" Metrics.Metric   : "has"
 UserModel.User --> "1..*" Interventions.Intervention   : "receives"
-UserModel.User --> "1..*" Telemetry.Event : "actor"
-
-UserModel.MotivationalState --> Metrics.WeeklyAdherence : "calculated from"
 
 KeySituations.KeySituation --> Interventions.Intervention : "triggers"
 @enduml

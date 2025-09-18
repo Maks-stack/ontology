@@ -41,26 +41,14 @@
     <button class="pkgbtn" id="clearPkgBtn" title="Clear highlight">Clear</button>
   </div>
 
-  <div class="wrap">
+  <div class="wrap" style="margin-left: 200px;">
     <h1>Highlight and select elements</h1>
     <div class="note">
       - Click an element to select and highlight it.<br/>
       - Click on the white or empty area to deselect.<br/>
       - Scroll to zoom, drag to pan, double-click to zoom in, use the buttons to reset.
       - use searchbar to quickly find elements
-      <ul>
-        <b>Latest Changes:</b>
-        <li>Renamed <code>GameMechanic</code> → <code>MotivationalMechanic</code>.</li>
-        <li><code>Interventions.Intervention --&gt; UserModel.MotivationalState : "selectedByCurrentState"</code></li>
-        <li><code>Interventions.Intervention "0..*" --&gt; "0..*" Metrics.Metric : "considers"</code></li>
-        <li><code>Interventions.Intervention --&gt; "0..*" MotivationalMechanics.MotivationalMechanic : "toggles on/off"</code></li>
-        <li>Removed mechanic categories as classes; all motivational mechanics are now instances of the former category class.</li>
-        <li>User relations added: <code>User --&gt; MotivationalState</code> / <code>User --&gt; CognitiveLoadState</code> (<em>has</em>).</li>
-        <li><code>UserModel.User --&gt; "0..*" Metrics.Metric : "has"</code></li>
-        <li><code>class Metric { +timestamp: DateTime }</code></li>
-        <li>Simplified <code>UserTraitWeight</code>: only <code>trait</code> and <code>weight</code> kept.</li>
-        <li><code>KeySituations.KeySituation "0..*" --&gt; "0..*" Interventions.Intervention : triggers</code></li>
-      </ul>
+     <ul> <li><strong>Metrics</strong> <ul> <li>Simplified the model: dropped <code>Measurement</code>, <code>GeneralMetric</code>, and <code>MechanicMetric</code>; kept a single <code>Metric</code> concept with concrete instances.</li> <li>Added <code>DailyAdherence</code> and <code>WeeklyAdherence</code> as instances of <code>Metric</code>.</li> <li><code>MetricComputation</code> now produces <code>Metric</code> and takes input from <code>Telemetry.EventCollection</code> (triggered by <code>Telemetry.Event</code>).</li> </ul> </li> <li><strong>Telemetry (new)</strong> <ul> <li>Introduced <code>Event</code> with subtypes <code>UserEvent</code> and <code>SystemEvent</code>, plus <code>EventCollection</code> to aggregate events.</li> <li>Events now trigger <code>KeySituation</code> and kick off <code>MetricComputation</code>; <code>User</code> is the actor of events.</li> </ul> </li> <li><strong>KeySituations</strong> <ul> <li>Collapsed the previous subtype tree into one <code>KeySituation</code> concept with named instances; still linked to <code>Intervention</code> via “triggers”.</li> </ul> </li> <li><strong>Interventions</strong> <ul> <li>Streamlined the hierarchy: removed <code>ImmediateIntervention</code>, <code>MechanicIntervention</code>, and scheduling constructs; kept <code>Questionnaire</code> and <code>AlertMessage</code> under <code>Intervention</code>.</li> </ul> </li> <li><strong>Program_and_Tasks</strong> <ul> <li>Dropped adherence calculation links to <code>Task</code>/<code>TaskRequirement</code> and the <code>Program → KeySituation</code> trigger.</li> </ul> </li> <li><strong>UserModel</strong> <ul> <li>Replaced <code>User → UserAction</code> with <code>User → Telemetry.Event</code> (actor).</li> <li>States (<code>MotivationalState</code>, <code>CognitiveLoadState</code>) “read” <code>Metric</code>; <code>MotivationalState</code> is derived from <code>WeeklyAdherence</code>.</li> </ul> </li> <li><strong>MotivationalMechanics</strong> <ul> <li>Kept the <code>Mapping</code> concept; removed the old <code>MechanicTraitWeight</code>; mappings reference <code>UserTrait</code> and <code>MotivationalMechanic</code>.</li> </ul> </li> </ul>
     </div>
 
     <input id="searchBox" list="graphTerms" placeholder="Search element…"
