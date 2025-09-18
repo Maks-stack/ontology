@@ -436,16 +436,15 @@ package MotivationalMechanics #fff6e8ff {
   }
   In_Game_Currency --> Rewards_and_Unlocks : "instance of"
 
-  package Usertrait_Mechanic_Mapping {
+  
     
-    object Level_and_Experience_Point_System_to_Player {
-      weight = 0.8
-    }
-    Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Mapping : "instance of"
+  object Level_and_Experience_Point_System_to_Player {
+    weight = 0.8
   }
+  Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Mapping : "instance of"
+  
 }
 
-MotivationalMechanics.Mapping --> UserTraits.UserTrait : "has"
 MotivationalMechanics.Mapping --> UserTraits.UserTrait : "references"
 MotivationalMechanics.Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
 
