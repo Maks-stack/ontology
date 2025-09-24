@@ -10,6 +10,11 @@ hide empty members
 
 left to right direction
 
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+
 package Metrics #ffe8e8ff {
   class Metric {
     +timestamp: DateTime
@@ -33,6 +38,25 @@ package Metrics #ffe8e8ff {
   class ClickRate extends Metric
   class Adherence extends Metric
   class HesitationTime extends Metric
+
+  object user_U123 {
+    externalId = "U123"
+  }
+
+  object m_da_2025_09_15 {
+    timestamp = 2025-09-15T08:00:00Z\n
+    value = 0.86
+  } 
+  m_da_2025_09_15 --> DailyAdherence : "instance of"
+  m_da_2025_09_15 --> user_U123 : measuredFor
+
+  object m_usageRate_lexp_2025_09_15 {
+    timestamp = 2025-09-15T08:05:00Z\
+    value = 0.42
+  }
+  m_usageRate_lexp_2025_09_15 --> MechanicUsageRate : "instance of"
+  m_usageRate_lexp_2025_09_15 --> user_U123 : measuredFor
+  
 }
 
 package KeySituations #e8faffff {
@@ -46,12 +70,19 @@ package KeySituations #e8faffff {
   class SessionStartedKeySituation extends KeySituation
   class TaskStartedKeySituation extends KeySituation
   class TaskFinishedKeySituation extends KeySituation
+  ' --- TaskFinished key situation instance ---
+  object ks_taskFinished_2025_09_15_0810 {
+    description = "User completed Memory Game task"
+  }
+  ks_taskFinished_2025_09_15_0810 --> KeySituations.TaskFinishedKeySituation : "instance of"
+
   class SessionEndedKeySituation extends KeySituation
 
   note left of KeySituation
   Generic KeySituation structure used for multiple behavioral logs,
   such as screen visits, mechanic usage, and session tracking.
   end note
+  
 }
 
 package Interventions #e8e8ffff {
@@ -104,11 +135,12 @@ package EventRegistration #f1f1f1ff{
     +timestamp: DateTime
     +element
   }
-
+  together {
   class UserEvent extends Event {
   }
 
   class SystemEvent extends Event {
+  }
   }
 
   class EventCollection {
@@ -121,23 +153,40 @@ package EventRegistration #f1f1f1ff{
   Event of User Action or System event, recorded and evaluated by application.
   Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
   end note
+  together {
+    class ClickEvent extends UserEvent 
 
-  class ClickEvent extends UserEvent 
+    class LoginEvent extends UserEvent 
 
-  class LoginEvent extends UserEvent 
+    class TaskFinishedEvent extends UserEvent 
 
-  class TaskFinishedEvent extends UserEvent 
+    ' --- TaskFinished event instance ---
+    object task_T42 {
+      title = "Memory Game"
+    }
+    
 
-  class ErrorCommittedEvent extends UserEvent 
+    object evt_taskFinished_2025_09_15_0810 {
+      timestamp = 2025-09-15T08:10:00Z
+      element = "task_T42"
+    }
+    evt_taskFinished_2025_09_15_0810 --> EventRegistration.TaskFinishedEvent : "instance of"
+    evt_taskFinished_2025_09_15_0810 --> task_T42 : element
 
-  class HourPassedEvent extends SystemEvent 
+    class ErrorCommittedEvent extends UserEvent 
 
-  class DayPassedEvent extends SystemEvent
+    class HourPassedEvent extends SystemEvent 
 
-  class WeekPassedEvent extends SystemEvent
+    class DayPassedEvent extends SystemEvent
 
-  class MechanicInteraction extends UserEvent  
+    class WeekPassedEvent extends SystemEvent
+
+    class MechanicInteraction extends UserEvent  
+    }
 }
+
+EventRegistration.task_T42 --> Program_and_Tasks.Task : "instance of"
+EventRegistration.evt_taskFinished_2025_09_15_0810 --> KeySituations.ks_taskFinished_2025_09_15_0810 : "triggers"
 
 package Program_and_Tasks #ebffe8ff {
 
@@ -279,35 +328,48 @@ package UserTraits #fcffe8ff {
     Playertype is a representation of a user's gaming style or approach.
     end note
 
-    object Philanthropist {
-      Motivated by Purpose. Philanthropists are altruistic, aiming to enrich the lives of others and make a meaningful impact. They are driven by the desire to give back.
-    }
-    Philanthropist --> PlayerType : "instance of"
+  object Philanthropist {
+    Motivated by Purpose.\n
+    Philanthropists are altruistic,\n
+    aiming to enrich others' lives.
+  }
+  Philanthropist --> PlayerType : "instance of"
 
-    object Achiever {
-      Motivated by Mastery. Achievers seek to learn new skills and continually improve themselves. They thrive on challenges and the satisfaction that comes from overcoming them.
-    }
-    Achiever --> PlayerType : "instance of"
+  object Achiever {
+    Motivated by Mastery.\n
+    Achievers seek to learn new skills\n
+    and continuamlly improve themselves.
+  }
+  Achiever --> PlayerType : "instance of"
 
-    object Free_Spirit {
-      Motivated by Autonomy. Free Spirits desire the freedom to explore and create. Some are creators at heart, while others are explorers. All share a common need for independence.
-    }
-    Free_Spirit --> PlayerType : "instance of"
+  object Free_Spirit {
+    Motivated by Autonomy.\n
+    Free Spirits desire freedom to explore\n
+    and create independently.
+  }
+  Free_Spirit --> PlayerType : "instance of"
 
-    object Socializer {
-      The Socializer is motivated by Relatedness. Socializers enjoy interacting with others and building strong social connections. Their goal is to foster relationships and create a sense of community.
-    }
-    Socializer --> PlayerType : "instance of"
+  object Socializer {
+    Motivated by Relatedness.\n
+    Socializers enjoy interaction and\n
+    building social connections.
+  }
+  Socializer --> PlayerType : "instance of"
 
-    object Player {
-      The Player is motivated by Rewards. They will do what is needed of them to collect rewards from a system. They are in it for themselves.
-    }
-    Player --> PlayerType : "instance of"
+  object Player {
+    Motivated by Rewards.\n
+    Players do what is needed to collect\n
+    rewards for themselves.
+  }
+  Player --> PlayerType : "instance of"
 
-    object Disruptor {
-      The Disruptor is motivated by Change. In general, they want to disrupt your system, either directly or through other users to force positive or negative change.
-    }
-    Disruptor --> PlayerType : "instance of"
+  object Disruptor {
+    Motivated by Change.\n
+    Disruptors try to alter the system,\n
+    forcing positive or negative change.
+  }
+  Disruptor --> PlayerType : "instance of"
+
 
     class DigitalLiteracy extends UserTrait
     hide DigitalLiteracy members
@@ -337,7 +399,7 @@ package UserTraits #fcffe8ff {
     and complete tasks independently.
     end note
 
-    object FrustrationTolerance
+    class FrustrationTolerance extends UserTrait  
     hide FrustrationTolerance members
     FrustrationTolerance : UserTrait
     FrustrationTolerance : userId = 1
@@ -349,12 +411,16 @@ package UserTraits #fcffe8ff {
     end note
   }
 }
+MotivationalMechanics.Usertrait_Mechanic_Mapping.TraitMechanicMapping --> UserTraits.UserTrait : "has"
+MotivationalMechanics.Usertrait_Mechanic_Mapping.TraitMechanicMapping --> MotivationalMechanics.MotivationalMechanic : "has"
 
 package MotivationalMechanics #fff6e8ff {
 
   left to right direction
 
   class MotivationalMechanic 
+  hide MotivationalMechanic members
+
   
   '//----------------------------------Progress Indicators---------------------------------------------'
   class Progress_Indicators extends MotivationalMechanic
@@ -415,12 +481,12 @@ package MotivationalMechanics #fff6e8ff {
   Mystery_Boxes --> Surprises_and_Events : "instance of"
   
   '//---------------------------------Motivational Messages---------------------------------------------'
-  class Motivational_Message extends MotivationalMechanic
-  hide Motivational_Message members
-  object Encouraging_Message {
+  class Motivational_Messages extends MotivationalMechanic
+  hide Motivational_Messages members
+  object Encouraging_Messages {
     Positive reinforcement to sustain motivation.
   }
-  Encouraging_Message --> Motivational_Message : "instance of"
+  Encouraging_Messages --> Motivational_Messages : "instance of"
   '//---------------------------------Time-Based Challenges---------------------------------------------'
   class Time_Based_Challenges extends MotivationalMechanic
   hide Time_Based_Challenges members
@@ -436,19 +502,38 @@ package MotivationalMechanics #fff6e8ff {
   }
   In_Game_Currency --> Rewards_and_Unlocks : "instance of"
 
-  
-    
-  object Level_and_Experience_Point_System_to_Player {
-    weight = 0.8
-  }
-  Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Mapping : "instance of"
-  
-}
+  package Usertrait_Mechanic_Mapping {
 
-MotivationalMechanics.Mapping --> UserTraits.UserTrait : "references"
-MotivationalMechanics.Mapping --> MotivationalMechanics.MotivationalMechanic : "references"
+    class TraitMechanicMapping {
+      Trait : UserTrait
+      Mechanic: MotivationalMechanic
+      +weight: float  ' (0.0 – 1.0) '
+    }
+
+    object Level_and_Experience_Point_System_to_Player {
+      Trait = Player
+      Mechanic = Level_and_Experience_Point_System
+      weight = 0.8
+    }
+    Level_and_Experience_Point_System_to_Player : TraitMechanicMapping
+    Level_and_Experience_Point_System_to_Player --> TraitMechanicMapping : "instance of"
+
+    Level_and_Experience_Point_System_to_Player --> Player : "maps"
+    Level_and_Experience_Point_System_to_Player --> Level_and_Experience_Point_System : "maps"
+  }
+  Metrics.m_usageRate_lexp_2025_09_15 --> MotivationalMechanics.Level_and_Experience_Point_System : aboutMechanic
+
+}
+' put after all package blocks are declared
+Metrics -[hidden]-> EventRegistration
+EventRegistration -[hidden]-> KeySituations
+KeySituations -[hidden]-> Interventions
+Interventions -[hidden]-> UserModel
+UserModel -[hidden]-> UserTraits
+UserTraits -[hidden]-> MotivationalMechanics
 
 MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
+
 EventRegistration.Event "1..*  " --> Metrics.MetricComputation : "triggers"
 Metrics.MetricComputation --> EventRegistration.EventCollection : "uses"
 
@@ -459,7 +544,7 @@ Interventions.Intervention --> "0..*" UserModel.User : "targets"
 Interventions.Intervention "1..*" --> "1..*" Metrics.Metric : "considers"
 Interventions.Intervention "1..*" --> "1..*" UserModel.UserTraitWeight : "considers"
 
-EventRegistration.Event "*..*" --> "*..*" KeySituations.KeySituation : "triggers *"
+EventRegistration.Event "0..*" --> "0..*" KeySituations.KeySituation : "triggers"
 
 UserModel.MotivationalState --> Metrics.Metric : "reads"
 UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
@@ -469,4 +554,6 @@ UserModel.User --> "1..*" Metrics.Metric   : "has"
 UserModel.User --> "1..*" Interventions.Intervention   : "receives"
 
 KeySituations.KeySituation --> Interventions.Intervention : "triggers"
+
+Metrics.m_usageRate_lexp_2025_09_15 --> MotivationalMechanics.Level_and_Experience_Point_System : "aboutMechanic"
 @enduml
