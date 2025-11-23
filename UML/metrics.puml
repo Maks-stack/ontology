@@ -1,0 +1,32 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+package Metrics #ffe8e8 {
+  class Metric #fda5a5ff {
+    +timestamp: DateTime
+    +value: float
+  }
+  class AdherenceMetric #ffcdcdff extends Metric
+  class EngagementMetric #ffcdcdff extends Metric
+  class PerformanceMetric #ffcdcdff extends Metric
+  class SystemMetric #ffcdcdff extends Metric
+  class MechanicState #ffcdcdff extends Metric
+
+
+  class DailyAdherence #ffcdcdff extends AdherenceMetric
+  class WeeklyAdherence #ffcdcdff extends AdherenceMetric
+  class MechanicUsageRate #ffcdcdff extends EngagementMetric
+  class MechanicDisplayRate #ffcdcdff extends EngagementMetric
+  class MechanicEngagement #ffcdcdff extends EngagementMetric
+  class SessionDuration #ffcdcdff extends SystemMetric
+  class ClickRate #ffcdcdff extends PerformanceMetric
+  class Adherence #ffcdcdff extends AdherenceMetric
+  class HesitationTime #ffcdcdff extends PerformanceMetric
+}
+@enduml

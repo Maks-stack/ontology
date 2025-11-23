@@ -1,0 +1,88 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 25
+skinparam ranksep 30
+skinparam packageStyle rectangle
+
+<style>
+  .thick { LineThickness 3 }
+</style>
+
+package Metrics #ffe8e8 {
+  class Metric <<thick>>
+}
+skinparam class {
+  BackgroundColor<<loop_start>> #fff3cd
+  BorderColor<<loop_start>> #d39e00
+  BorderThickness<<loop_start>> 2
+}
+
+package EventRegistration #f1f1f1 {
+  class Event <<loop_start>>
+  class TaskEvent extends Event
+}
+
+package KeySituations #e8faff {
+  class KeySituation <<thick>>
+  class TaskFinishedKeySituation extends KeySituation
+}
+
+package AssistantActions #e8e8ff {
+  class AssistantAction <<thick>>
+  class PromptMessage extends AssistantAction
+}
+
+package UserModel #fde8ff {
+  class User <<thick>>
+  class UserState
+  class UserTraitWeight
+  class MotivationalState extends UserState
+  class CognitiveLoadState extends UserState
+}
+
+
+
+package UserTraits #fcffe8 {
+  class UserTrait
+  class Player extends UserTrait
+}
+
+package MotivationalMechanics #fff6e8 {
+  class MotivationalMechanic
+  class Level_and_Experience_Point_System extends MotivationalMechanic
+}
+
+package Plan_and_Tasks  #ebffe8 {
+  class Plan
+  class Task
+}
+
+' ---------- Relationships ----------
+MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight : selected_by
+
+AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+AssistantActions.AssistantAction -[#444,thickness=6]-> "0..*" UserModel.User : targets
+AssistantActions.AssistantAction --> "1..*" Metrics.Metric : considers
+AssistantActions.AssistantAction --> "1..*" UserModel.UserTraitWeight : considers
+AssistantActions.AssistantAction --> "1..*" UserModel.UserState : considers
+
+EventRegistration.Event -[#444,thickness=6]-> KeySituations.KeySituation : triggers
+EventRegistration.Event -[#444,thickness=6]-> Metrics.Metric : produces
+Plan_and_Tasks.Task --> EventRegistration.TaskEvent : triggers
+Plan_and_Tasks.Plan --> Plan_and_Tasks.Task : contains
+EventRegistration.TaskEvent --> KeySituations.TaskFinishedKeySituation : triggers
+
+KeySituations.KeySituation -[#444,thickness=6]-> AssistantActions.AssistantAction : triggers
+
+UserModel.MotivationalState --> Metrics.Metric : reads
+UserModel.CognitiveLoadState --> Metrics.Metric : reads
+
+UserModel.UserTraitWeight --> UserTraits.UserTrait : references
+UserModel.User -[#444,thickness=6]-> Metrics.Metric : has
+UserModel.User --> AssistantActions.AssistantAction : receives
+UserModel.User --> Plan_and_Tasks.Plan : has
+@enduml

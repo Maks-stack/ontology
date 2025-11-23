@@ -1,0 +1,52 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 30
+skinparam ranksep 35
+skinparam packageStyle rectangle
+title Motivational Framework - System Flow
+
+package UserModel #fde8ff {
+  class User #f59bff
+  class UserTraitWeight #f7befeff
+  class LogState #f7befeff
+  class MotivationalState #f7befeff
+  class CogState #f7befeff
+}
+
+package Metrics #ffe8e8 {
+  class Metric #fda5a5ff
+}
+
+package AssistantActions #e8e8ff {
+  class AssistantAction #d6d6ff
+}
+
+package KeySituations #e8faff {
+  class KeySituation #bbf0ff
+}
+
+package MotivationalMechanics #fff6e8 {
+  class MotivationalMechanic #ffecceff
+}
+
+UserModel.User --> UserModel.LogState : has
+UserModel.User --> UserModel.CogState : has
+UserModel.User --> UserModel.MotivationalState : has
+UserModel.User --> UserModel.UserTraitWeight : has
+
+UserModel.CogState --> Metrics.Metric : reads
+UserModel.MotivationalState --> Metrics.Metric : reads
+UserModel.LogState  --> Metrics.Metric : reads 
+Metrics.Metric --> AssistantActions.AssistantAction : considers
+
+AssistantActions.AssistantAction --> KeySituations.KeySituation : triggers
+KeySituations.KeySituation --> AssistantActions.AssistantAction : triggers
+AssistantActions.AssistantAction --> MotivationalMechanics.MotivationalMechanic : toggles or logs
+
+UserModel.UserTraitWeight --> AssistantActions.AssistantAction : considers
+UserModel.UserTraitWeight --> MotivationalMechanics.MotivationalMechanic : selected_by
+@enduml

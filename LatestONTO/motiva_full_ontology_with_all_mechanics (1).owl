@@ -54,7 +54,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="http://example.org/motiva#triggeredBy">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-    <rdfs:domain rdf:resource="http://example.org/motiva#Intervention"/>
+    <rdfs:domain rdf:resource="http://example.org/motiva#AssistantAction"/>
     <rdfs:range rdf:resource="http://example.org/motiva#KeySituation"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://example.org/motiva#Progress_Bars_GT4">

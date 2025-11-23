@@ -1,0 +1,42 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+package EventRegistration #f1f1f1 {
+  legend top right
+  Evaluated user/system actions. Collections store events.
+  end legend
+
+  class Event #ccccccff {
+    
+    + timestamp: DateTime
+    
+    
+  }
+  together {
+    class UserEvent #e6e6e6ff extends Event
+    class SystemEvent #e6e6e6ff extends Event
+    class TaskEvent #e6e6e6ff extends UserEvent
+  }
+
+  class EventCollection 
+  EventCollection o-- "1..*" Event : stores
+
+  together {
+    class ClickEvent #e6e6e6ff extends UserEvent
+    class LoginEvent #e6e6e6ff extends UserEvent
+    class TaskFinishedEvent #e6e6e6ff extends TaskEvent
+    class ErrorCommittedEvent #e6e6e6ff extends UserEvent
+    class HourPassedEvent #e6e6e6ff extends SystemEvent
+    class DayPassedEvent #e6e6e6ff extends SystemEvent
+    class WeekPassedEvent #e6e6e6ff extends SystemEvent
+    class MechanicInteraction #e6e6e6ff extends UserEvent
+  }
+}
+@enduml

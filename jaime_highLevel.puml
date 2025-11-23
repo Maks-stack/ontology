@@ -1,0 +1,42 @@
+@startuml
+title Jaime Architecture Sketch
+
+left to right direction
+skinparam shadowing false
+
+skinparam packageStyle rectangle
+
+actor User as user
+
+rectangle "Main Platform" as platform
+rectangle "Motivational Assistant" as motivasst
+circle "Observer" as observer
+rectangle "Key Situations" as keysituations
+rectangle "Update" as update
+rectangle "Adaptation" as adaptation
+database "Domain Model" as domainmodel
+
+
+' === Connections ===
+user --> platform : actions
+platform --> observer : actions
+observer --> update : relevant events
+platform --> keysituations
+
+adaptation --> keysituations : user feedback\n(mensajes, activación de mecánicas)
+update --> domainmodel
+domainmodel <--> update
+domainmodel --> adaptation : metrics
+update --> adaptation : metrics
+
+motivasst --> update : relevant events
+
+' === Examples under key situations ===
+note bottom of keysituations
+login session
+task finished
+visit leaderboard
+achieved challenges/badges
+end note
+
+@enduml

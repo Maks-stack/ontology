@@ -1,0 +1,74 @@
+@startuml
+scale 1024 width
+scale 2024 height
+
+skinparam shadowing false
+hide stereotype
+hide empty members
+left to right direction
+skinparam nodesep 50
+skinparam ranksep 40
+skinparam ArrowThickness 0.6
+skinparam defaultFontSize 12
+skinparam ClassBorderColor #333333
+skinparam ClassBackgroundColor #ffffff
+skinparam packageStyle rectangle
+
+actor User as user
+
+package "User Interface" #ebffe8 {
+  rectangle Personal_Development #f1f1f1
+  rectangle Motivational_Assistant #e8e8ff {
+    rectangle ViewController_Mechanic1
+    rectangle ContentEngine_Mechanic1
+
+    rectangle ViewController_Mechanic2
+    rectangle ContentEngine_Mechanic2
+  }
+  
+}
+
+package "Motivational_Assistant_Adapter" #ebffe8 {
+  rectangle "EventMapper" as EventMapper #f1f1f1
+  rectangle "ActionBridge" as ActionBridge #f1f1f1
+}
+
+package Motivational_Assistant_Engine #e8e8ff {
+  rectangle "EventIngestion" as EventIngestion #d6d6ff
+  rectangle DecisionEngine_Mechanic1 #d6d6ff
+  rectangle DecisionEngine_Mechanic2 #d6d6ff
+
+  rectangle "CRUD Operator" as CRUDOperator #d6d6ff
+  
+  rectangle "DomainModel "as DomainModel #fde8ff
+}
+
+
+' --- User and System flow ---
+user --> Motivational_Assistant : interacts
+user --> Personal_Development : interacts
+Personal_Development --> EventMapper : emits Events
+
+' --- Adapter to MA ---
+EventMapper --> EventIngestion : relevant_event
+
+DecisionEngine_Mechanic1 --> ActionBridge : Assistant_Action
+DecisionEngine_Mechanic2 --> ActionBridge : Assistant_Action
+
+' --- Back to System ---
+ActionBridge --> ContentEngine_Mechanic1 : apply Assistant_Action
+ContentEngine_Mechanic1 --> ViewController_Mechanic1 : deliver messages/toggles mechanics
+ViewController_Mechanic1 --> EventMapper : emits resulting Events
+
+ActionBridge --> ContentEngine_Mechanic2 : apply Assistant_Action
+ContentEngine_Mechanic2 --> ViewController_Mechanic2 : deliver messages/toggles mechanics
+ViewController_Mechanic2 --> EventMapper : emits resulting Events
+
+' --- Data access ---
+EventIngestion --> CRUDOperator : provide events
+CRUDOperator <--> DomainModel: read/write
+
+DomainModel --> DecisionEngine_Mechanic1 : "domain_state"
+DomainModel --> DecisionEngine_Mechanic2 : "domain_state"
+
+@enduml

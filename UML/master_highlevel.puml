@@ -1,0 +1,32 @@
+@startuml
+title Motiva Framework — High-Level Overview
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+!include ./UML/metrics.puml
+!include ./UML/event_registration.puml
+!include ./UML/keysituations.puml
+!include ./UML/assistantActions.puml
+!include ./UML/user_model.puml
+!include ./UML/user_traits.puml
+!include ./UML/motivational_mechanics.puml
+!include ./UML/plan_and_tasks.puml
+!include ./UML/relationships.puml
+
+hide attributes
+hide methods
+hide circle
+hide stereotype
+hide fields
+
+skinparam class {
+  BackgroundColor White
+  BorderColor Black
+}
+@enduml

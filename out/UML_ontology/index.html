@@ -6,7 +6,7 @@
   <style>
     body { font-family: system-ui, sans-serif; margin: 24px; }
     .wrap { display: grid; gap: 12px; }
-    .note { font-size: 14px; opacity: .8; }
+    .note { font-size: 14px; opacity: .85; padding: 8px 10px; background:#f7f7f7; border:1px solid #e5e5e5; border-radius:8px; }
     .toolbar {
       position: fixed; right: 18px; bottom: 18px;
       display: grid; gap: 8px; z-index: 9999;
@@ -30,7 +30,8 @@
     .pkgbtn {
       border: 1px solid #ccc; background: #fff; padding: 6px 10px;
       border-radius: 8px; font: 13px system-ui, sans-serif; cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,.08); text-align: left; white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(0,0,0,.08); text-align: left;
+      max-width: 200px;
     }
     .pkgbtn:active { transform: translateY(1px); }
     .pkgbtn.is-active { border-color: #4b9cff; box-shadow: 0 0 0 2px rgba(75,156,255,.2); }
@@ -43,17 +44,20 @@
 
   <div class="wrap" style="margin-left: 200px;">
     <h1>Highlight and select elements</h1>
-    <div class="note">
-      - Click an element to select and highlight it.<br/>
-      - Click on the white or empty area to deselect.<br/>
-      - Scroll to zoom, drag to pan, double-click to zoom in, use the buttons to reset.
-      - use searchbar to quickly find elements
-     <ul> <li><strong>Metrics</strong> <ul> <li>Simplified the model: dropped <code>Measurement</code>, <code>GeneralMetric</code>, and <code>MechanicMetric</code>; kept a single <code>Metric</code> concept with concrete instances.</li> <li>Added <code>DailyAdherence</code> and <code>WeeklyAdherence</code> as instances of <code>Metric</code>.</li> <li><code>MetricComputation</code> now produces <code>Metric</code> and takes input from <code>Telemetry.EventCollection</code> (triggered by <code>Telemetry.Event</code>).</li> </ul> </li> <li><strong>Telemetry (new)</strong> <ul> <li>Introduced <code>Event</code> with subtypes <code>UserEvent</code> and <code>SystemEvent</code>, plus <code>EventCollection</code> to aggregate events.</li> <li>Events now trigger <code>KeySituation</code> and kick off <code>MetricComputation</code>; <code>User</code> is the actor of events.</li> </ul> </li> <li><strong>KeySituations</strong> <ul> <li>Collapsed the previous subtype tree into one <code>KeySituation</code> concept with named instances; still linked to <code>Intervention</code> via “triggers”.</li> </ul> </li> <li><strong>Interventions</strong> <ul> <li>Streamlined the hierarchy: removed <code>ImmediateIntervention</code>, <code>MechanicIntervention</code>, and scheduling constructs; kept <code>Questionnaire</code> and <code>AlertMessage</code> under <code>Intervention</code>.</li> </ul> </li> <li><strong>Program_and_Tasks</strong> <ul> <li>Dropped adherence calculation links to <code>Task</code>/<code>TaskRequirement</code> and the <code>Program → KeySituation</code> trigger.</li> </ul> </li> <li><strong>UserModel</strong> <ul> <li>Replaced <code>User → UserAction</code> with <code>User → Telemetry.Event</code> (actor).</li> <li>States (<code>MotivationalState</code>, <code>CognitiveLoadState</code>) “read” <code>Metric</code>; <code>MotivationalState</code> is derived from <code>WeeklyAdherence</code>.</li> </ul> </li> <li><strong>MotivationalMechanics</strong> <ul> <li>Kept the <code>Mapping</code> concept; removed the old <code>MechanicTraitWeight</code>; mappings reference <code>UserTrait</code> and <code>MotivationalMechanic</code>.</li> </ul> </li> </ul>
-    </div>
 
-    <input id="searchBox" list="graphTerms" placeholder="Search element…"
-       style="margin-left:auto; padding:6px 8px; border:1px solid #ccc; border-radius:8px; min-width:240px;">
-    <datalist id="graphTerms"></datalist>
+    <!-- Dynamic per-selection text lives here -->
+    <div id="noteBox" class="note"></div>
+
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <input id="searchBox" list="graphTerms" placeholder="Search element…"
+         style="margin-left:auto; padding:6px 8px; border:1px solid #ccc; border-radius:8px; min-width:240px;">
+      <datalist id="graphTerms"></datalist>
+
+      <!-- Single diagram picker -->
+      <select id="diagramPicker" style="padding:6px 8px; border:1px solid #ccc; border-radius:8px;">
+        <!-- options populated by JS -->
+      </select>
+    </div>
 
     <object id="svgObj" type="image/svg+xml" data="./UML_ontology.svg"
             width="100%" style="border:1px solid #ccc; max-height: 80vh;"></object>
@@ -128,13 +132,106 @@
   }
   function panBy(svg, state, dx, dy){ state.vb.x += dx; state.vb.y += dy; setViewBox(svg, state.vb); }
 
-  const svgObj = document.getElementById('svgObj');
+  // ====== Globals for UI ======
+  const svgObj   = document.getElementById('svgObj');
+  const pkgPanel = document.getElementById('pkgPanel');
+  const clearBtn = document.getElementById('clearPkgBtn');
+  const searchBox = document.getElementById('searchBox');
+  const datalist = document.getElementById('graphTerms');
+  const picker = document.getElementById('diagramPicker');
+  const noteBox = document.getElementById('noteBox');
 
+  // ====== Diagram switching with per-selection custom text ======
+  const DIAGRAMS = [
+    {
+      label:'Ontology',
+      path:'./master.svg',
+      note:`<strong>Ontology:</strong> 
+      Core semantic classes and relations. Use to reason about domain structure.`
+    },
+    {
+      label:'Instances',
+      path:'./UML_ontology_instances.svg',
+      note:`<strong>Instances:</strong> <br><br>
+      This diagram shows concrete instances for user U123 on 2025-09-15.<br><br>
+
+      EventRegistration records two events (session started, task finished) and one event collection window with counts and duration.<br>
+      Events trigger KeySituations for session start and task completion.<br><br>
+
+      Metrics capture adherence for the user and usage rate for the Level/XP mechanic.<br>
+      The event collection aggregates into adherence and summarizes the session-start situation.<br><br>
+
+      AssistantActions fire from the key situations: a welcome prompt at 08:12, a demographics form at 08:30, and an IMI survey at 09:00.<br>
+      These actions affect the UserModel, the IMI produces a metric, considers the user’s Player trait weight and the Player↔Level/XP mapping, and can toggle the Level/XP mechanic.<br><br>
+
+      UserModel holds the user instance and their Player trait weight (0.75) and owns a plan with a week-38 block and a Memory Game assignment with requirements (reps and level).<br><br>
+
+      Mappings link traits to mechanics with weights, e.g., Player→Level/XP (0.8) and Socializer→Community Insights (0.8).<br><br>
+
+      Net effect: events → situations → actions → user and metrics, with trait-mechanic mappings guiding which mechanics get reinforced or toggled.`
+    },
+    {
+      label:'High Level Ontology',
+      path:'./master_highlevel.svg',
+      note:`
+      <strong>High Level Overview :</strong> <br><br>
+      EventRegistration records occurrences in the system or user context and converts them into Metrics that quantify user activity. It can also initiate KeySituations, which represent contextually significant events requiring motivational handling.<br><br>
+      KeySituations activate AssistantActions, which constitute the assistant’s responses such as prompts, feedback, or adaptive interventions. These actions are informed by Metrics and the UserModel to ensure contextual relevance and are used to adjust or toggle specific MotivationalMechanics (e.g., rewards, goals, feedback loops).<br><br>
+      MotivationalMechanics are selected per user based on mappings between UserTraits (individual motivational or personality attributes) and mechanics with the highest predicted effectiveness. These mappings are represented in Usertrait_Mechanic_Mapping.<br><br>
+      The UserModel functions as the central representation of the individual, encompassing their state, traits, metrics, and assigned tasks. It maintains continuous reference to and synchronization with these components, completing the adaptive feedback loop between user behavior, system observation, and personalized motivation.`
+    },
+    {
+      label:'Architecture',
+      path:'./sketch_jaime_HighLevelArchitecture.svg',
+      note:`<strong>Architecture:</strong> <br><br>
+        The User interacts with the main system through the UI.<br><br>
+        The UI emits events to the Event Bus, which distributes them across system components.<br><br>
+        The Event Bus forwards selected events to the Motivational Assistant Adapter.<br><br>
+        Within this adapter, the Event Mapper translates system-level events into Motivational Events.<br><br>
+        These are processed by the Motivational Assistant’s Decision Engine, which generates Assistant Actions.<br><br>
+        The Action Bridge maps these actions to corresponding system-level events and content elements through the Content Engine.<br><br>
+        The Content Engine publishes the resulting content back to the Event Bus, completing the feedback loop.`
+    }
+  ];
+
+  function setDiagram(path){
+    localStorage.setItem('umlDiagramPath', path);
+
+    // set per-selection text
+    const meta = DIAGRAMS.find(d => d.path === path);
+    noteBox.innerHTML = meta?.note || '';
+
+    // reset UI tied to previous SVG
+    [...pkgPanel.querySelectorAll('.pkgbtn')].forEach(b => { if (b !== clearBtn) b.remove(); });
+    datalist.innerHTML = '';
+    searchBox.value = '';
+
+    // load svg
+    svgObj.data = path;
+
+    // sync picker
+    if (picker && [...picker.options].some(o => o.value === path)) picker.value = path;
+  }
+
+  function initPicker(){
+    picker.innerHTML = DIAGRAMS.map(d=>`<option value="${d.path}">${d.label}</option>`).join('');
+    const saved = localStorage.getItem('umlDiagramPath');
+    const initial = saved && DIAGRAMS.some(d=>d.path===saved) ? saved : DIAGRAMS[0].path;
+    picker.value = initial;
+    setDiagram(initial);
+  }
+  picker.addEventListener('change', ()=> setDiagram(picker.value));
+  initPicker();
+
+  // ====== Main loader per-diagram ======
   svgObj.addEventListener('load', () => {
     const svgDoc  = svgObj.contentDocument;
     if (!svgDoc) { console.warn('SVG contentDocument not available.'); return; }
     const svgRoot = svgDoc.documentElement;
     if (!svgRoot || svgRoot.nodeName.toLowerCase() !== 'svg') { console.warn('Embedded doc is not <svg>.'); return; }
+
+    // safety: wipe buttons on reload except Clear
+    [...pkgPanel.querySelectorAll('.pkgbtn')].forEach(b => { if (b !== clearBtn) b.remove(); });
 
     svgRoot.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     svgRoot.style.touchAction = 'none';
@@ -185,7 +282,7 @@
     }
     function onPointerMove(e){
       if(!isDragging || (pointerId!==null && e.pointerId!==pointerId)) return;
-      const dx=e.clientX-lastClientX, dy=e.clientY-lastClientY;
+      const dx=e.clientX-lastClientX; const dy=e.clientY-lastClientY;
       lastClientX=e.clientX; lastClientY=e.clientY;
       movedPx += Math.hypot(dx,dy);
       panDX+=dx; panDY+=dy;
@@ -204,7 +301,7 @@
 
     // ====== Keyboard shortcuts ======
     svgRoot.ownerDocument.addEventListener('keydown', (e) => {
-      if (e.key === '+') {
+      if (e.key === '+' || e.key === '=') {
         const r=svgRoot.getBoundingClientRect(); const c=clientPointToSvg(svgRoot,r.left+r.width/2,r.top+r.height/2);
         zoomAt(svgRoot, state, c, 1/1.1);
       } else if (e.key === '-') {
@@ -270,7 +367,7 @@
         const hit = el.cloneNode(false);
         hit.classList.add('hit');
         hit.removeAttribute('marker-start'); hit.removeAttribute('marker-mid'); hit.removeAttribute('marker-end');
-        g.appendChild(hit); // on top for clicks
+        g.appendChild(hit);
       });
     });
 
@@ -402,7 +499,6 @@
 
     // ====== Search wiring ======
     function focusAndHighlight(targetId){ highlightFor(targetId); }
-    const searchBox = document.getElementById('searchBox');
     function runSearch(q){
       const key = normalizeId(q); if(!key) return;
       let target = nameToId.get(key);
@@ -418,12 +514,9 @@
       if(label) suggestions.add(label);
     });
     [...elemGroups, ...clusterGroups].forEach(g => suggestions.add(g.id));
-    const dl=document.getElementById('graphTerms');
-    dl.innerHTML=[...suggestions].sort((a,b)=>a.localeCompare(b)).map(s=>`<option value="${s}">`).join('');
+    datalist.innerHTML=[...suggestions].sort((a,b)=>a.localeCompare(b)).map(s=>`<option value="${s}">`).join('');
 
     // ====== Left buttons for top-level clusters ======
-    const pkgPanel = document.getElementById('pkgPanel');
-    const clearBtn = document.getElementById('clearPkgBtn');
     clearBtn.addEventListener('click', () => {
       clearHighlight();
       pkgPanel.querySelectorAll('.pkgbtn').forEach(b => b.classList.remove('is-active'));
@@ -445,11 +538,11 @@
       pkgPanel.appendChild(btn);
     });
 
-    console.info('SVG pan/zoom initialized. viewBox=', state.vb);
+    console.info('SVG pan/zoom initialized. viewBox=', state.vb, 'diagram=', svgObj.data);
   });
 
   svgObj.addEventListener('error', () => {
-    console.error('Failed to load UML_ontology.svg. Check path and server.');
+    console.error('Failed to load SVG:', svgObj.data);
   });
   </script>
 </body>

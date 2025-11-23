@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+package UserModel #fde8ffff {
+  class User #f59bff
+
+  class UserState #f7befeff {
+    +timestamp: DateTime
+  }
+
+  class MotivationalState #f7befeff extends UserState
+  class Low #f5c6fbff extends MotivationalState
+  class Medium #f5c6fbff extends MotivationalState
+  class High #f5c6fbff extends MotivationalState
+
+  class CognitiveLoadState #f7befeff extends UserState
+  class Underchallenged #f5c6fbff extends CognitiveLoadState
+  class OptimalLoad #f5c6fbff extends CognitiveLoadState
+  class Overloaded #f5c6fbff extends CognitiveLoadState
+
+  class UserTraitWeight #f7befeff {
+    +weight: float
+  }
+
+  User --> "1..*" UserState : has
+  User --> "1..*" UserTraitWeight : has
+}
+@enduml

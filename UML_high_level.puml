@@ -1,0 +1,37 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 30
+skinparam ranksep 35
+skinparam packageStyle rectangle
+title Asistente Motivacional — Functional Flow
+
+Class User
+
+package Main_Platform #ebffe8 {
+  class KeySituations #e8faff
+  
+}
+
+class Observer #f1f1f1
+
+package Motivational_Assistant #e8e8ff {
+  class Update #d6d6ff
+  class Adaptation #d6d6ff
+  class DomainModel #fde8ff
+}
+
+User --> Main_Platform : actions
+Main_Platform --> Observer : actions
+Observer --> Motivational_Assistant.Update : relevant events
+Main_Platform.KeySituations --> Motivational_Assistant.Update : user feedback
+Motivational_Assistant.Update --> Motivational_Assistant.DomainModel : reads/writes
+Motivational_Assistant.DomainModel --> Motivational_Assistant.Update : provides data
+Motivational_Assistant.Update --> Motivational_Assistant.Adaptation : metrics
+Motivational_Assistant.Adaptation --> Motivational_Assistant.DomainModel : updates state
+Motivational_Assistant.Adaptation --> Main_Platform.KeySituations : user feedback
+Motivational_Assistant.Adaptation --> Motivational_Assistant.Update : user state
+@enduml

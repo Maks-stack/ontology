@@ -1,0 +1,48 @@
+@startuml
+
+skinparam shadowing false
+hide stereotype
+hide empty members
+skinparam nodesep 50
+skinparam ranksep 40
+skinparam ArrowThickness 0.6
+skinparam defaultFontSize 12
+skinparam ClassBorderColor #333333
+skinparam ClassBackgroundColor #ffffff
+' optional: try a more balanced solver
+' layout smetana
+
+  rectangle "EventRegistration" as EventRegistration #f1f1f1
+  rectangle "KeySituations" as KeySituations #e8faff
+  rectangle "AssistantActions" as AssistantActions #e8e8ff
+
+
+  rectangle "Metrics" as Metrics #ffe8e8
+  rectangle "UserModel" as UserModel #fde8ff
+  rectangle "Plan_and_Tasks" as Plan_and_Tasks #ebffe8
+
+  rectangle "UserTraits" as UserTraits #fcffe8
+  rectangle "Usertrait_Mechanic_Mapping" as UMM #ffffff
+  rectangle "MotivationalMechanics" as MotivationalMechanics #fff6e8
+
+
+
+
+
+
+
+
+UMM --> MotivationalMechanics : maps
+UMM --> UserTraits : maps
+MotivationalMechanics --> UserModel : selected_by
+AssistantActions --> MotivationalMechanics : toggles
+AssistantActions --> Metrics : considers
+AssistantActions --> UserModel : targets, considers
+EventRegistration --> KeySituations : triggers
+EventRegistration --> Metrics : produces
+KeySituations --> AssistantActions : triggers
+UserModel --> Metrics : reads, has
+UserModel --> UserTraits : references
+UserModel --> AssistantActions : receives
+UserModel --> Plan_and_Tasks : has
+@enduml

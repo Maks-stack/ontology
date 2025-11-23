@@ -1,0 +1,72 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+package Plan_and_Tasks #ebffe8ff {
+  class Plan #lightgreen { 
+    +name: String
+    +description: String
+  }
+  note right of Plan
+    Succession of task blocks (composites).
+  end note
+
+  class Task #lightgreen { 
+    +title: String
+    +description: String
+  }
+
+  class Level #lightgreen { 
+    +name: String
+    +difficulty: Int
+  }
+  note bottom of Level
+    Optional difficulty per task.
+  end note
+
+  class Repetitions #lightgreen { 
+    +count: Int
+  }
+  note bottom of Repetitions
+    Required to define plan.
+  end note
+
+  class TaskRequirement #lightgreen { 
+    +requiredRepetitions: int
+  }
+  note left of TaskRequirement
+    How many times a Task must be repeated on a Level.
+  end note
+
+  class TaskAssignment #lightgreen { 
+    +task: Task
+    +taskRequirement: TaskRequirement
+  }
+  note right of TaskAssignment
+    Assigns a Task and its requirements to a block.
+  end note
+
+  class TaskBlock #lightgreen { 
+    +title: String
+    +description: String
+    +startDate: DateTime
+    +endDate: DateTime
+  }
+  note right of TaskBlock
+    Composite grouping of assignments and blocks.
+  end note
+
+  TaskAssignment --> "1" Task : has assigned
+  TaskAssignment --> "1..*" TaskRequirement : has assigned
+  TaskRequirement --> "0..1" Level : can have
+  TaskRequirement --> "1..*" Repetitions : requires
+
+  Plan *--> "1..*" TaskBlock
+  TaskBlock *--> "1..*" TaskAssignment : contains
+}
+@enduml

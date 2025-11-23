@@ -1,0 +1,37 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+package AssistantActions #e8e8ff {
+  class AssistantAction #cacaff {
+    toggle : Boolean
+    stateChange : Boolean
+  }
+  note right of AssistantAction
+    One-off AssistantAction: activates/deactivates a mechanic
+    or prompts another user interaction.
+  end note
+
+  class Questionnaire #d6d6ff extends AssistantAction
+  class AlertMessage #d6d6ff extends AssistantAction
+  note right of AlertMessage
+    General info, warnings, or alerts to guide or prompt users.
+  end note
+
+  class Intrinsic_Motivation_Inventory #d6d6ff extends Questionnaire
+  class User_Engagement_Scale #d6d6ff extends Questionnaire
+  class SystemNotice #d6d6ff extends Questionnaire
+  class PromptMessage #d6d6ff extends Questionnaire
+  !if ($renderMode == "master")
+  
+  !else
+  AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+  !endif
+}
+@enduml

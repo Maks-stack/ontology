@@ -1,0 +1,236 @@
+@startuml
+skinparam linetype polyline
+title Motiva Framework — Instances Only
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+skinparam class { 
+  StereotypeFontStyle bold 
+}
+skinparam class {
+  BackgroundColor<<Metric>> #ffe8e8
+  BorderColor<<Metric>> #cc7a7a
+  StereotypeFontStyle bold
+}
+
+package UserModel #fde8ff {
+  object user_U123 {
+    Instance of:
+    User
+    Id =
+    "U123"
+  }
+  object traitweight_user_U123_Player {
+    Instance of:
+    UserTraitWeight
+    weight =
+    0.75
+  }
+}
+
+package Metrics #ffe8e8 {
+  object metric_daily_adherence_2025_09_15_0800 <<Metric>> {
+    timestamp =
+    2025-09-15T08:00:00Z
+    value =
+    0.86
+  }
+  object metric_usageRate_lexp_2025_09_15 <<Metric>> {
+    timestamp =
+    2025-09-15T08:05:00Z
+    value =
+    0.42
+  }
+}
+
+package KeySituations #e8faff {
+  object ks_taskFinished_2025_09_15_0810 <<KeySituation>> {
+    description =
+    "User completed Memory Game task"
+  }
+  object ks_sessionStarted_2025_09_15_0800 <<KeySituation>> {
+    description =
+    "User started a new session"
+  }
+}
+
+package EventRegistration #f1f1f1 {
+  object evt_taskFinished_2025_09_15_0810 {
+    timestamp =
+    2025-09-15T08:10:00Z
+  }
+  object evt_sessionStarted_2025_09_15_0800 {
+    timestamp =
+    2025-09-15T08:00:00Z
+  }
+  object ec_User_U123_2025_09_15 {
+    windowStart =
+    2025-09-15T08:00:00Z
+    windowEnd =
+    2025-09-15T08:20:00Z
+    scope =
+    "session"
+    eventCount =
+    23
+    durationMs =
+    1200000
+    algorithmVersion =
+    "ec.v1"
+  }
+  ' intra-package only
+  EventRegistration.ec_User_U123_2025_09_15 o-- EventRegistration.evt_sessionStarted_2025_09_15_0800 : stores
+  EventRegistration.ec_User_U123_2025_09_15 o-- EventRegistration.evt_taskFinished_2025_09_15_0810 : stores
+}
+
+package UserTraits #fcffe8 {
+  object Philanthropist
+  object Achiever
+  object Free_Spirit
+  object Socializer
+  object Player
+  object Disruptor
+
+  object Digital_Literacy
+  object Cognitive_Ability
+  object Attention_Span
+  object Self_Discipline
+  object Frustration_Tolerance
+}
+
+package MotivationalMechanics #fff6e8 {
+  object Level_and_Experience_Point_System
+  object Leaderboards
+  object Self_Assigned_Targets
+  object Custom_Player_Made_Content
+  object Social_Share_Buttons
+  object Community_Insights
+  object Mystery_Boxes
+  object Encouraging_Messages
+  object Appointment_Dynamics
+  object In_Game_Currency
+
+  package Usertrait_Mechanic_Mapping {
+    object Level_and_Experience_Point_System_to_Player {
+      weight =
+      0.8
+    }
+    object Community_Insights_to_Socializer {
+      weight =
+      0.8
+    }
+  }
+}
+
+package AssistantActions #e8e8ff {
+  object imi_2025_09_15_0900 {
+    kind =
+    "Intrinsic_Motivation_Inventory"
+    questionCount =
+    20
+    estimatedTime =
+    5
+    timestamp =
+    2025-09-15T09:00:00Z
+  }
+  object prompt_2025_09_15_0812 {
+    kind =
+    "PromptMessage"
+    text =
+    "Welcome back. Ready for today’s tasks?"
+    timestamp =
+    2025-09-15T08:12:00Z
+  }
+  object demo_2025_09_15_0830 {
+    kind =
+    "Demographics_Questionnaire"
+    fields =
+    "Puesto de Trabajo, edad, género, nivel educativo"
+    timestamp =
+    2025-09-15T08:30:00Z
+  }
+}
+
+package Plan_and_Tasks #ebffe8 {
+  object plan_P1 <<Plan>> {
+    name =
+    "Cognitive Health : March - September"
+    description =
+    "Memory + attention basics"
+  }
+  object tb_week38 <<TaskBlock>> {
+    title =
+    "Week 38 Block"
+    startDate =
+    "2025-09-15"
+    endDate =
+    "2025-09-21"
+  }
+  object ta_MemoryGame <<TaskAssignment>> {
+    title =
+    "Memory Game 3 times on level 5"
+  }
+  object t_memGame <<Task>> {
+    title =
+    "Memory Game"
+  }
+  object tr_memGame <<TaskRequirement>>
+  object reps_memGame <<Repetitions>> {
+    requiredRepetitions =
+    3
+  }
+  object level_memGame <<Level>> {
+    Level =
+    3
+  }
+
+  ' intra-package only
+  plan_P1 --> tb_week38 : contains
+  tb_week38 --> ta_MemoryGame : contains
+  ta_MemoryGame --> t_memGame : contains
+  ta_MemoryGame --> tr_memGame : contains
+  tr_memGame --> reps_memGame : contains
+  tr_memGame --> level_memGame : contains
+}
+
+' ----------------- CROSS-PACKAGE LINKS (all inter-package relations below) -----------------
+
+' metrics -> user/mechanic
+Metrics.metric_daily_adherence_2025_09_15_0800 --> UserModel.user_U123 : measuredFor
+Metrics.metric_usageRate_lexp_2025_09_15 --> MotivationalMechanics.Level_and_Experience_Point_System : aboutMechanic
+
+' events -> situations and aggregations
+EventRegistration.evt_taskFinished_2025_09_15_0810 --> KeySituations.ks_taskFinished_2025_09_15_0810 : triggers
+EventRegistration.ec_User_U123_2025_09_15 --> Metrics.metric_daily_adherence_2025_09_15_0800 : aggregatesInto
+EventRegistration.ec_User_U123_2025_09_15 --> KeySituations.ks_sessionStarted_2025_09_15_0800 : summarizes
+
+' ownership
+UserModel.user_U123 --> Plan_and_Tasks.plan_P1 : has
+
+' AssistantActions wiring
+KeySituations.ks_taskFinished_2025_09_15_0810 --> AssistantActions.imi_2025_09_15_0900 : triggers
+KeySituations.ks_sessionStarted_2025_09_15_0800 --> AssistantActions.prompt_2025_09_15_0812 : triggers
+
+AssistantActions.imi_2025_09_15_0900 --> UserModel.user_U123 : affects
+AssistantActions.prompt_2025_09_15_0812 --> UserModel.user_U123 : affects
+AssistantActions.demo_2025_09_15_0830 --> UserModel.user_U123 : affects
+
+AssistantActions.imi_2025_09_15_0900 --> Metrics.metric_daily_adherence_2025_09_15_0800 : produces
+AssistantActions.imi_2025_09_15_0900 --> UserModel.traitweight_user_U123_Player : considers
+AssistantActions.imi_2025_09_15_0900 --> MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player : considers
+AssistantActions.imi_2025_09_15_0900 --> MotivationalMechanics.Level_and_Experience_Point_System : toggles
+
+' mapping edges
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> UserTraits.Player : maps
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Level_and_Experience_Point_System : maps
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Community_Insights_to_Socializer --> UserTraits.Socializer : maps
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Community_Insights_to_Socializer --> MotivationalMechanics.Community_Insights : maps
+
+' trait weight ownership
+UserModel.user_U123 --> UserModel.traitweight_user_U123_Player : has
+UserModel.traitweight_user_U123_Player --> UserTraits.Player : references
+@enduml

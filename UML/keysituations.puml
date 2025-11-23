@@ -1,0 +1,22 @@
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+package KeySituations #e8faff {
+  class KeySituation #bbf0ff
+  class MechanicDisplayedKeySituation #d5f6ff extends KeySituation
+  class MechanicInteractionKeySituation #d5f6ff extends KeySituation
+  class MilestoneReachedKeySituation #d5f6ff extends KeySituation
+  class DailyChallengePosedKeySituation #d5f6ff extends KeySituation
+  class SessionStartedKeySituation #d5f6ff extends KeySituation
+  class TaskStartedKeySituation #d5f6ff extends KeySituation
+  class TaskFinishedKeySituation #d5f6ff extends KeySituation
+  class SessionEndedKeySituation #d5f6ff extends KeySituation
+  note left of KeySituation
+  Generic KeySituation structure for behavioral logs.
+  end note
+}

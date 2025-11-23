@@ -198,8 +198,8 @@ package Units {
   MonthlyInterval --> Interval : "instance of"
 }
 
-package Interventions {
-  class Intervention {
+package AssistantActions {
+  class AssistantAction {
     +id: int
     +userId: int
     +timestamp: DateTime
@@ -207,7 +207,7 @@ package Interventions {
     +metadata: Map<String, String>
   }
 
-  note right of Intervention
+  note right of AssistantAction
   Represents a planned activity, stimulus, or interaction
   aimed at influencing user behavior or collecting data.
   Examples: questionnaires, prompts, mini-games, etc.
@@ -218,9 +218,9 @@ package Interventions {
     +estimatedTime: int
   }
 
-  Questionnaire --> Intervention : "instance of"
-  Intervention --> KeySituation : "triggered by"
-  Intervention --> Interval : "triggered by"
+  Questionnaire --> AssistantAction : "instance of"
+  AssistantAction --> KeySituation : "triggered by"
+  AssistantAction --> Interval : "triggered by"
 
   object Intrinsic_Motivation_Inventory 
   Intrinsic_Motivation_Inventory --> Questionnaire : "instance of"
@@ -233,7 +233,7 @@ package Interventions {
     +text: String
   }
   
-  MotivationalMessage --> Intervention : "instance of"
+  MotivationalMessage --> AssistantAction : "instance of"
 
   object MotivationalMessagePM_LOW
   MotivationalMessagePM_LOW : MotivationalMessage

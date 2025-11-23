@@ -1,0 +1,545 @@
+@startuml
+
+skinparam linetype polyline
+
+title Motiva Framework Ontology
+
+hide empty methods
+hide empty attributes
+hide empty members
+
+left to right direction
+
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+
+
+package Metrics #ffe8e8 {
+  class Metric #ffb5b5 {
+    +timestamp: DateTime
+    +value: float
+  }
+
+  class DailyAdherence #f3e0e0 extends Metric
+
+  class WeeklyAdherence #f3e0e0 extends Metric
+
+  class MechanicUsageRate #f3e0e0 extends Metric
+  class MechanicDisplayRate #f3e0e0 extends Metric
+  class MechanicEngagement #f3e0e0 extends Metric
+  class SessionDuration #f3e0e0 extends Metric
+  class ClickRate #f3e0e0 extends Metric
+  class Adherence #f3e0e0 extends Metric
+  class HesitationTime #f3e0e0 extends Metric
+
+  object user_U123 {
+    externalId = "U123"
+  }
+
+  object m_da_2025_09_15 {
+    timestamp = 2025-09-15T08:00:00Z\n
+    value = 0.86
+  } 
+  m_da_2025_09_15 --> DailyAdherence : "instance of"
+  m_da_2025_09_15 --> user_U123 : measuredFor
+
+  object m_usageRate_lexp_2025_09_15 {
+    timestamp = 2025-09-15T08:05:00Z
+    value = 0.42
+  }
+  m_usageRate_lexp_2025_09_15 --> MechanicUsageRate : "instance of"
+  m_usageRate_lexp_2025_09_15 --> user_U123 : measuredFor
+  
+}
+
+package KeySituations #e8faff {
+
+  class KeySituation #bbf0ff
+
+  class MechanicDisplayedKeySituation #e0eff3 extends KeySituation
+  class MechanicInteractionKeySituation #cef4ffff extends KeySituation
+  class MilestoneReachedKeySituation #e0eff3 extends KeySituation
+  class DailyChallengePosedKeySituation #e0eff3 extends KeySituation
+  class SessionStartedKeySituation #e0eff3 extends KeySituation
+  class TaskStartedKeySituation #e0eff3 extends KeySituation
+  class TaskFinishedKeySituation #e0eff3 extends KeySituation
+  ' --- TaskFinished key situation instance ---
+  object ks_taskFinished_2025_09_15_0810 {
+    description = "User completed Memory Game task"
+  }
+  ks_taskFinished_2025_09_15_0810 --> KeySituations.TaskFinishedKeySituation : "instance of"
+
+  class SessionEndedKeySituation #e0eff3 extends KeySituation
+
+  note left of KeySituation
+  Generic KeySituation structure used for multiple behavioral logs,
+  such as screen visits, mechanic usage, and session tracking.
+  end note
+  
+}
+
+package AssistantActions #e8e8ff {
+  class AssistantAction #cacaff {
+    timestamp: DateTime
+  }
+
+  note right of AssistantAction
+  Represents a planned activity, stimulus, or interaction
+  aimed at influencing user behavior or collecting data.
+  Examples: questionnaires, prompts, mini-games, etc.
+  end note
+
+  class Questionnaire #dcdcf2 {
+    +questionCount: int
+    +estimatedTime: int
+  }
+  class AlertMessage #e0e0f3 {
+    +questionCount: int
+    +estimatedTime: int
+  }
+
+  note right of AlertMessage
+    Displays general information, warnings, or alerts intended 
+    to guide, inform, or prompt the user during interaction.
+  end note
+
+  class Questionnaire #dcdcf2 extends AssistantAction
+  class AlertMessage #e0e0f3 extends AssistantAction
+
+  class Intrinsic_Motivation_Inventory #e0e0f3 extends Questionnaire  
+
+  class User_Engagement_Scale #e0e0f3 extends Questionnaire  
+
+  class SystemNotice #e0e0f3 extends Questionnaire  
+
+  class PromptMessage #e0e0f3 extends Questionnaire 
+}
+
+package EventRegistration #f1f1f1{
+
+  legend top right
+  EventRegistration: evaluated user/system actions.
+  relation to user with user being actor
+  Event can trigger a keysituation
+  Event produces a measurement
+  end legend
+  
+  class Event #e4e4e4 {
+    +timestamp: DateTime
+    +element
+  }
+  together {
+    class UserEvent #e4e4e4 extends Event {
+    }
+    class SystemEvent #e4e4e4 extends Event {
+    }
+    class TaskEvent #e4e4e4 extends UserEvent {
+
+    }
+  }
+
+  class EventCollection {
+    +aggregatedAt: DateTime
+  }
+
+  EventCollection o-- "1..*" Event : "stores"
+  
+  note top of Event
+  Event of User Action or System event, recorded and evaluated by application.
+  Can be neutral like click or evaluated like error or success. Stored with TimeStamp.
+  end note
+  together {
+    class ClickEvent #e7e7e7 extends UserEvent 
+
+    class LoginEvent #e7e7e7 extends UserEvent 
+
+    class TaskFinishedEvent #e7e7e7 extends TaskEvent 
+
+    ' --- TaskFinished event instance ---
+    object task_T42 {
+      title = "Memory Game"
+    }
+    
+
+    object evt_taskFinished_2025_09_15_0810 {
+      timestamp = 2025-09-15T08:10:00Z
+      element = "task_T42"
+    }
+    evt_taskFinished_2025_09_15_0810 --> EventRegistration.TaskFinishedEvent : "instance of"
+    evt_taskFinished_2025_09_15_0810 --> task_T42 : element
+
+    class ErrorCommittedEvent #e7e7e7 extends UserEvent 
+
+    class HourPassedEvent #e7e7e7 extends SystemEvent 
+
+    class DayPassedEvent #e7e7e7 extends SystemEvent
+
+    class WeekPassedEvent #e7e7e7 extends SystemEvent
+
+    class MechanicInteraction #e7e7e7 extends UserEvent  
+    }
+}
+
+EventRegistration.task_T42 --> Program_and_Tasks.Task : "instance of"
+EventRegistration.evt_taskFinished_2025_09_15_0810 --> KeySituations.ks_taskFinished_2025_09_15_0810 : "triggers"
+
+
+
+package Program_and_Tasks #ebffe8ff {
+
+  class Program #lightgreen {
+    +name: String
+    +description: String
+  }
+
+  note right of Program
+  A succession of task blocks (composites).
+  end note
+
+  class Task #lightgreen {
+    +title: String
+    +description: String
+  }
+
+  class Level #lightgreen {
+    +name: String
+    +difficulty: Int
+  }
+
+  class Repetitions #lightgreen {
+    +count: Int
+  }
+
+  note bottom of Level
+  Indicates the difficulty of a task. Optional as task might not have difficulty.
+  end note
+
+  note bottom of Repetitions
+  Indicates the number of repetitions of a task. Mandatory to define program.
+  end note
+
+  class TaskRequirement #lightgreen {
+    +requiredRepetitions: int
+  }
+
+  note left of TaskRequirement
+  How many times a Task must be repeated
+  on a specific Level within a TaskBlock.
+  end note
+
+  class TaskAssignment #lightgreen {
+    task: Task
+    taskRequirement: TaskRequirement
+  }
+
+  note right of TaskAssignment
+  Assigns a Task to a TaskBlock and defines
+  required repetitions across Levels.
+  end note
+
+  class TaskBlock #lightgreen {
+    +title: String
+    +description: String
+    +startDate: DateTime
+    +endDate: DateTime
+  }
+
+  note right of TaskBlock
+  Composite element: groups multiple TaskAssignments and TaskBlocks
+  into a hierarchy. Allows nested structures.
+  end note
+
+  TaskAssignment --> "1" Task : "has assigned"
+  TaskAssignment --> "1..*" TaskRequirement: "has Assigned"
+  TaskRequirement --> "0..1" Level : optional
+  TaskRequirement --> "1..*" Repetitions : required
+
+  Program *--> "1..*" TaskBlock
+
+  TaskBlock *--> "1..*" TaskAssignment : "contains"
+
+}
+
+
+
+package UserModel #fde8ffff {
+
+  class User #f59bff {
+  }
+
+  class UserState #f59bff{ 
+    +timestamp: DateTime
+  }
+
+  User --> "1" Program : "has"
+  User --> "1..*" UserState : "has"
+
+  class MotivationalState #f59bff extends UserState { 
+    +timestamp: DateTime
+  }
+  together {
+    class "…" as OtherMotivationalStates
+    class Low extends MotivationalState
+    class Medium extends MotivationalState
+    class High extends MotivationalState
+  }
+
+  class CognitiveLoadState #f59bff extends UserState { 
+    +timestamp: DateTime 
+  }
+
+  together {
+    class "…" as OtherCognitiveLoadStates
+    class Underchallenged extends CognitiveLoadState
+    class OptimalLoad extends CognitiveLoadState
+    class Overloaded extends CognitiveLoadState
+  }
+
+  class UserTraitWeight #f59bff {
+    +weight: float  ' (0.0 – 1.0) '
+  }
+
+  User --> "1..*" UserTraitWeight : "has"
+}
+
+
+package UserTraits #fcffe8ff {
+  class UserTrait #edff7b{
+    +name: string
+  }
+  
+    
+    class MotivationalTrait extends UserTrait
+    note bottom of MotivationalTrait
+    MotivationalTrait is a representation of a user's motivational characteristics.
+    end note
+    hide MotivationalTrait members
+
+    class PlayerType extends UserTrait
+    note bottom of PlayerType
+    Playertype is a representation of a user's gaming style or approach.
+    end note
+
+  object Philanthropist {
+    Motivated by Purpose.\n
+    Philanthropists are altruistic,\n
+    aiming to enrich others' lives.
+  }
+  Philanthropist --> PlayerType : "instance of"
+
+  object Achiever {
+    Motivated by Mastery.\n
+    Achievers seek to learn new skills\n
+    and continuamlly improve themselves.
+  }
+  Achiever --> PlayerType : "instance of"
+
+  object Free_Spirit {
+    Motivated by Autonomy.\n
+    Free Spirits desire freedom to explore\n
+    and create independently.
+  }
+  Free_Spirit --> PlayerType : "instance of"
+
+  object Socializer {
+    Motivated by Relatedness.\n
+    Socializers enjoy interaction and\n
+    building social connections.
+  }
+  Socializer --> PlayerType : "instance of"
+
+  object Player {
+    Motivated by Rewards.\n
+    Players do what is needed to collect\n
+    rewards for themselves.
+  }
+  Player --> PlayerType : "instance of"
+
+  object Disruptor {
+    Motivated by Change.\n
+    Disruptors try to alter the system,\n
+    forcing positive or negative change.
+  }
+  Disruptor --> PlayerType : "instance of"
+
+
+  class DigitalLiteracy extends UserTrait
+  hide DigitalLiteracy members
+  note bottom of DigitalLiteracy
+  Describes a user's familiarity and comfort with digital technologies,
+  including software tools, navigation, and basic troubleshooting.
+  end note
+
+  class CognitiveAbility extends UserTrait
+  hide CognitiveAbility members
+  note bottom of CognitiveAbility
+  Represents a user's capacity for logical reasoning, memory, and 
+  problem-solving. Important for adapting the complexity of tasks.
+  end note
+
+  class AttentionSpan extends UserTrait
+  hide AttentionSpan members
+  note bottom of AttentionSpan
+  Describes the user's ability to maintain focus over time. 
+  Useful for pacing content and avoiding cognitive overload.
+  end note
+
+  class SelfDiscipline extends UserTrait
+  hide SelfDiscipline members
+  note bottom of SelfDiscipline
+  Indicates the user's ability to stay consistent, resist distractions, 
+  and complete tasks independently.
+  end note
+
+  class FrustrationTolerance extends UserTrait  
+  hide FrustrationTolerance members
+  
+  note bottom of FrustrationTolerance
+  Measures how well a user copes with difficulty, failure, or delay. 
+  Helpful for adjusting challenge levels and support mechanisms.
+  end note
+
+}
+MotivationalMechanics.Usertrait_Mechanic_Mapping.MechanicTraitWeight --> UserTraits.UserTrait : "has"
+MotivationalMechanics.Usertrait_Mechanic_Mapping.MechanicTraitWeight --> MotivationalMechanics.MotivationalMechanic : "has"
+
+package MotivationalMechanics #fff6e8 {
+
+  left to right direction
+
+  class MotivationalMechanic #ffe3b6ff
+  hide MotivationalMechanic members
+
+  
+  '//----------------------------------Progress Indicators---------------------------------------------'
+  class Progress_Indicators #f3ebe0 extends MotivationalMechanic
+
+  object Level_and_Experience_Point_System
+  Level_and_Experience_Point_System --> Progress_Indicators : "instance of"
+
+  '//----------------------------------Competition with others---------------------------------------------'
+  class Competition_with_others #f3ebe0 extends MotivationalMechanic
+  hide Competition_with_others members
+
+  object Leaderboards {
+    As a core progression system, it provides a continuous sense of growth and achievement as users earn XP and unlock new levels or features
+  }
+  Leaderboards --> Competition_with_others : "instance of"
+
+  '//---------------------------------Personal Goals---------------------------------------------'
+  class Personal_Goals #f3ebe0 extends MotivationalMechanic
+  hide Personal_Goals members
+
+  object Self_Assigned_Targets {
+    Users define their own objectives.
+  }
+  Self_Assigned_Targets --> Personal_Goals : "instance of"
+
+  '//---------------------------------Personalization and Creativity---------------------------------------------'
+  class Personalization_and_Creativity #f3ebe0 extends MotivationalMechanic
+  hide Personalization_and_Creativity members
+  
+  object Custom_Player_Made_Content {
+    User-generated content in-system.
+  }
+  Custom_Player_Made_Content --> Personalization_and_Creativity : "instance of"
+  
+  '//---------------------------------Sharing Achievements with Others---------------------------------------------'
+  class Sharing_Achievements #f3ebe0 extends MotivationalMechanic
+  hide Sharing_Achievements members
+  object Social_Share_Buttons {
+    Sharing accomplishments externally.
+  }
+  Social_Share_Buttons --> Sharing_Achievements : "instance of"
+  
+  '//---------------------------------Social Networking---------------------------------------------'
+  class Social_Networking #f3ebe0 extends MotivationalMechanic
+  hide Social_Networking members
+  object Community_Insights {
+    Display others’ behaviors for comparison.
+  }
+
+  Community_Insights --> Social_Networking : "instance of"
+
+  '//---------------------------------Surprises and Special Events---------------------------------------------'
+  class Surprises_and_Events #f3ebe0 extends MotivationalMechanic
+  hide Surprises_and_Events members
+  object Mystery_Boxes {
+    Loot boxes with random content.
+  }
+  Mystery_Boxes --> Surprises_and_Events : "instance of"
+  
+  '//---------------------------------Motivational Messages---------------------------------------------'
+  class Motivational_Messages #f3ebe0 extends MotivationalMechanic
+  hide Motivational_Messages members
+  object Encouraging_Messages {
+    Positive reinforcement to sustain motivation.
+  }
+  Encouraging_Messages --> Motivational_Messages : "instance of"
+  '//---------------------------------Time-Based Challenges---------------------------------------------'
+  class Time_Based_Challenges #f3ebe0 extends MotivationalMechanic
+  hide Time_Based_Challenges members
+  object Appointment_Dynamics {
+    Scheduled events like Happy Hour.
+  }
+  Appointment_Dynamics --> Time_Based_Challenges : "instance of"
+  '//----------------------------------Rewards and Unlocks---------------------------------------------'
+  class Rewards_and_Unlocks #f3ebe0 extends MotivationalMechanic
+  hide Rewards_and_Unlocks members
+  object In_Game_Currency {
+    Accumulation of virtual money/resources.
+  }
+  In_Game_Currency --> Rewards_and_Unlocks : "instance of"
+
+  package Usertrait_Mechanic_Mapping {
+
+    class MechanicTraitWeight {
+      +weight: float  ' (0.0 – 1.0) '
+    }
+
+    object Level_and_Experience_Point_System_to_Player {
+      Trait = Player
+      Mechanic = Level_and_Experience_Point_System
+      weight = 0.8
+    }
+    Level_and_Experience_Point_System_to_Player : MechanicTraitWeight
+    Level_and_Experience_Point_System_to_Player --> MechanicTraitWeight : "instance of"
+
+    Level_and_Experience_Point_System_to_Player --> Player : "maps"
+    Level_and_Experience_Point_System_to_Player --> Level_and_Experience_Point_System : "maps"
+  }
+}
+' put after all package blocks are declared
+Metrics -[hidden]-> EventRegistration
+EventRegistration -[hidden]-> KeySituations
+KeySituations -[hidden]-> AssistantActions
+AssistantActions -[hidden]-> UserModel
+UserModel -[hidden]-> UserTraits
+UserTraits -[hidden]-> MotivationalMechanics
+
+MotivationalMechanics.MotivationalMechanic --> UserModel.UserTraitWeight: "selectedByTraitWeight"
+
+AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : "toggles on/off"
+AssistantActions.AssistantAction --> "0..*" UserModel.User : "targets"
+
+AssistantActions.AssistantAction "1..*" --> "1..*" Metrics.Metric : "considers"
+AssistantActions.AssistantAction "1..*" --> "1..*" UserModel.UserTraitWeight : "considers"
+AssistantActions.AssistantAction "1..*" --> "1..*" UserModel.UserState : "considers"
+
+
+EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : "triggers"
+
+UserModel.MotivationalState --> Metrics.Metric : "reads"
+UserModel.CognitiveLoadState --> Metrics.Metric : "reads"
+
+UserModel.UserTraitWeight --> UserTraits.UserTrait : "references"
+UserModel.User --> "1..*" Metrics.Metric   : "has"
+UserModel.User --> "1..*" AssistantActions.AssistantAction   : "receives"
+
+KeySituations.KeySituation -->  "0..*" AssistantActions.AssistantAction : "triggers"
+
+Metrics.m_usageRate_lexp_2025_09_15 --> MotivationalMechanics.Level_and_Experience_Point_System : "aboutMechanic"
+
+Program_and_Tasks.Task --> EventRegistration.TaskEvent : "triggers"
+@enduml

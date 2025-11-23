@@ -1,0 +1,41 @@
+@startuml
+Metrics -[hidden]-> EventRegistration
+EventRegistration -[hidden]-> KeySituations
+KeySituations -[hidden]-> AssistantActions
+AssistantActions -[hidden]-> UserModel
+UserModel -[hidden]-> UserTraits
+UserTraits -[hidden]-> MotivationalMechanics
+
+MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserModel.UserTraitWeight : selected_by
+
+AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+AssistantActions.AssistantAction --> "0..*" UserModel.User : targets
+AssistantActions.AssistantAction "1..*" --> "1..*" Metrics.Metric : considers
+AssistantActions.AssistantAction "1..*" --> "1..*" UserModel.UserTraitWeight : considers
+AssistantActions.AssistantAction "1..*" --> "1..*" UserModel.UserState : considers
+
+EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : triggers
+
+EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : produces
+
+KeySituations.KeySituation "1" --> "0..*" AssistantActions.AssistantAction : triggers
+
+UserModel.MotivationalState "1" --> "1..*" Metrics.Metric : reads
+UserModel.CognitiveLoadState "1"--> "1..*" Metrics.Metric : reads
+
+UserModel.UserTraitWeight "1" --> "1..*" UserTraits.UserTrait : references
+UserModel.User "1" --> "1..*" AssistantActions.AssistantAction : receives
+UserModel.User --> Metrics.Metric : "has"
+
+UserModel.User "1" --> "1" Plan_and_Tasks.Plan : "has"
+
+EventRegistration.TaskEvent "1" --> "1" Plan_and_Tasks.Task : "refers"
+Metrics.Metric "1" --> "1" EventRegistration.EventCollection : "reads"
+
+MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : "is_determined_by"
+MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.MechanicState : "has"
+
+
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> UserTraits.Player : maps
+MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Level_and_Experience_Point_System : maps
+@enduml

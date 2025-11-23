@@ -1,0 +1,66 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 28
+skinparam ranksep 30
+skinparam packageStyle rectangle
+title Motiva — One-Slide System Graph
+
+package UserModel #fde8ff {
+  class User #f59bff
+  class UserTraitWeight #f7befeff
+  class MotivationalState #f7befeff
+}
+
+package UserTraitTypes #fcffe8 {
+  class UserTrait #eaf797ff
+}
+
+package Mechanics #fff6e8 {
+  class Catalog #ffecceff
+  class TraitMapping #ffecceff
+}
+
+package AssistantActions #e8e8ff {
+  class Units #d6d6ff
+}
+
+package ProgramAndTasks #ebffe8 {
+  class Program #lightgreen
+  class Task #lightgreen
+}
+
+package MetricsAndMeasurements #ffe8e8 {
+  class Metric #fda5a5ff
+}
+
+package KeySituations #e8faff {
+  class KeySituation #bbf0ff
+}
+
+package UserActions #f1f1f1 {
+  class Event #ccccccff
+}
+
+UserTraitTypes.UserTrait --> UserModel.UserTraitWeight : defines
+Mechanics.TraitMapping --> UserTraitTypes.UserTrait : uses
+Mechanics.TraitMapping --> Mechanics.Catalog : maps
+Mechanics.Catalog --> UserModel.UserTraitWeight : selected_by
+
+UserModel.User --> ProgramAndTasks.Program : has
+ProgramAndTasks.Task --> UserActions.Event : prompts
+
+UserActions.Event --> MetricsAndMeasurements.Metric : produces
+UserActions.Event --> KeySituations.KeySituation : triggers
+
+UserModel.MotivationalState --> MetricsAndMeasurements.Metric : reads
+UserModel.User --> MetricsAndMeasurements.Metric : has
+
+KeySituations.KeySituation --> AssistantActions.Units : triggers
+Mechanics.Catalog --> AssistantActions.Units : configures
+MetricsAndMeasurements.Metric --> AssistantActions.Units : informs
+UserModel.User --> AssistantActions.Units : targets
+@enduml
