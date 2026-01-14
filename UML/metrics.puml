@@ -18,7 +18,6 @@ package Metrics #ffe8e8 {
   class SystemMetric #ffcdcdff extends Metric
   class MechanicState #ffcdcdff extends Metric
 
-
   class DailyAdherence #ffcdcdff extends AdherenceMetric
   class WeeklyAdherence #ffcdcdff extends AdherenceMetric
   class MechanicUsageRate #ffcdcdff extends EngagementMetric
@@ -28,5 +27,7 @@ package Metrics #ffe8e8 {
   class ClickRate #ffcdcdff extends PerformanceMetric
   class Adherence #ffcdcdff extends AdherenceMetric
   class HesitationTime #ffcdcdff extends PerformanceMetric
+
 }
+
 @enduml

@@ -1,0 +1,47 @@
+@startuml
+
+left to right direction
+
+actor User as user
+
+database "Domain Model" as DomainModel #f0f0f0 {
+  rectangle "<img:Shared.drawio.png>" as SharedDomain
+}
+
+package Personal_Development_Model #ebffe8 {
+  node "Personal Development Application Logic" as PD_Logic {
+    rectangle PersonalDevelopment_CRUD #c8f0c2ff
+  }
+}
+PersonalDevelopment_CRUD --> SharedDomain : reads/\nwrites
+
+Package MotivationalAssistant_Model #d6d6ff {
+  
+  node "Motivational Assistant Logic" as MA_Architecture {
+    rectangle MotivationalAssistant_Model #b2b2f8ff
+  }
+} 
+MotivationalAssistant_CRUD --> SharedDomain : reads/\nwrites
+
+Package UI {
+  rectangle Personal_Development_UI #ebffe8
+  rectangle Motivational_Assistant_UI #d6d6ff
+}
+
+Package Adapter {
+  rectangle EventMapper #f1f1f1
+  rectangle ActionMapper #f1f1f1 
+}
+
+Personal_Development_UI <-->  Personal_Development_Model : "sends data/\nreceives events"
+  Motivational_Assistant_UI ---> EventMapper : "sends events"
+
+EventMapper --> MotivatioanalAssistant_Model : sends\n data
+ActionMapper <-- MotivatioanalAssistant_Model : sends\n actions
+
+ActionMapper --> Motivational_Assistant_UI : sends\n actions
+
+user --> Personal_Development_UI : interacts
+user --> Motivational_Assistant_UI : interacts
+
+@enduml

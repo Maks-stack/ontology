@@ -15,7 +15,7 @@ package AssistantActions #e8e8ff {
   }
   note right of AssistantAction
     One-off AssistantAction: activates/deactivates a mechanic
-    or prompts another user interaction.
+    or prompts another user interaction.>
   end note
 
   class Questionnaire #d6d6ff extends AssistantAction
@@ -28,10 +28,10 @@ package AssistantActions #e8e8ff {
   class User_Engagement_Scale #d6d6ff extends Questionnaire
   class SystemNotice #d6d6ff extends Questionnaire
   class PromptMessage #d6d6ff extends Questionnaire
-  !if ($renderMode == "master")
+  ' !if ($renderMode == "master")
   
-  !else
-  AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
-  !endif
+  ' !else
+  ' AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+  ' !endif
 }
 @enduml

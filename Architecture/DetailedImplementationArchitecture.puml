@@ -1,0 +1,121 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam shadowing false
+
+package Frontend {
+  package "UI Layer" {
+    class HomeScreen
+    class OtherScreens
+    class GlobalModal as "Global Modal (Layout)"
+    class OtherUI as "Other UI (banners/animations/games)"
+  }
+
+  package "Event Layer" {
+    class EventBus as "EventBus\n(emitEvent / onEvent)"
+  }
+
+  package KeySituationLayer {
+    class KeySituationEngine {
+      subscribers: Array<(onEvent)>
+      -initialized: boolean
+      +doInit(): void
+    }
+
+    class VisitHomeFirstTimePerDay {
+      +onEvaluate(e: ScreenViewedEvent): void
+      +emitKS()
+    }
+    
+    class KeySituationBus as "KeySituationBus"
+    {
+      +listeners = new Map<string, Set<(payload: any) => void>>()
+      +emitKS()
+      +onKS()
+    }
+
+    KeySituationEngine *-- VisitHomeFirstTimePerDay
+    KeySituationEngine --> VisitHomeFirstTimePerDay : onEvaluate
+  }
+}
+
+
+
+
+
+package "Backend" {
+  class KeySituationRoute {
+    +"POST /key-situations/*"()
+  }
+
+  class EventRoute {
+    +"POST /events/*"()
+  }
+
+  class MetricRoute {
+    +"GET /metric/*"()
+  }
+
+  class Metrics {
+    +getMetric(MetricId)  
+  }
+
+  class AssistActionRoute {
+    +"GET /assistant-actions/*"()
+  }
+
+  class Usertraits {
+    +"GET /user-traits/*"()
+
+  }
+}
+
+database "Application DB" as DB {
+  entity "usuarios" {
+    id_user : int <<PK>>
+    email : varchar
+    password : varchar
+    last_login : datetime
+  }
+
+  entity "events" {
+    id_event : int <<PK>>
+    type : varchar
+    payload : json
+    created_at : datetime
+  }
+
+  entity "key_situations" {
+    id_ks : int <<PK>>
+    type : varchar
+    triggered_at : datetime
+  }
+
+  entity "prueba_N" {
+    id_ks : int <<PK>>
+    type : varchar
+    triggered_at : datetime
+  }
+}
+
+
+
+
+HomeScreen --> EventBus : emitEvent("screen/viewed")
+OtherScreens --> EventBus : emitEvent(...)
+
+EventBus --> KeySituationEngine : onEvent(...)
+VisitHomeFirstTimePerDay --> KeySituationBus : if{evaluated positive} emitKS(...)
+
+KeySituationBus --> GlobalModal : listener.onKS(...)
+KeySituationBus --> OtherUI : listener.onKS(...)
+
+EventBus --> EventRoute : POST /events/*
+KeySituationBus --> KeySituationRoute : POST /key-situations/*
+
+Metrics --> DB : query metrics
+
+GlobalModal --> AssistActionRoute : GET /assist-actions/*
+OtherUI --> AssistActionRoute : GET /assist-actions/*
+
+AssistActionRoute --> Metrics : query assist actions
+@enduml

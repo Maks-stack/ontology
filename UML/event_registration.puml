@@ -9,10 +9,6 @@ skinparam ranksep 40
 skinparam packageStyle rectangle
 
 package EventRegistration #f1f1f1 {
-  legend top right
-  Evaluated user/system actions. Collections store events.
-  end legend
-
   class Event #ccccccff {
     
     + timestamp: DateTime

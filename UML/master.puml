@@ -13,7 +13,6 @@ title Motiva Framework Ontology
 skinparam class {
   StereotypeFontStyle bold
 }
-
 !include ./metrics.puml
 !include ./keysituations.puml
 !include ./assistantActions.puml
@@ -23,5 +22,6 @@ skinparam class {
 !include ./user_traits.puml
 !include ./motivational_mechanics.puml
 !include ./relationships.puml
+!include ./conditions.puml
 
 @enduml

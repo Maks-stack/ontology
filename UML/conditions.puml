@@ -1,0 +1,26 @@
+@startuml
+skinparam linetype polyline
+hide empty methods
+hide empty attributes
+hide empty members
+left to right direction
+skinparam nodesep 40
+skinparam ranksep 40
+skinparam packageStyle rectangle
+package Conditions #ffedcaff {
+  class Condition #f8db92ff {
+    +timestamp: DateTime
+    +value: float
+  }
+  class UserBehaviourCondition #f8db92ff extends Condition
+  class AdherenceLow #f8db92ff extends UserBehaviourCondition
+  class ConfidenceLow #f8db92ff extends UserBehaviourCondition
+
+  class SystemCondition #f8db92ff extends Condition
+  class TimeOfDayCondition #f8db92ff extends SystemCondition
+
+  class PlanCondition #f8db92ff extends Condition
+  class HalfwayPointReached #f8db92ff extends PlanCondition
+}
+
+@enduml

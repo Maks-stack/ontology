@@ -13,37 +13,38 @@ skinparam folder<<dynamic>> BorderColor #d46b08
 skinparam folder<<static>> BackgroundColor #f0f5ff
 skinparam folder<<static>> BorderColor #1d39c4
 
-package static_modules {
-  folder "MotivationalMechanics" as MotivationalMechanics <<static>> #fff6e8
-  folder "Usertrait_Mechanic_Mapping" as Usertrait_Mechanic_Mapping <<static>> #ffffff
-  folder "Plan_and_Tasks" as Plan_and_Tasks <<static>> #ebffe8ff
-  folder "UserTraits" as UserTraits <<static>> #fcffe8ff
-}
-package dynamic_modules {
-  folder "AssistantActions" as AssistantActions <<dynamic>> #e8e8ff
-  folder "EventRegistration" as EventRegistration <<dynamic>> #f1f1f1
-  folder "KeySituations" as KeySituations <<dynamic>> #e8faff
-  folder "Metrics" as Metrics <<dynamic>> #ffe8e8
-  folder "UserModel" as UserModel <<dynamic>> #fde8ffff
-}
-
+folder "AssistantActions" as AssistantActions <<dynamic>> #e8e8ff
+folder "Conditions" as Conditions #ffedcaff
+folder "EventRegistration" as EventRegistration <<dynamic>> #f1f1f1
+folder "KeySituations" as KeySituations <<dynamic>> #e8faff
+folder "Metrics" as Metrics <<dynamic>> #ffe8e8
+folder "MotivationalMechanics" as MotivationalMechanics <<static>> #fff6e8
+folder "Usertrait_Mechanic_Mapping" as Usertrait_Mechanic_Mapping <<static>> #ffffff
+folder "Plan_and_Tasks" as Plan_and_Tasks <<static>> #ebffe8ff
+folder "UserModel" as UserModel <<dynamic>> #fde8ffff
+folder "UserTraits" as UserTraits <<static>> #fcffe8ff
 
 ' relations (with cardinalities when present)
-AssistantActions --> "0..1" MotivationalMechanics : toggles
 Usertrait_Mechanic_Mapping --> MotivationalMechanics : maps
 Usertrait_Mechanic_Mapping --> UserTraits : maps
 MotivationalMechanics "1" --> "1..2" UserModel : selected_by
+AssistantActions --> "0..1" MotivationalMechanics : toggles
 AssistantActions --> "0..*" UserModel : targets
 AssistantActions "1..*" --> "1..*" Metrics : considers
 AssistantActions "1..*" --> "1..*" UserModel : considers
 EventRegistration "1..*" --> "0..*" KeySituations : triggers
 EventRegistration "1..*" --> "0..*" Metrics : produces
 KeySituations "1" --> "0..*" AssistantActions : triggers
-UserModel "1" --> "1..*" Metrics : reads
 UserModel "1" --> "1..*" UserTraits : references
-UserModel "1" --> "1..*" Metrics : has
 UserModel "1" --> "1..*" AssistantActions : receives
+UserModel --> Metrics : "has"
 UserModel "1" --> "1" Plan_and_Tasks : "has"
 EventRegistration "1" --> "1" Plan_and_Tasks : "refers"
 Metrics "1" --> "1" EventRegistration : "reads"
+MotivationalMechanics "1" --> "1" Metrics : "is_determined_by"
+MotivationalMechanics "1" --> "1" Metrics : "references"
+AssistantActions "1" --> "1..*" Conditions : uses
+AssistantActions "1" --> "1" KeySituations : evaluates
+Conditions "1" --> "1..*" Metrics : reads
+Conditions "1" --> "1..*" Plan_and_Tasks : reads
 @enduml

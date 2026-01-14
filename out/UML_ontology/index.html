@@ -147,7 +147,17 @@
       label:'Ontology',
       path:'./master.svg',
       note:`<strong>Ontology:</strong> 
-      Core semantic classes and relations. Use to reason about domain structure.`
+      Core semantic classes and relations. Use to reason about domain structure.<br>
+      Packages:<br>
+      <strong>Metrics:</strong> capture quantifiable user data from events.<br>
+      <strong>KeySituations:</strong> significant vents triggering relevant key situations. One or more events combined can trigger a KeySituation.<br>
+      <strong>AssistantActions:</strong> actions taken by the assistant in response to KeySituations, informed by Metrics and UserModel. Can contain state of mechanics, user messages<br>
+      <strong>KeySituations:</strong> significant Situations triggered by events. Play an important role for user motivation and usage flow.<br>
+      <strong>Plan_and_Tasks:</strong> user plans and tasks assigned. Mark a planned progression for the user. Might be shared by Personal Development app and Motivational Assistant.<br>
+      <strong>UserModel</strong>: representation of the user with connections to traits, state, metrics, and assigned tasks.<br>
+      <strong>User Traits</strong>: motivational or personality traits of the user.<br>
+      <strong>Motivational Mechanics</strong>: mechanics applied to motivate the user, selected based on trait-mechanic mappings.<br><br>
+      `
     },
     {
       label:'Instances',
@@ -161,7 +171,7 @@
       Metrics capture adherence for the user and usage rate for the Level/XP mechanic.<br>
       The event collection aggregates into adherence and summarizes the session-start situation.<br><br>
 
-      AssistantActions fire from the key situations: a welcome prompt at 08:12, a demographics form at 08:30, and an IMI survey at 09:00.<br>
+      <strong>AssistantActions</strong> fire from the key situations: a welcome prompt at 08:12, a demographics form at 08:30, and an IMI survey at 09:00.<br>
       These actions affect the UserModel, the IMI produces a metric, considers the user’s Player trait weight and the Player↔Level/XP mapping, and can toggle the Level/XP mechanic.<br><br>
 
       UserModel holds the user instance and their Player trait weight (0.75) and owns a plan with a week-38 block and a Memory Game assignment with requirements (reps and level).<br><br>
@@ -182,15 +192,20 @@
     },
     {
       label:'Architecture',
-      path:'./sketch_jaime_HighLevelArchitecture.svg',
+      path:'./Architecture.svg',
       note:`<strong>Architecture:</strong> <br><br>
-        The User interacts with the main system through the UI.<br><br>
-        The UI emits events to the Event Bus, which distributes them across system components.<br><br>
-        The Event Bus forwards selected events to the Motivational Assistant Adapter.<br><br>
-        Within this adapter, the Event Mapper translates system-level events into Motivational Events.<br><br>
-        These are processed by the Motivational Assistant’s Decision Engine, which generates Assistant Actions.<br><br>
-        The Action Bridge maps these actions to corresponding system-level events and content elements through the Content Engine.<br><br>
-        The Content Engine publishes the resulting content back to the Event Bus, completing the feedback loop.`
+        The User interacts with the main system through the UI Layer. In the diagram the Personal Development applications UI and the Motivational Assistants UI are seperated, while in practice the code might be mixed.<br><br>
+
+        The Personal Development UI communicates directly with the Personal Development model as they are very tighly coupled. We assume that the Personal Development UI, the Personal Development Logic and a Domain model containing some data about the user and their progress already exists as a whole application. <br><br>
+
+        The Motivational Assistant UI and its logic are added on top of the already existing application so they must be more loosely coupled.
+        For that reason an Adapter pattern is used to connect the Motivational Assistant to the main system. In the adapter Events like Session Started, Task finished are defined. The Motivational Assistan UI can call these events to notify the Motivational Assistant Logic about the users actions. These events are received by the Motivational Assistants logic and processed. The Motivational Assistants Logic then updates the Domain Model with new Metrics and new user States.<br><br>
+        We can see that the Domain Model contains some parts that are shared between the Personal Development application and the Motivational Assistant like the User Model, Tasks and Plans. These parts are used by both systems.<br><br>
+        Some other parts specific to the Motivatonal Assistant like events, metrics and  mechanic mappings are not shared.<br><br>
+        The Motivational Assistant Logic then sends back Assistan Actions via the Action Mapper in the Adapter which the Motivational Assistant UI can receive and then convert them into UI changes, activation or deactivation of mechanics etc.
+        `
+
+
     }
   ];
 
