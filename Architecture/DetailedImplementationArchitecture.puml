@@ -2,6 +2,20 @@
 skinparam componentStyle rectangle
 skinparam shadowing false
 
+skinparam class {
+  BackgroundColor #ffffff
+  BorderColor<<engine>> #000000ff
+  BorderThickness<<engine>> 2
+}
+
+package Shared {
+  enum KeysituationDefinition #bbf0ff {
+    visitHome/FirstTimePerDay
+    exercise/Finish
+    exercise/Error
+    exercise/ThreeErrorsInARow
+  }
+}
 package Frontend {
   package "UI Layer" {
     class HomeScreen
@@ -10,23 +24,23 @@ package Frontend {
     class OtherUI as "Other UI (banners/animations/games)"
   }
 
-  package "Event Layer" {
-    class EventBus as "EventBus\n(emitEvent / onEvent)"
+  package "Event Layer" #f1f1f1 {
+    class EventBus as "EventBus\n(emitEvent / onEvent)" #ccccccff
   }
 
-  package KeySituationLayer {
-    class KeySituationEngine {
+  package KeySituationLayer  {
+    class KeySituationEngine <<engine>> {
       subscribers: Array<(onEvent)>
       -initialized: boolean
       +doInit(): void
     }
 
-    class VisitHomeFirstTimePerDay {
+    class VisitHomeFirstTimePerDay #bbf0ff  {
       +onEvaluate(e: ScreenViewedEvent): void
       +emitKS()
     }
     
-    class KeySituationBus as "KeySituationBus"
+    class KeySituationBus as "KeySituationBus"#bbf0ff
     {
       +listeners = new Map<string, Set<(payload: any) => void>>()
       +emitKS()
@@ -43,33 +57,166 @@ package Frontend {
 
 
 package "Backend" {
-  class KeySituationRoute {
+  class KeySituationRoute #bbf0ff{
     +"POST /key-situations/*"()
   }
 
-  class EventRoute {
+  class EventRoute #ccccccff {
     +"POST /events/*"()
   }
 
-  class MetricRoute {
+  class MetricRoute #fda5a5ff {
     +"GET /metric/*"()
   }
 
-  class Metrics {
+  class AssistantActionRoute #cacaff {
+    +"GET /getAssistantActions/:userId/"
+  }
+
+    class MotivationalMechanicRoute #ffe3b6ff{
+    +"GET /getWeightedMechanicsForPlayer/:userId"
+  }
+
+  class MetricQueries #fda5a5ff {
     +getMetric(MetricId)  
   }
 
-  class AssistActionRoute {
-    +"GET /assistant-actions/*"()
+  class Usertraits #eaf797ff {
+    +"GET /user-traits/*"()
   }
 
-  class Usertraits {
-    +"GET /user-traits/*"()
+  class UserTraitQueries #eaf797ff {
+  }
 
+  class UserContext #f7befeff {
+    + id: number
+    + motivationalState: "label: inactive | low |  medium | high"  
+    + keySituationType: KeySituationDefinition
+	  + metrics: Partial<Record<MetricId, Metric>>
+	  + userTraits: UserTrait[] | null
+  }
+
+  class MotivationalEngine <<engine>>  {
+    -AssistantActionsEngine
+    +getAssistantActions()
+    +buildContext() 
+    +buildMetrics()
+  }
+
+  class AssistantActionsEngine <<engine>> #cacaff {
+    +evaluateAssistantActions(userId, keySituationType)
+    -getActiveActions()
+  }
+
+  class UserTraitEngine <<engine>> #eaf797ff {
+    +getUserTraits(userId: number)
+  }
+  enum AssistantActionType #cacaff {
+    Nudge
+    Alert
+    Questionnaire
+  }
+  class AssistantAction #cacaff {
+    type: AssistantActionType
+	  conditions: Condition[]
+	  content: string
+    + evaluate(UserContext)
+  }
+  AssistantAction --> AssistantActionType : type
+
+  class AssistantActionCatalog #cacaff {
+    +allAssistantActions: assistantAction[]
+  }
+
+  class Condition #f8db92ff{
+    +check: (ctx: AssistantContext) => boolean
+  }
+  object inactiveCondition #f8db92ff {
+    UserContext.motivationalState === 'inactive
+  }
+  inactiveCondition --> Condition : instance of
+
+  object lowMotivationCondition #f8db92ff {
+    UserContext.motivationalState === 'inactive
+  }
+  lowMotivationCondition --> Condition : instance of
+  
+  class Metric #fda5a5ff {
+    + id: MetricId
+    + value: number
+    + public updatedAt: Date
+  } 
+
+  enum MetricId #fda5a5ff{
+    motivational_state
+    confidence_state
+    days_since_last_use
+    cognitive_load_state
+  }
+
+  Metric --> MetricId : uses
+
+  class UserTrait #eaf797ff{
+    -trait: TraitId
+    -value: number
+    +updateTrait()
+  }
+
+  enum TraitId #eaf797ff {
+    PERSONAL_MASTERY 
+    HARD_WORK 
+    RELATION_TO_OTHERS_GOALS
+    COMPETITIVE_EXCELLENCE 
+    FAILURE_AVOIDANCE 
+    ACHIEVER
+    PLAYER
+    DISRUPTOR
+    PHILANTHROPIST
+    SOCIALIZER
+    FREE_SPIRIT
+  }
+
+  class MotivationalMechanicsCatalog #ffe3b6ff {
+    +GameMechanics: GameMechanic[]
+  }
+
+  class GameMechanic #ffe3b6ff {
+    + name: string
+    + description: string
+    + activationConditions: Condition[*]
+    + weights: Map<TraitId, number>
+  }
+  UserTrait --> TraitId : uses
+  GameMechanic --> TraitId : uses
+
+  class MechanicsQueries #ffe3b6ff {
+    +getWeightedMechanics (userTraits: UserTrait[])
+  }
+
+  class WorkplansRoute #lightgreen {
+    + "GET /getActivePlanData/:userId/"
+    + getActivePlanData()
   }
 }
 
-database "Application DB" as DB {
+package Data {
+
+  interface IMotivationalDataProvider <<port>> #ffffff {
+    + getActivePlanData(userId: number)
+    + getWeeklyProgressData(userId: number, fromIso: string, toIso: string)
+    + getLastActivityAt(userId: number)
+    + fetchUserTraits(userId: number)
+    
+  }
+
+  class MotivationalDataProvider <<adapter>> #dddddd {
+    - db: Knex
+  }
+
+  MotivationalDataProvider --> DB : query
+
+  IMotivationalDataProvider ..|> MotivationalDataProvider : implements
+  database "Application DB" as DB #d9d9d9ff {
   entity "usuarios" {
     id_user : int <<PK>>
     email : varchar
@@ -96,6 +243,10 @@ database "Application DB" as DB {
     triggered_at : datetime
   }
 }
+}
+
+
+
 
 
 
@@ -109,13 +260,74 @@ VisitHomeFirstTimePerDay --> KeySituationBus : if{evaluated positive} emitKS(...
 KeySituationBus --> GlobalModal : listener.onKS(...)
 KeySituationBus --> OtherUI : listener.onKS(...)
 
-EventBus --> EventRoute : POST /events/*
-KeySituationBus --> KeySituationRoute : POST /key-situations/*
+EventBus --> EventRoute : POST /events/
+KeySituationBus --> KeySituationRoute : POST /key-situations/
 
-Metrics --> DB : query metrics
+MetricQueries --> Data.MotivationalDataProvider : query metrics
+MotivationalEngine --> Data.MotivationalDataProvider : uses
 
-GlobalModal --> AssistActionRoute : GET /assist-actions/*
-OtherUI --> AssistActionRoute : GET /assist-actions/*
+GlobalModal --> AssistantActionRoute : /getAssistantActions/:userId/
+OtherUI --> AssistantActionRoute : /getAssistantActions/:userId/
 
-AssistActionRoute --> Metrics : query assist actions
+Backend.AssistantActionCatalog "1" o-- "1..*" Backend.AssistantAction : has
+
+AssistantActionRoute --> MotivationalEngine : getAssistantActions()
+
+Backend.AssistantAction "1" -- "0..*" Backend.Condition : has
+
+AssistantActionsEngine --> Backend.AssistantActionCatalog : evaluate(context)
+
+MetricQueries --> Metric : returns
+MetricQueries --> WorkplansRoute : getActivePlanData
+WorkplansRoute --> Data.MotivationalDataProvider : query workplan data
+
+MotivationalEngine --> AssistantActionsEngine : getActiveActions(context)<AssistantAction[]>
+MotivationalEngine --> MotivationalEngine : buildMetrics(userId)
+MotivationalEngine --> MotivationalEngine : buildContext(userId)
+MotivationalEngine --> MetricQueries : uses to build metrics
+MotivationalEngine --> UserTraitEngine: getUserTraits(userId)
+UserTraitEngine --> UserTraitQueries: uses
+UserTraitEngine --> UserTrait: create()
+UserTraitQueries --> UserTrait : returns
+UserTraitQueries --> Data.MotivationalDataProvider : Query UserTraits
+
+MotivationalMechanicsCatalog "1" *-- "1..*" GameMechanic : has
+
+HomeScreen --> MotivationalMechanicRoute : getWeightedMechanicsForPlayer/:userId
+
+MotivationalMechanicRoute --> MechanicsQueries : getWeightedMechanics(userTraits)
+
+MotivationalMechanicRoute --> UserTraitEngine : getUserTraits(userId)
+
+MechanicsQueries --> MotivationalMechanicsCatalog : evaluates
+
+Condition --> UserContext : uses to evaluate
+MotivationalEngine --> UserContext : builds
+@enduml
+
+@startuml
+actor Client
+participant "MotivationalEngine" as MotivationalEngine
+
+participant "AssistantActionsEngine" as ActionsEngine
+participant "MetricQueries" as MetricQueries
+participant "UserTraitQueries" as UserTraitQueries
+
+Client -> MotivationalEngine: getAssistantActions(userId, keySituationType)
+MotivationalEngine -> MotivationalEngine: buildContext()
+
+MotivationalEngine -> MotivationalEngine: buildMetrics(userId)
+MotivationalEngine -> MetricQueries: getMotivationalState(userId)
+MetricQueries --> MotivationalEngine: Metric(motivational_state)
+
+MotivationalEngine -> MetricQueries: getDaysSinceLastUseMetric(userId)
+MetricQueries --> MotivationalEngine: Metric(days_since_last_use)
+
+MotivationalEngine -> ActionsEngine: getActiveActions(ctx)
+ActionsEngine --> MotivationalEngine: activeActions[*]
+
+MotivationalEngine --> Client: activeActions[*]
+
+
+
 @enduml

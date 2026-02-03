@@ -204,27 +204,29 @@
         Some other parts specific to the Motivatonal Assistant like events, metrics and  mechanic mappings are not shared.<br><br>
         The Motivational Assistant Logic then sends back Assistan Actions via the Action Mapper in the Adapter which the Motivational Assistant UI can receive and then convert them into UI changes, activation or deactivation of mechanics etc.
         `
-
-
+    },
+    {
+      label:'Detailed Implementation Architecture',
+      path:'./DetailedImplementationArchitecture.svg',
+      note:`<strong>Detailed Implementation Architecture:</strong> <br><br>
+        This diagram refines the Architecture view down to concrete components, services, and data flows.<br><br>
+        It shows how the Motivational Assistant logic is decomposed into modules (event ingestion, situation detection, metric aggregation, mechanic selection, action generation) and how these modules interact via explicit interfaces and data contracts.<br><br>
+        Use this view when you need to think about code modules, deployment boundaries, or how the adapter connects to persistence, queues, and external services.`
     }
   ];
 
   function setDiagram(path){
     localStorage.setItem('umlDiagramPath', path);
 
-    // set per-selection text
     const meta = DIAGRAMS.find(d => d.path === path);
     noteBox.innerHTML = meta?.note || '';
 
-    // reset UI tied to previous SVG
     [...pkgPanel.querySelectorAll('.pkgbtn')].forEach(b => { if (b !== clearBtn) b.remove(); });
     datalist.innerHTML = '';
     searchBox.value = '';
 
-    // load svg
     svgObj.data = path;
 
-    // sync picker
     if (picker && [...picker.options].some(o => o.value === path)) picker.value = path;
   }
 
@@ -253,11 +255,9 @@
     svgRoot.style.userSelect = 'none';
     svgRoot.style.webkitUserSelect = 'none';
 
-    // Init pan/zoom state
     const vbInit = ensureViewBox(svgRoot);
     const state = { vb0: { ...vbInit }, vb:  { ...vbInit } };
 
-    // ====== Wheel zoom ======
     let wheelFrame = null, wheelAccum = 0, lastWheelCenter = null;
     function normalizeDeltaY(e){ if(e.deltaMode===1)return e.deltaY*16; if(e.deltaMode===2)return e.deltaY*800; return e.deltaY; }
     const ZOOM_SENS = 0.0015;
@@ -274,7 +274,6 @@
     }
     svgRoot.addEventListener('wheel', onWheelSmooth, { passive: false });
 
-    // ====== Drag to pan with click/drag separation ======
     svgRoot.classList.add('is-grab');
     let isDragging=false, pointerId=null, lastClientX=0, lastClientY=0, panDX=0, panDY=0, panFrame=null;
     let movedPx=0; const DRAG_THRESHOLD=5;
@@ -314,7 +313,6 @@
     svgRoot.ownerDocument.addEventListener('pointerup', onPointerUpOrCancel, { passive:false });
     svgRoot.ownerDocument.addEventListener('pointercancel', onPointerUpOrCancel, { passive:false });
 
-    // ====== Keyboard shortcuts ======
     svgRoot.ownerDocument.addEventListener('keydown', (e) => {
       if (e.key === '+' || e.key === '=') {
         const r=svgRoot.getBoundingClientRect(); const c=clientPointToSvg(svgRoot,r.left+r.width/2,r.top+r.height/2);
@@ -327,7 +325,6 @@
       }
     });
 
-    // ====== Injected styles for highlighting ======
     const style = svgDoc.createElementNS('http://www.w3.org/2000/svg', 'style');
     style.textContent = `
       svg { touch-action:none; user-select:none; -webkit-user-select:none; }
@@ -369,13 +366,11 @@
     `;
     svgRoot.appendChild(style);
 
-    // ====== Highlight logic ======
     const elemGroups    = Array.from(svgDoc.querySelectorAll('g[id^="elem_"]'));
     const clusterGroups = Array.from(svgDoc.querySelectorAll('g[id^="cluster_"]'));
     const linkGroups    = Array.from(svgDoc.querySelectorAll('g[id^="link_"]'));
     const allNodeGroups = [...elemGroups, ...clusterGroups];
 
-    // Build hit geometry for all link primitives
     linkGroups.forEach(g => g.dataset.tokens = JSON.stringify(tokensFromId(g.id)));
     linkGroups.forEach(g => {
       g.querySelectorAll('path,line,polyline,polygon').forEach(el => {
@@ -386,7 +381,6 @@
       });
     });
 
-    // --- index elements for search ---
     const nameToId = new Map();
     function addName(id, text){ const key=normalizeId(text); if(key) nameToId.set(key, id); }
     [...elemGroups, ...clusterGroups].forEach(g => {
@@ -427,7 +421,6 @@
       elemGroups.forEach(g => { try{ elemBBox.set(g, g.getBBox()); }catch{} });
       clusterGroups.forEach(g => { try{ clusterBBox.set(g, g.getBBox()); }catch{} });
 
-      // map cluster -> elements inside
       const clusterInfo = new Map();
       const INSIDE_PADDING = 2;
       clusterGroups.forEach(cluster => {
@@ -493,7 +486,6 @@
       });
     }
 
-    // ====== Click wiring using movement threshold ======
     allNodeGroups.forEach(g => {
       g.addEventListener('click', () => {
         if (movedPx > DRAG_THRESHOLD) return;
@@ -512,7 +504,6 @@
       if (e.target === svgDoc || e.target === svgRoot) clearHighlight();
     });
 
-    // ====== Search wiring ======
     function focusAndHighlight(targetId){ highlightFor(targetId); }
     function runSearch(q){
       const key = normalizeId(q); if(!key) return;
@@ -531,7 +522,6 @@
     [...elemGroups, ...clusterGroups].forEach(g => suggestions.add(g.id));
     datalist.innerHTML=[...suggestions].sort((a,b)=>a.localeCompare(b)).map(s=>`<option value="${s}">`).join('');
 
-    // ====== Left buttons for top-level clusters ======
     clearBtn.addEventListener('click', () => {
       clearHighlight();
       pkgPanel.querySelectorAll('.pkgbtn').forEach(b => b.classList.remove('is-active'));
