@@ -16,7 +16,6 @@ package Metrics #ffe8e8 {
   class EngagementMetric #ffcdcdff extends Metric
   class PerformanceMetric #ffcdcdff extends Metric
   class SystemMetric #ffcdcdff extends Metric
-  class MechanicState #ffcdcdff extends Metric
 
   class DailyAdherence #ffcdcdff extends AdherenceMetric
   class WeeklyAdherence #ffcdcdff extends AdherenceMetric

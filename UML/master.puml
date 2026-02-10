@@ -1,4 +1,5 @@
 @startuml
+
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -13,15 +14,17 @@ title Motiva Framework Ontology
 skinparam class {
   StereotypeFontStyle bold
 }
+
+!include ./user_traits.puml
+!include ./motivational_mechanics.puml
 !include ./metrics.puml
 !include ./keysituations.puml
 !include ./assistantActions.puml
 !include ./event_registration.puml
 !include ./plan_and_tasks.puml
-!include ./user_model.puml
-!include ./user_traits.puml
-!include ./motivational_mechanics.puml
-!include ./relationships.puml
+!include ./user_context.puml
 !include ./conditions.puml
+!include ./relationships.puml
+
 
 @enduml

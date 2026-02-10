@@ -7,16 +7,20 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package UserTraits #fcffe8ff {
-  class UserTrait #eaf797ff
 
-  class MotivationalTrait #eaf797ff extends UserTrait
+!define traitsBack        #fafeb7ff
+!define traitsFront      #f5fba0ff
+
+package UserTraits traitsBack {
+  class UserTrait traitsFront
+
+  class MotivationalTrait traitsFront extends UserTrait
   hide MotivationalTrait members
   note bottom of MotivationalTrait
   Representation of motivational characteristics.
   end note
 
-  class PlayerType #eaf797ff extends UserTrait
+  class PlayerType traitsFront extends UserTrait
   note bottom of PlayerType
   User gaming style or approach.
   end note
@@ -35,31 +39,31 @@ package UserTraits #fcffe8ff {
   Disruptor --> PlayerType : "instance of"
 
 
-  class DigitalLiteracy #eaf797ff extends UserTrait
+  class DigitalLiteracy traitsFront extends UserTrait
   hide DigitalLiteracy members
   note bottom of DigitalLiteracy
   Familiarity with digital technologies.
   end note
 
-  class CognitiveAbility #eaf797ff extends UserTrait
+  class CognitiveAbility traitsFront extends UserTrait
   hide CognitiveAbility members
   note bottom of CognitiveAbility
   Reasoning, memory, problem-solving.
   end note
 
-  class AttentionSpan #eaf797ff extends UserTrait
+  class AttentionSpan traitsFront extends UserTrait
   hide AttentionSpan members
   note bottom of AttentionSpan
   Ability to maintain focus.
   end note
 
-  class SelfDiscipline #eaf797ff extends UserTrait
+  class SelfDiscipline traitsFront extends UserTrait
   hide SelfDiscipline members
   note bottom of SelfDiscipline
   Consistency and task completion.
   end note
 
-  class FrustrationTolerance #eaf797ff extends UserTrait
+  class FrustrationTolerance traitsFront extends UserTrait
   hide FrustrationTolerance members
   note bottom of FrustrationTolerance
   Coping with difficulty and delay.

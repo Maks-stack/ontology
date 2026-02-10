@@ -6,6 +6,9 @@ hide empty methods
 hide empty attributes
 hide empty members
 
+!define mechanicsBack        #f5ffdbff
+!define mechanicsFront      #e4ffa0ff
+
 ' keep orientation, reduce width
 scale 0.8
 skinparam nodesep 16
@@ -16,22 +19,24 @@ skinparam ClassAttributeFontSize 10
 skinparam ClassStereotypeFontSize 10
 skinparam NoteFontSize 10
 
-package MotivationalMechanics #fff6e8 {
+package MotivationalMechanics mechanicsBack {
   left to right direction
 
-  class MotivationalMechanic #ffe3b6ff
+  class MotivationalMechanic mechanicsFront
   hide MotivationalMechanic members
 
   class MotivationalMechanic
 
-class Progress_Indicators #ffecceff extends MotivationalMechanic
+  class MechanicState mechanicsFront
+
+class Progress_Indicators mechanicsFront extends MotivationalMechanic
 object Level_and_Experience_Point_System
 Level_and_Experience_Point_System --> Progress_Indicators : «instance of»
 note bottom of Level_and_Experience_Point_System
 Core progression; growth via XP and unlocks.
 end note
 
-class Competition_with_others #ffecceff extends MotivationalMechanic
+class Competition_with_others mechanicsFront extends MotivationalMechanic
 hide Competition_with_others members
 object Leaderboards
 Leaderboards --> Competition_with_others : «instance of»
@@ -39,7 +44,7 @@ note bottom of Leaderboards
 Competing with other comparing points
 end note
 
-class Personal_Goals #ffecceff extends MotivationalMechanic
+class Personal_Goals mechanicsFront extends MotivationalMechanic
 hide Personal_Goals members
 object Self_Assigned_Targets
 Self_Assigned_Targets --> Personal_Goals : «instance of»
@@ -47,7 +52,7 @@ note bottom of Self_Assigned_Targets
 Users define objectives.
 end note
 
-class Personalization_and_Creativity #ffecceff extends MotivationalMechanic
+class Personalization_and_Creativity mechanicsFront extends MotivationalMechanic
 hide Personalization_and_Creativity members
 object Custom_Player_Made_Content
 Custom_Player_Made_Content --> Personalization_and_Creativity : «instance of»
@@ -55,7 +60,7 @@ note bottom of Custom_Player_Made_Content
 User-generated content.
 end note
 
-class Sharing_Achievements #ffecceff extends MotivationalMechanic
+class Sharing_Achievements mechanicsFront extends MotivationalMechanic
 hide Sharing_Achievements members
 object Social_Share_Buttons
 Social_Share_Buttons --> Sharing_Achievements : «instance of»
@@ -63,7 +68,7 @@ note bottom of Social_Share_Buttons
 Share externally.
 end note
 
-class Social_Networking #ffecceff extends MotivationalMechanic
+class Social_Networking mechanicsFront extends MotivationalMechanic
 hide Social_Networking members
 object Community_Insights
 Community_Insights --> Social_Networking : «instance of»
@@ -71,7 +76,7 @@ note bottom of Community_Insights
 Show peer behavior.
 end note
 
-class Surprises_and_Events #ffecceff extends MotivationalMechanic
+class Surprises_and_Events mechanicsFront extends MotivationalMechanic
 hide Surprises_and_Events members
 object Mystery_Boxes
 Mystery_Boxes --> Surprises_and_Events : «instance of»
@@ -79,7 +84,7 @@ note bottom of Mystery_Boxes
 Randomized rewards.
 end note
 
-class Motivational_Messages #ffecceff extends MotivationalMechanic
+class Motivational_Messages mechanicsFront extends MotivationalMechanic
 hide Motivational_Messages members
 object Encouraging_Messages
 Encouraging_Messages --> Motivational_Messages : «instance of»
@@ -87,7 +92,7 @@ note bottom of Encouraging_Messages
 Positive reinforcement.
 end note
 
-class Time_Based_Challenges #ffecceff extends MotivationalMechanic
+class Time_Based_Challenges mechanicsFront extends MotivationalMechanic
 hide Time_Based_Challenges members
 object Appointment_Dynamics
 Appointment_Dynamics --> Time_Based_Challenges : «instance of»
@@ -95,7 +100,7 @@ note bottom of Appointment_Dynamics
 Scheduled events.
 end note
 
-class Rewards_and_Unlocks #ffecceff extends MotivationalMechanic
+class Rewards_and_Unlocks mechanicsFront extends MotivationalMechanic
 hide Rewards_and_Unlocks members
 object In_Game_Currency
 In_Game_Currency --> Rewards_and_Unlocks : «instance of»
@@ -117,6 +122,14 @@ end note
 
   ' relations
   Usertrait_Mechanic_Mapping.MechanicTraitWeight --> MotivationalMechanics.MotivationalMechanic : maps
+
+  ' !if ($renderMode == "master")
+  
+  ' !else
   Usertrait_Mechanic_Mapping.MechanicTraitWeight --> UserTraits.UserTrait : maps
+  ' !endif
+  
+
+  MotivationalMechanic "1" --> "1" MechanicState : has
 }
 @enduml

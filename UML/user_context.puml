@@ -7,7 +7,7 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package UserModel #fde8ffff {
+package UserContext #fde8ffff {
   class User #f59bff
 
   class UserState #f7befeff {

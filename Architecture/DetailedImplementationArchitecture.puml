@@ -180,7 +180,7 @@ package "Backend" {
     +GameMechanics: GameMechanic[]
   }
 
-  class GameMechanic #ffe3b6ff {
+  class MotivationalMechanic #ffe3b6ff {
     + name: string
     + description: string
     + activationConditions: Condition[*]

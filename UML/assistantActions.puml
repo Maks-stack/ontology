@@ -31,7 +31,7 @@ package AssistantActions #e8e8ff {
   ' !if ($renderMode == "master")
   
   ' !else
-  ' AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+  AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
   ' !endif
 }
 @enduml
