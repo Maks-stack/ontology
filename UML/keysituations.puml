@@ -6,16 +6,21 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package KeySituations #e8faff {
-  class KeySituation #bbf0ff
-  class MechanicDisplayedKeySituation #d5f6ff extends KeySituation
-  class MechanicInteractionKeySituation #d5f6ff extends KeySituation
-  class MilestoneReachedKeySituation #d5f6ff extends KeySituation
-  class DailyChallengePosedKeySituation #d5f6ff extends KeySituation
-  class SessionStartedKeySituation #d5f6ff extends KeySituation
-  class TaskStartedKeySituation #d5f6ff extends KeySituation
-  class TaskFinishedKeySituation #d5f6ff extends KeySituation
-  class SessionEndedKeySituation #d5f6ff extends KeySituation
+
+!define keySituationsBack #e8faffff
+!define keySituationsFront #bbf0ffff
+!define keySituationsLight #d5f6ffff
+
+package KeySituations keySituationsBack {
+  class KeySituation keySituationsFront
+  class MechanicDisplayedKeySituation keySituationsLight extends KeySituation
+  class MechanicInteractionKeySituation keySituationsLight extends KeySituation
+  class MilestoneReachedKeySituation keySituationsLight extends KeySituation
+  class DailyChallengePosedKeySituation keySituationsLight extends KeySituation
+  class SessionStartedKeySituation keySituationsLight extends KeySituation
+  class TaskStartedKeySituation keySituationsLight extends KeySituation
+  class TaskFinishedKeySituation keySituationsLight extends KeySituation
+  class SessionEndedKeySituation keySituationsLight extends KeySituation
   note left of KeySituation
   Generic KeySituation structure for behavioral logs.
   end note

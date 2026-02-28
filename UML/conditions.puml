@@ -7,20 +7,24 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package Conditions #ffedcaff {
-  class Condition #f8db92ff {
+
+!define conditionsBack #ffedcaff
+!define conditionsFront #f8db92ff
+
+package Conditions conditionsBack {
+  class Condition conditionsFront {
     +timestamp: DateTime
     +value: float
   }
-  class UserBehaviourCondition #f8db92ff extends Condition
-  class AdherenceLow #f8db92ff extends UserBehaviourCondition
-  class ConfidenceLow #f8db92ff extends UserBehaviourCondition
+  class UserBehaviourCondition conditionsFront extends Condition
+  class AdherenceLow conditionsFront extends UserBehaviourCondition
+  class ConfidenceLow conditionsFront extends UserBehaviourCondition
 
-  class SystemCondition #f8db92ff extends Condition
-  class TimeOfDayCondition #f8db92ff extends SystemCondition
+  class SystemCondition conditionsFront extends Condition
+  class TimeOfDayCondition conditionsFront extends SystemCondition
 
-  class PlanCondition #f8db92ff extends Condition
-  class HalfwayPointReached #f8db92ff extends PlanCondition
+  class PlanCondition conditionsFront extends Condition
+  class HalfwayPointReached conditionsFront extends PlanCondition
 }
 
 @enduml

@@ -1,0 +1,323 @@
+@prefix : <http://example.org/motiva#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://example.org/motiva>
+  a owl:Ontology ;
+  rdfs:label "Motiva Framework Ontology (from PlantUML)"@en .
+
+##########
+# Classes
+##########
+
+:AssistantAction a owl:Class .
+:Questionnaire a owl:Class ; rdfs:subClassOf :AssistantAction .
+:AlertMessage a owl:Class ; rdfs:subClassOf :AssistantAction .
+:Intrinsic_Motivation_Inventory a owl:Class ; rdfs:subClassOf :Questionnaire .
+:User_Engagement_Scale a owl:Class ; rdfs:subClassOf :Questionnaire .
+:SystemNotice a owl:Class ; rdfs:subClassOf :Questionnaire .
+:PromptMessage a owl:Class ; rdfs:subClassOf :Questionnaire .
+
+:Condition a owl:Class .
+:UserBehaviourCondition a owl:Class ; rdfs:subClassOf :Condition .
+:AdherenceLow a owl:Class ; rdfs:subClassOf :UserBehaviourCondition .
+:ConfidenceLow a owl:Class ; rdfs:subClassOf :UserBehaviourCondition .
+:SystemCondition a owl:Class ; rdfs:subClassOf :Condition .
+:TimeOfDayCondition a owl:Class ; rdfs:subClassOf :SystemCondition .
+:PlanCondition a owl:Class ; rdfs:subClassOf :Condition .
+:HalfwayPointReached a owl:Class ; rdfs:subClassOf :PlanCondition .
+
+:Event a owl:Class .
+:UserEvent a owl:Class ; rdfs:subClassOf :Event .
+:SystemEvent a owl:Class ; rdfs:subClassOf :Event .
+:TaskEvent a owl:Class ; rdfs:subClassOf :UserEvent .
+:ClickEvent a owl:Class ; rdfs:subClassOf :UserEvent .
+:LoginEvent a owl:Class ; rdfs:subClassOf :UserEvent .
+:TaskFinishedEvent a owl:Class ; rdfs:subClassOf :TaskEvent .
+:ErrorCommittedEvent a owl:Class ; rdfs:subClassOf :UserEvent .
+:HourPassedEvent a owl:Class ; rdfs:subClassOf :SystemEvent .
+:DayPassedEvent a owl:Class ; rdfs:subClassOf :SystemEvent .
+:WeekPassedEvent a owl:Class ; rdfs:subClassOf :SystemEvent .
+:MechanicInteraction a owl:Class ; rdfs:subClassOf :UserEvent .
+
+:EventCollection a owl:Class .
+
+:KeySituation a owl:Class .
+:MechanicDisplayedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:MechanicInteractionKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:MilestoneReachedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:DailyChallengePosedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:SessionStartedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:TaskStartedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:TaskFinishedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+:SessionEndedKeySituation a owl:Class ; rdfs:subClassOf :KeySituation .
+
+:Metric a owl:Class .
+:AdherenceMetric a owl:Class ; rdfs:subClassOf :Metric .
+:EngagementMetric a owl:Class ; rdfs:subClassOf :Metric .
+:PerformanceMetric a owl:Class ; rdfs:subClassOf :Metric .
+:SystemMetric a owl:Class ; rdfs:subClassOf :Metric .
+
+:DailyAdherence a owl:Class ; rdfs:subClassOf :AdherenceMetric .
+:WeeklyAdherence a owl:Class ; rdfs:subClassOf :AdherenceMetric .
+:Adherence a owl:Class ; rdfs:subClassOf :AdherenceMetric .
+:MechanicUsageRate a owl:Class ; rdfs:subClassOf :EngagementMetric .
+:MechanicDisplayRate a owl:Class ; rdfs:subClassOf :EngagementMetric .
+:MechanicEngagement a owl:Class ; rdfs:subClassOf :EngagementMetric .
+:SessionDuration a owl:Class ; rdfs:subClassOf :SystemMetric .
+:ClickRate a owl:Class ; rdfs:subClassOf :PerformanceMetric .
+:HesitationTime a owl:Class ; rdfs:subClassOf :PerformanceMetric .
+
+:MotivationalMechanic a owl:Class .
+:MechanicState a owl:Class .
+
+:Progress_Indicators a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Competition_with_others a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Personal_Goals a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Personalization_and_Creativity a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Sharing_Achievements a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Social_Networking a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Surprises_and_Events a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Motivational_Messages a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Time_Based_Challenges a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+:Rewards_and_Unlocks a owl:Class ; rdfs:subClassOf :MotivationalMechanic .
+
+:MechanicUserTraitMapping a owl:Class .
+:UserTrait a owl:Class .
+:MotivationalTrait a owl:Class ; rdfs:subClassOf :UserTrait .
+:PlayerType a owl:Class ; rdfs:subClassOf :UserTrait .
+:DigitalLiteracy a owl:Class ; rdfs:subClassOf :UserTrait .
+:CognitiveAbility a owl:Class ; rdfs:subClassOf :UserTrait .
+:AttentionSpan a owl:Class ; rdfs:subClassOf :UserTrait .
+:SelfDiscipline a owl:Class ; rdfs:subClassOf :UserTrait .
+:FrustrationTolerance a owl:Class ; rdfs:subClassOf :UserTrait .
+
+:User a owl:Class .
+:UserState a owl:Class .
+:MotivationalState a owl:Class ; rdfs:subClassOf :UserState .
+:Low a owl:Class ; rdfs:subClassOf :MotivationalState .
+:Medium a owl:Class ; rdfs:subClassOf :MotivationalState .
+:High a owl:Class ; rdfs:subClassOf :MotivationalState .
+:CognitiveLoadState a owl:Class ; rdfs:subClassOf :UserState .
+:Underchallenged a owl:Class ; rdfs:subClassOf :CognitiveLoadState .
+:OptimalLoad a owl:Class ; rdfs:subClassOf :CognitiveLoadState .
+:Overloaded a owl:Class ; rdfs:subClassOf :CognitiveLoadState .
+:UserTraitWeight a owl:Class .
+
+:Plan a owl:Class .
+:Task a owl:Class .
+
+###################
+# Object Properties
+###################
+
+:togglesMechanic a owl:ObjectProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range :MotivationalMechanic .
+
+:targetsUser a owl:ObjectProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range :User .
+
+:considersMetric a owl:ObjectProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range :Metric .
+
+:considersTraitWeight a owl:ObjectProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range :UserTraitWeight .
+
+:hasCondition a owl:ObjectProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range :Condition .
+
+:triggersKeySituation a owl:ObjectProperty ;
+  rdfs:domain :Event ;
+  rdfs:range :KeySituation .
+
+:producesMetric a owl:ObjectProperty ;
+  rdfs:domain :Event ;
+  rdfs:range :Metric .
+
+:triggersAssistantAction a owl:ObjectProperty ;
+  rdfs:domain :KeySituation ;
+  rdfs:range :AssistantAction .
+
+:storesEvent a owl:ObjectProperty ;
+  rdfs:domain :EventCollection ;
+  rdfs:range :Event .
+
+:readsEventCollection a owl:ObjectProperty ;
+  rdfs:domain :Metric ;
+  rdfs:range :EventCollection .
+
+:refersToTask a owl:ObjectProperty ;
+  rdfs:domain :TaskEvent ;
+  rdfs:range :Task .
+
+:hasPlan a owl:ObjectProperty ;
+  rdfs:domain :User ;
+  rdfs:range :Plan .
+
+:hasUserState a owl:ObjectProperty ;
+  rdfs:domain :User ;
+  rdfs:range :UserState .
+
+:hasUserTraitWeight a owl:ObjectProperty ;
+  rdfs:domain :User ;
+  rdfs:range :UserTraitWeight .
+
+:referencesTrait a owl:ObjectProperty ;
+  rdfs:domain :UserTraitWeight ;
+  rdfs:range :UserTrait .
+
+:selected_by a owl:ObjectProperty ;
+  rdfs:domain :MotivationalMechanic ;
+  rdfs:range :UserTraitWeight .
+
+:hasMechanicState a owl:ObjectProperty ;
+  rdfs:domain :MotivationalMechanic ;
+  rdfs:range :MechanicState .
+
+:mapsToMechanic a owl:ObjectProperty ;
+  rdfs:domain :MechanicUserTraitMapping ;
+  rdfs:range :MotivationalMechanic .
+
+:mapsToTrait a owl:ObjectProperty ;
+  rdfs:domain :MechanicUserTraitMapping ;
+  rdfs:range :UserTrait .
+
+:readsMetric a owl:ObjectProperty ;
+  rdfs:domain :Condition ;
+  rdfs:range :Metric .
+
+:readsPlan a owl:ObjectProperty ;
+  rdfs:domain :PlanCondition ;
+  rdfs:range :Plan .
+
+:isDeterminedByMetric a owl:ObjectProperty ;
+  rdfs:domain :MotivationalMechanic ;
+  rdfs:range :Metric .
+
+:mechanicStateBasedOnMetric a owl:ObjectProperty ;
+  rdfs:domain :MechanicState ;
+  rdfs:range :Metric .
+
+#################
+# Data Properties
+#################
+
+:timestamp a owl:DatatypeProperty ;
+  rdfs:domain :Event ;
+  rdfs:range xsd:dateTime .
+
+:metricTimestamp a owl:DatatypeProperty ;
+  rdfs:domain :Metric ;
+  rdfs:range xsd:dateTime .
+
+:conditionTimestamp a owl:DatatypeProperty ;
+  rdfs:domain :Condition ;
+  rdfs:range xsd:dateTime .
+
+:userStateTimestamp a owl:DatatypeProperty ;
+  rdfs:domain :UserState ;
+  rdfs:range xsd:dateTime .
+
+:value a owl:DatatypeProperty ;
+  rdfs:domain :Metric ;
+  rdfs:range xsd:float .
+
+:conditionValue a owl:DatatypeProperty ;
+  rdfs:domain :Condition ;
+  rdfs:range xsd:float .
+
+:weight a owl:DatatypeProperty ;
+  rdfs:domain :UserTraitWeight ;
+  rdfs:range xsd:float .
+
+:MechanicUserTraitMappingValue a owl:DatatypeProperty ;
+  rdfs:domain :MechanicUserTraitMapping ;
+  rdfs:range xsd:float .
+
+:toggle a owl:DatatypeProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range xsd:boolean .
+
+:stateChange a owl:DatatypeProperty ;
+  rdfs:domain :AssistantAction ;
+  rdfs:range xsd:boolean .
+
+#############################
+# Minimal OWL Restrictions
+#############################
+
+:MotivationalMechanic
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :hasMechanicState ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :MechanicState
+  ] .
+
+:EventCollection
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :storesEvent ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :Event
+  ] .
+
+:User
+  rdfs:subClassOf
+    [ a owl:Restriction ;
+      owl:onProperty :hasUserState ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass :UserState
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasUserTraitWeight ;
+      owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass :UserTraitWeight
+    ] ,
+    [ a owl:Restriction ;
+      owl:onProperty :hasPlan ;
+      owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onClass :Plan
+    ] .
+
+:UserTraitWeight
+  rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :referencesTrait ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :UserTrait
+  ] .
+
+################
+# Individuals
+################
+
+:Philanthropist a :PlayerType .
+:Achiever a :PlayerType .
+:Free_Spirit a :PlayerType .
+:Socializer a :PlayerType .
+:Player a :PlayerType .
+:Disruptor a :PlayerType .
+
+:Level_and_Experience_Point_System a :Progress_Indicators .
+:Leaderboards a :Competition_with_others .
+:Self_Assigned_Targets a :Personal_Goals .
+:Custom_Player_Made_Content a :Personalization_and_Creativity .
+:Social_Share_Buttons a :Sharing_Achievements .
+:Community_Insights a :Social_Networking .
+:Mystery_Boxes a :Surprises_and_Events .
+:Encouraging_Messages a :Motivational_Messages .
+:Appointment_Dynamics a :Time_Based_Challenges .
+:In_Game_Currency a :Rewards_and_Unlocks .
+
+:Level_and_Experience_Point_System_to_Player a :MechanicUserTraitMapping ;
+  :MechanicUserTraitMappingValue "0.8"^^xsd:float ;
+  :mapsToMechanic :Level_and_Experience_Point_System ;
+  :mapsToTrait :Player .

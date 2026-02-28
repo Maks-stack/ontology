@@ -7,8 +7,12 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package Plan_and_Tasks #ebffe8ff {
-  class Plan #lightgreen { 
+
+!define planBack #ebffe8ff
+!define planFront #lightgreen
+
+package Plan_and_Tasks planBack {
+  class Plan planFront {
     +name: String
     +description: String
   }
@@ -16,12 +20,12 @@ package Plan_and_Tasks #ebffe8ff {
     Succession of task blocks (composites).
   end note
 
-  class Task #lightgreen { 
+  class Task planFront {
     +title: String
     +description: String
   }
 
-  class Level #lightgreen { 
+  class Level planFront {
     +name: String
     +difficulty: Int
   }
@@ -29,21 +33,21 @@ package Plan_and_Tasks #ebffe8ff {
     Optional difficulty per task.
   end note
 
-  class Repetitions #lightgreen { 
+  class Repetitions planFront {
     +count: Int
   }
   note bottom of Repetitions
     Required to define plan.
   end note
 
-  class TaskRequirement #lightgreen { 
+  class TaskRequirement planFront {
     +requiredRepetitions: int
   }
   note left of TaskRequirement
     How many times a Task must be repeated on a Level.
   end note
 
-  class TaskAssignment #lightgreen { 
+  class TaskAssignment planFront {
     +task: Task
     +taskRequirement: TaskRequirement
   }
@@ -51,7 +55,7 @@ package Plan_and_Tasks #ebffe8ff {
     Assigns a Task and its requirements to a block.
   end note
 
-  class TaskBlock #lightgreen { 
+  class TaskBlock planFront {
     +title: String
     +description: String
     +startDate: DateTime

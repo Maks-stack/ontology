@@ -7,25 +7,30 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package Metrics #ffe8e8 {
-  class Metric #fda5a5ff {
+
+!define metricsBack #ffe8e8ff
+!define metricsFront #fda5a5ff
+!define metricsLight #ffcdcdff
+
+package Metrics metricsBack {
+  class Metric metricsFront {
     +timestamp: DateTime
     +value: float
   }
-  class AdherenceMetric #ffcdcdff extends Metric
-  class EngagementMetric #ffcdcdff extends Metric
-  class PerformanceMetric #ffcdcdff extends Metric
-  class SystemMetric #ffcdcdff extends Metric
+  class AdherenceMetric metricsLight extends Metric
+  class EngagementMetric metricsLight extends Metric
+  class PerformanceMetric metricsLight extends Metric
+  class SystemMetric metricsLight extends Metric
 
-  class DailyAdherence #ffcdcdff extends AdherenceMetric
-  class WeeklyAdherence #ffcdcdff extends AdherenceMetric
-  class MechanicUsageRate #ffcdcdff extends EngagementMetric
-  class MechanicDisplayRate #ffcdcdff extends EngagementMetric
-  class MechanicEngagement #ffcdcdff extends EngagementMetric
-  class SessionDuration #ffcdcdff extends SystemMetric
-  class ClickRate #ffcdcdff extends PerformanceMetric
-  class Adherence #ffcdcdff extends AdherenceMetric
-  class HesitationTime #ffcdcdff extends PerformanceMetric
+  class DailyAdherence metricsLight extends AdherenceMetric
+  class WeeklyAdherence metricsLight extends AdherenceMetric
+  class MechanicUsageRate metricsLight extends EngagementMetric
+  class MechanicDisplayRate metricsLight extends EngagementMetric
+  class MechanicEngagement metricsLight extends EngagementMetric
+  class SessionDuration metricsLight extends SystemMetric
+  class ClickRate metricsLight extends PerformanceMetric
+  class Adherence metricsLight extends AdherenceMetric
+  class HesitationTime metricsLight extends PerformanceMetric
 
 }
 

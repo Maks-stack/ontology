@@ -8,31 +8,42 @@ skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
 
-package EventRegistration #f1f1f1 {
-  class Event #ccccccff {
-    
+!define eventsBack #f1f1f1ff
+!define eventsFront #ccccccff
+!define eventsLight #e6e6e6ff
+
+package EventRegistration eventsBack {
+
+  class Event eventsFront {
     + timestamp: DateTime
-    
-    
-  }
-  together {
-    class UserEvent #e6e6e6ff extends Event
-    class SystemEvent #e6e6e6ff extends Event
-    class TaskEvent #e6e6e6ff extends UserEvent
   }
 
-  class EventCollection 
-  EventCollection o-- "1..*" Event : stores
+  together {
+    class UserEvent eventsLight extends Event
+    class SystemEvent eventsLight extends Event
+    class TaskEvent eventsLight extends UserEvent
+    class MechanicEvent eventsLight extends UserEvent
+  }
 
   together {
-    class ClickEvent #e6e6e6ff extends UserEvent
-    class LoginEvent #e6e6e6ff extends UserEvent
-    class TaskFinishedEvent #e6e6e6ff extends TaskEvent
-    class ErrorCommittedEvent #e6e6e6ff extends UserEvent
-    class HourPassedEvent #e6e6e6ff extends SystemEvent
-    class DayPassedEvent #e6e6e6ff extends SystemEvent
-    class WeekPassedEvent #e6e6e6ff extends SystemEvent
-    class MechanicInteraction #e6e6e6ff extends UserEvent
+    class ClickEvent eventsLight extends UserEvent
+    class LoginEvent eventsLight extends UserEvent
+    class LogoutEvent eventsLight extends UserEvent
+    class ErrorCommittedEvent eventsLight extends UserEvent
+    class ScoreEvent eventsLight extends UserEvent
+    class ScreenVisitedEvent eventsLight extends UserEvent
+
+    class HourPassedEvent eventsLight extends SystemEvent
+    class DayPassedEvent eventsLight extends SystemEvent
+    class WeekPassedEvent eventsLight extends SystemEvent
+
+    class TaskStartedEvent eventsLight extends TaskEvent
+    class TaskFinishedEvent eventsLight extends TaskEvent
+
+    class MechanicDisplayedEvent eventsLight extends MechanicEvent
+    class MechanicInteractedEvent eventsLight extends MechanicEvent
+    class MechanicDismissedEvent eventsLight extends MechanicEvent
   }
+
 }
 @enduml

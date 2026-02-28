@@ -110,26 +110,25 @@ end note
 
 
   package Usertrait_Mechanic_Mapping {
-    class MechanicTraitWeight { 
+    class MechanicUserTraitMapping { 
       +weight: float 
     }
     object Level_and_Experience_Point_System_to_Player {
       weight: 0.8
     }
-    Level_and_Experience_Point_System_to_Player --> MechanicTraitWeight : instance of 
+    Level_and_Experience_Point_System_to_Player --> MechanicUserTraitMapping : instance of 
 
   }
 
   ' relations
-  Usertrait_Mechanic_Mapping.MechanicTraitWeight --> MotivationalMechanics.MotivationalMechanic : maps
+  Usertrait_Mechanic_Mapping.MechanicUserTraitMapping --> MotivationalMechanics.MotivationalMechanic : maps
 
   ' !if ($renderMode == "master")
   
   ' !else
-  Usertrait_Mechanic_Mapping.MechanicTraitWeight --> UserTraits.UserTrait : maps
+  Usertrait_Mechanic_Mapping.MechanicUserTraitMapping --> UserTraits.UserTrait : maps
   ' !endif
   
-
   MotivationalMechanic "1" --> "1" MechanicState : has
 }
 @enduml

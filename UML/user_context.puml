@@ -7,28 +7,34 @@ left to right direction
 skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
-package UserContext #fde8ffff {
-  class User #f59bff
 
-  class UserState #f7befeff {
+!define contextBack #fde8ffff
+!define contextFront #f59bffff
+!define contextState #f7befeff
+!define contextLight #f5c6fbff
+
+package UserContext contextBack {
+  class User contextFront
+
+  class UserState contextState {
     +timestamp: DateTime
   }
 
-  class MotivationalState #f7befeff extends UserState
-  class Low #f5c6fbff extends MotivationalState
-  class Medium #f5c6fbff extends MotivationalState
-  class High #f5c6fbff extends MotivationalState
+  class MotivationalState contextState extends UserState
+  class Low contextLight extends MotivationalState
+  class Medium contextLight extends MotivationalState
+  class High contextLight extends MotivationalState
 
-  class CognitiveLoadState #f7befeff extends UserState
-  class Underchallenged #f5c6fbff extends CognitiveLoadState
-  class OptimalLoad #f5c6fbff extends CognitiveLoadState
-  class Overloaded #f5c6fbff extends CognitiveLoadState
+  class CognitiveLoadState contextState extends UserState
+  class Underchallenged contextLight extends CognitiveLoadState
+  class OptimalLoad contextLight extends CognitiveLoadState
+  class Overloaded contextLight extends CognitiveLoadState
 
-  class UserTraitWeight #f7befeff {
+  class UserTraitMapping contextState {
     +weight: float
   }
 
   User --> "1..*" UserState : has
-  User --> "1..*" UserTraitWeight : has
+  User --> "1..*" UserTraitMapping : has
 }
 @enduml

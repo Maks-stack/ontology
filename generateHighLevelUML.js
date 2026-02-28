@@ -28,20 +28,34 @@ const staticSet = new Set([
   "Usertrait_Mechanic:mapping"
 ].map(normalize));
 
-const packageRegex = /^\s*package\s+"?([\w_]+)"?\s*(#[A-Fa-f0-9]+)?/;
+const defineRegex = /^\s*!define\s+(\w+)\s+(.+)/;
+const packageRegex = /^\s*package\s+"?([\w_]+)"?\s*(#[\w]+|\w+)?/;
 const relationRegex =
   /^\s*([\w_.]+)\.[\w_]+\s*(?:"([^"]*)"\s*)?(<?[-.o*]+[-.o*]+>?)\s*(?:"([^"]*)"\s*)?([\w_.]+)\.[\w_]+(?:\s*:\s*(.*))?/;
 
 for (const file of files) {
   const text = fs.readFileSync(path.join(umlDir, file), "utf8");
   const lines = text.split(/\r?\n/);
+  const defines = new Map();
 
   for (const line of lines) {
+    const defMatch = line.match(defineRegex);
+    if (defMatch) {
+      defines.set(defMatch[1], defMatch[2].trim());
+      continue;
+    }
+
     const pkgMatch = line.match(packageRegex);
     if (pkgMatch) {
-      const [, name, color] = pkgMatch;
+      const [, name, colorOrRef] = pkgMatch;
       const shortName = name.split(".").slice(-1)[0]; // raw
-      if (!moduleColors.has(shortName)) moduleColors.set(shortName, color || "#ffffff");
+      if (!moduleColors.has(shortName)) {
+        let color = colorOrRef || "#ffffff";
+        if (color && !color.startsWith("#")) {
+          color = defines.get(color) || "#ffffff";
+        }
+        moduleColors.set(shortName, color);
+      }
       continue;
     }
 

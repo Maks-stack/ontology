@@ -8,26 +8,31 @@ skinparam nodesep 40
 skinparam ranksep 40
 skinparam packageStyle rectangle
 
-package AssistantActions #e8e8ff {
-  class AssistantAction #cacaff {
+!define actionsBack #e8e8ffff
+!define actionsFront #cacaffff
+!define actionsLight #d6d6ffff
+
+package AssistantActions actionsBack {
+  class AssistantAction actionsFront {
     toggle : Boolean
     stateChange : Boolean
+    +timestamp: DateTime
   }
   note right of AssistantAction
     One-off AssistantAction: activates/deactivates a mechanic
     or prompts another user interaction.>
   end note
 
-  class Questionnaire #d6d6ff extends AssistantAction
-  class AlertMessage #d6d6ff extends AssistantAction
+  class Questionnaire actionsLight extends AssistantAction
+  class AlertMessage actionsLight extends AssistantAction
   note right of AlertMessage
     General info, warnings, or alerts to guide or prompt users.
   end note
 
-  class Intrinsic_Motivation_Inventory #d6d6ff extends Questionnaire
-  class User_Engagement_Scale #d6d6ff extends Questionnaire
-  class SystemNotice #d6d6ff extends Questionnaire
-  class PromptMessage #d6d6ff extends Questionnaire
+  class Intrinsic_Motivation_Inventory actionsLight extends Questionnaire
+  class User_Engagement_Scale actionsLight extends Questionnaire
+  class SystemNotice actionsLight extends Questionnaire
+  class PromptMessage actionsLight extends Questionnaire
   ' !if ($renderMode == "master")
   
   ' !else

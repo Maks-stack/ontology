@@ -10,12 +10,11 @@ MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserContext.UserTraitW
 
 'AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
 AssistantActions.AssistantAction --> "0..*" UserContext.User : targets
-AssistantActions.AssistantAction "1..*" --> "1..*" Metrics.Metric : considers
-AssistantActions.AssistantAction "1..*" --> "1..*" UserContext.UserTraitWeight : considers
 
 EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : triggers
 
-EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : produces
+EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : triggers recalculation
+Metrics.Metric "1" --> "1" EventRegistration.Event   : calculated from
 
 KeySituations.KeySituation "1" --> "0..*" AssistantActions.AssistantAction : triggers
 
@@ -26,7 +25,6 @@ UserContext.User --> Metrics.Metric : has
 UserContext.User "1" --> "1" Plan_and_Tasks.Plan : has
 
 EventRegistration.TaskEvent "1" --> "1" Plan_and_Tasks.Task : refers
-Metrics.Metric "1" --> "1" EventRegistration.EventCollection : reads
 
 MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : is_determined_by
 
@@ -41,6 +39,9 @@ AssistantActions.AssistantAction "1" --> "1..*" Conditions.Condition : has
 
 Conditions.Condition "1" --> "1..*" Metrics.Metric : reads
 Conditions.PlanCondition "1" --> "1..*" Plan_and_Tasks.Plan : reads
+
+Conditions.Condition "1" --> "1..*" UserContext.UserTraitWeight : considers
+Conditions.Condition "1" --> "1" UserContext.UserState : considers
 
 MotivationalMechanics.MechanicState --> Metrics.Metric : based on
 @enduml
