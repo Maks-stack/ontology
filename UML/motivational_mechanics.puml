@@ -109,8 +109,8 @@ Virtual resources.
 end note
 
 
-  package Usertrait_Mechanic_Mapping {
-    class MechanicUserTraitMapping { 
+  package Usertrait_Mechanic_Mapping mechanicsBack {
+    class MechanicUserTraitMapping mechanicsFront {
       +weight: float 
     }
     object Level_and_Experience_Point_System_to_Player {

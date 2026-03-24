@@ -1,0 +1,57 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+actor User as user
+
+package "UI" {
+  rectangle "Personal Development UI" as PD_UI #ebffe8
+  rectangle "Motivational Assistant UI" as MA_UI #d6d6ff
+}
+
+package "Personal Development" #ebffe8 {
+  rectangle "Domain Services" as DomainServices #c8f0c2ff
+}
+
+package "Motivational Assistant" #d6d6ff {
+  rectangle "Adaptation Engine" as AdaptEngine #b2b2f8ff
+}
+
+package "Adapter" {
+  rectangle "Event Abstraction" as EventAbs #f1f1f1
+  rectangle "Action Interface" as ActionInt #f1f1f1
+}
+
+package "Ontology" #fff8dc {
+  together {
+    rectangle "User Traits\n& Player Types" as Traits #f5e6a3ff
+    rectangle "Behavioral Metrics" as Metrics #f5e6a3ff
+    rectangle "Key Situations" as KS #f5e6a3ff
+    rectangle "User State" as UserState #f5e6a3ff
+    rectangle "Motivational\nMechanics Catalog" as MechCatalog #f5e6a3ff
+  }
+  rectangle "Plans & Tasks" as Plans #c8f0c2ff
+}
+
+' User interactions
+user --> PD_UI : interacts
+user --> MA_UI : interacts
+
+' UI to logic
+PD_UI <--> DomainServices : sends data /\nreceives events
+MA_UI --> EventAbs : sends events
+
+' Adapter layer
+EventAbs --> AdaptEngine : sends data
+AdaptEngine --> ActionInt : sends actions
+ActionInt ---> MA_UI : sends actions
+
+' Ontology connections
+EventAbs --> Ontology : updates traits,\nmetrics & situations
+AdaptEngine <--> Ontology : reads/writes
+
+' Shared Plans & Tasks
+DomainServices <--> Plans : reads/writes
+
+@enduml

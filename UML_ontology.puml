@@ -119,7 +119,7 @@ package EventRegistration #f1f1f1{
   }
 }
 
-package Plan_and_Tasks #ebffe8ff {
+package PlanAndTasks #ebffe8ff {
 
   class Plan #lightgreen {
     +name: String
@@ -436,7 +436,7 @@ UserModel.User --> "1..*" AssistantActionss.AssistantActions   : "receives"
 
 KeySituations.KeySituation -->  "0..*" AssistantActionss.AssistantActions : "triggers"
 
-Plan_and_Tasks.Task --> EventRegistration.TaskEvent : "triggers"
+PlanAndTasks.Task --> EventRegistration.TaskEvent : "triggers"
 
 EventRegistration.TaskFinishedEvent --> KeySituations.TaskFinishedKeySituation : "triggers"
 @enduml

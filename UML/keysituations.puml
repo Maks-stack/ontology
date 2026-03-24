@@ -1,3 +1,4 @@
+@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -25,3 +26,4 @@ package KeySituations keySituationsBack {
   Generic KeySituation structure for behavioral logs.
   end note
 }
+@enduml

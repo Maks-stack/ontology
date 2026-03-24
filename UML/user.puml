@@ -16,20 +16,6 @@ skinparam packageStyle rectangle
 package UserContext contextBack {
   class User contextFront
 
-  class UserState contextState {
-    +timestamp: DateTime
-  }
-
-  class MotivationalState contextState extends UserState
-  class Low contextLight extends MotivationalState
-  class Medium contextLight extends MotivationalState
-  class High contextLight extends MotivationalState
-
-  class CognitiveLoadState contextState extends UserState
-  class Underchallenged contextLight extends CognitiveLoadState
-  class OptimalLoad contextLight extends CognitiveLoadState
-  class Overloaded contextLight extends CognitiveLoadState
-
   class UserTraitMapping contextState {
     +weight: float
   }

@@ -11,7 +11,7 @@ skinparam packageStyle rectangle
 !define planBack #ebffe8ff
 !define planFront #lightgreen
 
-package Plan_and_Tasks planBack {
+package PlanAndTasks planBack {
   class Plan planFront {
     +name: String
     +description: String
@@ -33,13 +33,6 @@ package Plan_and_Tasks planBack {
     Optional difficulty per task.
   end note
 
-  class Repetitions planFront {
-    +count: Int
-  }
-  note bottom of Repetitions
-    Required to define plan.
-  end note
-
   class TaskRequirement planFront {
     +requiredRepetitions: int
   }
@@ -48,8 +41,6 @@ package Plan_and_Tasks planBack {
   end note
 
   class TaskAssignment planFront {
-    +task: Task
-    +taskRequirement: TaskRequirement
   }
   note right of TaskAssignment
     Assigns a Task and its requirements to a block.
@@ -68,7 +59,6 @@ package Plan_and_Tasks planBack {
   TaskAssignment --> "1" Task : has assigned
   TaskAssignment --> "1..*" TaskRequirement : has assigned
   TaskRequirement --> "0..1" Level : can have
-  TaskRequirement --> "1..*" Repetitions : requires
 
   Plan *--> "1..*" TaskBlock
   TaskBlock *--> "1..*" TaskAssignment : contains

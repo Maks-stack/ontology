@@ -17,11 +17,16 @@ package Metrics metricsBack {
     +timestamp: DateTime
     +value: float
   }
-  class AdherenceMetric metricsLight extends Metric
+  
   class EngagementMetric metricsLight extends Metric
-  class PerformanceMetric metricsLight extends Metric
+  
   class SystemMetric metricsLight extends Metric
+  class UserStateMetric metricsLight extends Metric
 
+  class PerformanceMetric metricsLight extends UserStateMetric
+  class AdherenceMetric metricsLight extends UserStateMetric
+  class CognitiveLoadMetric metricsLight extends UserStateMetric
+  class MotivationalStateMetric metricsLight extends UserStateMetric
   class DailyAdherence metricsLight extends AdherenceMetric
   class WeeklyAdherence metricsLight extends AdherenceMetric
   class MechanicUsageRate metricsLight extends EngagementMetric
@@ -32,6 +37,19 @@ package Metrics metricsBack {
   class Adherence metricsLight extends AdherenceMetric
   class HesitationTime metricsLight extends PerformanceMetric
 
+  object Overloaded 
+  Overloaded -> CognitiveLoadMetric : "instance of"
+  object OptimalLoad      
+  OptimalLoad -> CognitiveLoadMetric : "instance of"
+  object Underchallenged
+  Underchallenged -> CognitiveLoadMetric : "instance of"
+
+  object High
+  High -> MotivationalStateMetric : "instance of"
+  object Medium
+  Medium -> MotivationalStateMetric : "instance of"
+  object Low
+  Low -> MotivationalStateMetric : "instance of"
 }
 
 @enduml

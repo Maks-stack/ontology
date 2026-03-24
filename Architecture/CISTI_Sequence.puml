@@ -1,0 +1,37 @@
+@startuml
+skinparam shadowing false
+skinparam ArrowColor #444444
+skinparam ActivityFontSize 12
+skinparam ActivityBorderThickness 1.5
+skinparam ActivityBackgroundColor #f5f5f5
+skinparam ActivityBorderColor #888888
+
+start
+
+:User Interaction
+<i>(task completion · inactivity · mechanic interaction)</i>;
+
+:Event Registration;
+
+fork
+  :Behavioral Metrics
+  <i>(adherence · performance · interaction frequency)</i>;
+fork again
+  :Key Situations
+  <i>(progress milestones · inactivity · repeated failure)</i>;
+end fork
+
+:User State
+<i>(metrics · context)</i>
++
+User Traits
+<i>(stable motivational profile)</i>;
+
+:Assistant Action Evaluation;
+
+:Motivational Mechanics
+<i>(activate · deactivate · modify)</i>;
+
+stop
+
+@enduml

@@ -56,7 +56,7 @@ package MotivationalMechanics #fff6e8 {
   class Level_and_Experience_Point_System extends MotivationalMechanic
 }
 
-package Plan_and_Tasks  #ebffe8 {
+package PlanAndTasks  #ebffe8 {
   class Plan
   class Task
 }
@@ -72,8 +72,8 @@ AssistantActions.AssistantAction --> "1..*" UserModel.UserState : considers
 
 EventRegistration.Event -[#444,thickness=6]-> KeySituations.KeySituation : triggers
 EventRegistration.Event -[#444,thickness=6]-> Metrics.Metric : produces
-Plan_and_Tasks.Task --> EventRegistration.TaskEvent : triggers
-Plan_and_Tasks.Plan --> Plan_and_Tasks.Task : contains
+PlanAndTasks.Task --> EventRegistration.TaskEvent : triggers
+PlanAndTasks.Plan --> PlanAndTasks.Task : contains
 EventRegistration.TaskEvent --> KeySituations.TaskFinishedKeySituation : triggers
 
 KeySituations.KeySituation -[#444,thickness=6]-> AssistantActions.AssistantAction : triggers
@@ -84,5 +84,5 @@ UserModel.CognitiveLoadState --> Metrics.Metric : reads
 UserModel.UserTraitWeight --> UserTraits.UserTrait : references
 UserModel.User -[#444,thickness=6]-> Metrics.Metric : has
 UserModel.User --> AssistantActions.AssistantAction : receives
-UserModel.User --> Plan_and_Tasks.Plan : has
+UserModel.User --> PlanAndTasks.Plan : has
 @enduml

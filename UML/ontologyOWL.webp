@@ -21,9 +21,9 @@
 :PromptMessage a owl:Class ; rdfs:subClassOf :Questionnaire .
 
 :Condition a owl:Class .
-:UserBehaviourCondition a owl:Class ; rdfs:subClassOf :Condition .
-:AdherenceLow a owl:Class ; rdfs:subClassOf :UserBehaviourCondition .
-:ConfidenceLow a owl:Class ; rdfs:subClassOf :UserBehaviourCondition .
+:UserStateCondition a owl:Class ; rdfs:subClassOf :Condition .
+:AdherenceLow a owl:Class ; rdfs:subClassOf :UserStateCondition .
+:ConfidenceLow a owl:Class ; rdfs:subClassOf :UserStateCondition .
 :SystemCondition a owl:Class ; rdfs:subClassOf :Condition .
 :TimeOfDayCondition a owl:Class ; rdfs:subClassOf :SystemCondition .
 :PlanCondition a owl:Class ; rdfs:subClassOf :Condition .

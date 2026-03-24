@@ -16,9 +16,9 @@ package Conditions conditionsBack {
     +timestamp: DateTime
     +value: float
   }
-  class UserBehaviourCondition conditionsFront extends Condition
-  class AdherenceLow conditionsFront extends UserBehaviourCondition
-  class ConfidenceLow conditionsFront extends UserBehaviourCondition
+  class UserStateCondition conditionsFront extends Condition
+  class AdherenceLow conditionsFront extends UserStateCondition
+  class ConfidenceLow conditionsFront extends UserStateCondition
 
   class SystemCondition conditionsFront extends Condition
   class TimeOfDayCondition conditionsFront extends SystemCondition

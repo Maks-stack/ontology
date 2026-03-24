@@ -8,8 +8,8 @@ UserTraits -[hidden]-> MotivationalMechanics
 
 MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserContext.UserTraitWeight : selected_by
 
-'AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
-AssistantActions.AssistantAction --> "0..*" UserContext.User : targets
+AssistantActions.AssistantAction "1" --> "1" MotivationalMechanics.MotivationalMechanic : toggles
+AssistantActions.AssistantAction "1" --> "1..*" UserContext.User : targets
 
 EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : triggers
 
@@ -22,9 +22,10 @@ UserContext.UserTraitWeight "1" --> "1..*" UserTraits.UserTrait : references
 UserContext.User "1" --> "1..*" AssistantActions.AssistantAction : receives
 UserContext.User --> Metrics.Metric : has
 
-UserContext.User "1" --> "1" Plan_and_Tasks.Plan : has
+UserContext.User "1" --> "1" PlanAndTasks.Plan : has
 
-EventRegistration.TaskEvent "1" --> "1" Plan_and_Tasks.Task : refers
+EventRegistration.TaskEvent "1" --> "1" PlanAndTasks.Task : refers
+PlanAndTasks.Task --> PlanAndTasks.Level : "has available"
 
 MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : is_determined_by
 
@@ -38,7 +39,7 @@ MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : reads
 AssistantActions.AssistantAction "1" --> "1..*" Conditions.Condition : has
 
 Conditions.Condition "1" --> "1..*" Metrics.Metric : reads
-Conditions.PlanCondition "1" --> "1..*" Plan_and_Tasks.Plan : reads
+Conditions.PlanCondition "1" --> "1..*" PlanAndTasks.Plan : reads
 
 Conditions.Condition "1" --> "1..*" UserContext.UserTraitWeight : considers
 Conditions.Condition "1" --> "1" UserContext.UserState : considers

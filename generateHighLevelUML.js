@@ -22,7 +22,7 @@ const dynamicSet = new Set([
 ].map(normalize));
 
 const staticSet = new Set([
-  "Plan_and_Tasks",
+  "PlanAndTasks",
   "UserTraits",
   "MotivationalMechanics",
   "Usertrait_Mechanic:mapping"

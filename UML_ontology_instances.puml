@@ -155,7 +155,7 @@ package AssistantActions #e8e8ff {
   }
 }
 
-package Plan_and_Tasks #ebffe8 {
+package PlanAndTasks #ebffe8 {
   object plan_P1 <<Plan>> {
     name =
     "Cognitive Health : March - September"
@@ -209,7 +209,7 @@ EventRegistration.ec_User_U123_2025_09_15 --> Metrics.metric_daily_adherence_202
 EventRegistration.ec_User_U123_2025_09_15 --> KeySituations.ks_sessionStarted_2025_09_15_0800 : summarizes
 
 ' ownership
-UserModel.user_U123 --> Plan_and_Tasks.plan_P1 : has
+UserModel.user_U123 --> PlanAndTasks.plan_P1 : has
 
 ' AssistantActions wiring
 KeySituations.ks_taskFinished_2025_09_15_0810 --> AssistantActions.imi_2025_09_15_0900 : triggers
