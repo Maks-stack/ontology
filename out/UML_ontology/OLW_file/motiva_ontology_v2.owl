@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:dcterms="http://purl.org/dc/terms/"
+>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Ontology"/>
+    <dcterms:license rdf:resource="https://creativecommons.org/licenses/by/4.0/"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#name">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Level"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#User">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N75ff4ec01d61413aace5b2377150c04e"/>
+    <rdfs:subClassOf rdf:nodeID="N084997ed102c45ad81fcc2cf5583dad1"/>
+    <rdfs:subClassOf rdf:nodeID="N6c649cf4244b4e41bca49a1397841d9c"/>
+    <rdfs:subClassOf rdf:nodeID="Ne0cc4f3a60524452a6359c15c68baf97"/>
+    <rdfs:subClassOf rdf:nodeID="N29705c1fd8b648d193bc35e58dc74bc6"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nbc3e6d15f13f4232be05620d3de45e36">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#keySituationHasCondition"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#CognitiveAbility">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1c442e158eea4f53b3ff76c9603d353a">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#hasAssignedRequirement"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#TaskRequirement"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PerformanceMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateMetric"/>
+    <rdfs:comment xml:lang="en">Measures task execution quality and interaction precision</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#conditionConsidersUserState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#value">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#traitMappingReferences">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Adherence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#AdherenceMetric"/>
+    <rdfs:comment xml:lang="en">Overall cumulative adherence across the full duration of the plan</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Questionnaire">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Ne0cc4f3a60524452a6359c15c68baf97">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#userHasPlan"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9d8c798e9a8c439597da3696947f3f4f">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#mechanicStateBasedOn"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#KeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="Nbc3e6d15f13f4232be05620d3de45e36"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#startDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N376554dd2e6e4634922089fe6eb02ce8">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#traitMappingReferences"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6acf4be5ccd64d6f8dd6cd956b262c19">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#metricCalculatedFrom"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Event"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2f34bc82cb054987b73e4e1ae64eaa39">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#mechanicStateBasedOn"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TimeOfDayCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SystemCondition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#taskBlockContains">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#TaskAssignment"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicInteractionKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#endDate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N1cac0c8045554007bc637f1ec45b8e31">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#conditionConsidersTraitMapping"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N2911167dde174329896d428e8475b72f">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#hasAssignedTask"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Task"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#CognitiveLoadMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateMetric"/>
+    <rdfs:comment xml:lang="en">Estimated mental effort required to interact with the system at a given moment</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Condition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N9db77ccf898744dab3ea5c104e51024c"/>
+    <rdfs:subClassOf rdf:nodeID="N1cac0c8045554007bc637f1ec45b8e31"/>
+    <rdfs:subClassOf rdf:nodeID="Nbc058d56b44745f2a36004a35d67c29a"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#targetsUser">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#User"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserStateMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:comment xml:lang="en">Measures aspects of the user cognitive, motivational, or behavioural state</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialNetworking">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserCommunication">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MotivationalMessage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#RewardNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#AchievementNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UnlockNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicStateUpdate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserCommunication"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialComparisonNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SocialNotification"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialEncouragementNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SocialNotification"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialInvitationNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SocialNotification"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SocialSharingNotification">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SocialNotification"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userHasState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TimeBasedChallenges">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MotivationalMechanic">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N260d1458a2c740168d5237c2a02a3b36"/>
+    <rdfs:subClassOf rdf:nodeID="N25e65b2f148543a28f34190b24acb44f"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#DailyAdherence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#AdherenceMetric"/>
+    <rdfs:comment xml:lang="en">Ratio of completed to assigned tasks within a single day</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#triggersKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Event"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nf212c84b5ff04f8ba97461efa5c74003">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#taskEventRefersTask"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Task"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#difficulty">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Level"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#AssistantAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="Nfb263779db6b4944bdb5d6dda774761b"/>
+    <rdfs:subClassOf rdf:nodeID="N7df1cce725354eb9a458466dd9a43f47"/>
+    <rdfs:subClassOf rdf:nodeID="N79a581f3c68a4f5bb927aa7db1e8ebfa"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicDisplayedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#requiredRepetitions">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskRequirement"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N79a581f3c68a4f5bb927aa7db1e8ebfa">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#actionHasCondition"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userHasMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#User"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#taskHasAvailableLevel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Task"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Level"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#requirementHasLevel">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskRequirement"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Level"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#weight">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MechanicUserTraitMapping"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#triggersMetricRecalculation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Event"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nbc058d56b44745f2a36004a35d67c29a">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#conditionConsidersUserState"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserState"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskFinishedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#TaskEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicUsageRate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#EngagementMetric"/>
+    <rdfs:comment xml:lang="en">Frequency with which a user actively interacts with a motivational mechanic</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#selectedBy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#AdherenceMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateMetric"/>
+    <rdfs:comment xml:lang="en">Measures consistency of task completion relative to the assigned plan</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#description">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Task"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N105cc666ace04fdc837ce5544c3a239a">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#mapsTrait"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N88e40bd8498a4dd497988bb29270d980">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#traitMappingReferences"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#RewardsAndUnlocks">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskStartedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#TaskEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N25e65b2f148543a28f34190b24acb44f">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#selectedBy"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">2</owl:maxQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SystemMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:comment xml:lang="en">Measures technical or session-level properties of system usage</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N6c649cf4244b4e41bca49a1397841d9c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#userReceivesAction"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N29705c1fd8b648d193bc35e58dc74bc6">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#userExecutesEvent"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N260d1458a2c740168d5237c2a02a3b36">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#hasMechanicState"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#MechanicState"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#HourPassedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SystemEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserTraitMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N88e40bd8498a4dd497988bb29270d980"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N084997ed102c45ad81fcc2cf5583dad1">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#userHasTraitMapping"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nfb263779db6b4944bdb5d6dda774761b">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#togglesMechanic"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N75ff4ec01d61413aace5b2377150c04e">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#userHasState"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#UserState"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#planConditionIsRelatedToPlan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#PlanCondition"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MotivationalTrait">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#mapsTrait">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MechanicUserTraitMapping"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#conditionConsidersTraitMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#AttentionSpan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#HesitationTime">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#PerformanceMetric"/>
+    <rdfs:comment xml:lang="en">Average time elapsed between a prompt being displayed and the user responding</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userHasTraitMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#mapsMechanic">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MechanicUserTraitMapping"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SessionDuration">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#SystemMetric"/>
+    <rdfs:comment xml:lang="en">Total time elapsed between session start and session end events</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#EngagementMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:comment xml:lang="en">Measures how actively a user interacts with motivational mechanics</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ScreenVisitedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SystemEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Event"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userReceivesAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ConfidenceLow">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateCondition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserTrait">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userExecutesEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#metricCalculatedFrom">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Event"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Plan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N9266148d52fd48fd88acb352ec431179"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+    <rdfs:subClassOf rdf:nodeID="Nf212c84b5ff04f8ba97461efa5c74003"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#mechanicStateBasedOn">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MechanicState"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicUserTraitMapping">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="Nc9916130575a4fb28be3430c6ebd7fd4"/>
+    <rdfs:subClassOf rdf:nodeID="N105cc666ace04fdc837ce5544c3a239a"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SystemNotice">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Questionnaire"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicDisplayRate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#EngagementMetric"/>
+    <rdfs:comment xml:lang="en">Frequency with which a motivational mechanic is shown to the user</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#timestamp">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Event"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskAssignment">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N2911167dde174329896d428e8475b72f"/>
+    <rdfs:subClassOf rdf:nodeID="N1c442e158eea4f53b3ff76c9603d353a"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SessionEndedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PromptMessage">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Questionnaire"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#taskEventRefersTask">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskEvent"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Task"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskStartedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#conditionConsidersMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#hasMechanicState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#MechanicState"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#keySituationHasCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N7df1cce725354eb9a458466dd9a43f47">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#targetsUser"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PlayerType">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Metric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N6acf4be5ccd64d6f8dd6cd956b262c19"/>
+    <rdfs:comment xml:lang="en">A quantitative measurement derived from user behaviour or system state, recalculated when a relevant Event occurs</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#title">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Task"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N3b73c1aa54d9412bbaceb7116cb42f94">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#taskBlockContains"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#TaskAssignment"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N5313477930b3400e8c6cb931d2dcd0de">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#planConditionIsRelatedToPlan"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#IntrinsicMotivationInventory">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Questionnaire"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#hasAssignedTask">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskAssignment"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Task"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#DigitalLiteracy">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MotivationalMessages">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#userHasPlan">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#User"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9266148d52fd48fd88acb352ec431179">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#planHasTaskBlock"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N69d0d9ab28f04e608a2589b8dcf9cdef">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#requirementHasLevel"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Level"/>
+    <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N69d0d9ab28f04e608a2589b8dcf9cdef"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MotivationalStateMetric">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateMetric"/>
+    <rdfs:comment xml:lang="en">Current estimated motivational level of the user, derived from engagement and adherence signals</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#traitMappingReferences">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#UserTraitMapping"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="N9db77ccf898744dab3ea5c104e51024c">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#conditionConsidersMetric"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#Metric"/>
+    <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:minQualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#actionHasCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ProgressIndicator">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicDisplayedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MechanicEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#CompetitionWithOthers">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ClickEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ErrorCommittedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskFinishedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#HalfwayPointReached">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#PlanCondition"/>
+  </rdf:Description>
+  <rdf:Description rdf:nodeID="Nc9916130575a4fb28be3430c6ebd7fd4">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Restriction"/>
+    <owl:onProperty rdf:resource="http://motiva.upm.es/ontology#mapsMechanic"/>
+    <owl:onClass rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+    <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#planHasTaskBlock">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#Plan"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#TaskBlock"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#togglesMechanic">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicEngagement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#EngagementMetric"/>
+    <rdfs:comment xml:lang="en">Composite score combining display rate and usage rate for a given mechanic</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Event">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#DailyChallengePosedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserStateCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PlanCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+    <rdfs:subClassOf rdf:nodeID="N5313477930b3400e8c6cb931d2dcd0de"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N2f34bc82cb054987b73e4e1ae64eaa39"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#TaskBlock">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:nodeID="N3b73c1aa54d9412bbaceb7116cb42f94"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PersonalizationAndCreativity">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserEngagementScale">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Questionnaire"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MechanicDismissedEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MechanicEvent"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#hasAssignedRequirement">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#TaskAssignment"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#TaskRequirement"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#ClickRate">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#PerformanceMetric"/>
+    <rdfs:comment xml:lang="en">Number of interaction clicks per unit of time within a session</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SessionStartedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SystemCondition">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Condition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#PersonalGoals">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#WeeklyAdherence">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#AdherenceMetric"/>
+    <rdfs:comment xml:lang="en">Ratio of completed to assigned tasks within a calendar week</rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#MilestoneReachedKeySituation">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SurprisesAndEvents">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#keySituationTriggersAction">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="http://motiva.upm.es/ontology#KeySituation"/>
+    <rdfs:range rdf:resource="http://motiva.upm.es/ontology#AssistantAction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SelfDiscipline">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#FrustrationTolerance">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserTrait"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#AdherenceLow">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#UserStateCondition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserEvent">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#Event"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#SharingAchievements">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+    <rdfs:subClassOf rdf:resource="http://motiva.upm.es/ontology#MotivationalMechanic"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Level">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#Task">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://motiva.upm.es/ontology#UserState">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+  </rdf:Description>
+</rdf:RDF>

@@ -40,7 +40,7 @@ user --> MA_UI : interacts
 
 ' UI to logic
 PD_UI <--> DomainServices : sends data /\nreceives events
-MA_UI --> EventAbs : sends events
+MA_UI <--> EventAbs : sends events
 
 ' Adapter layer
 EventAbs --> AdaptEngine : sends data
@@ -48,8 +48,13 @@ AdaptEngine --> ActionInt : sends actions
 ActionInt ---> MA_UI : sends actions
 
 ' Ontology connections
-EventAbs --> Ontology : updates traits,\nmetrics & situations
-AdaptEngine <--> Ontology : reads/writes
+
+AdaptEngine <--> Traits : reads/writes
+AdaptEngine <--> Metrics : reads/writes
+AdaptEngine <--> KS : reads/writes
+AdaptEngine <--> UserState : reads/writes
+AdaptEngine <--> MechCatalog : reads/writes
+AdaptEngine <--> Plans : reads/writes
 
 ' Shared Plans & Tasks
 DomainServices <--> Plans : reads/writes

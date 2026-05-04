@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -14,29 +13,30 @@ skinparam packageStyle rectangle
 
 package AssistantActions actionsBack {
   class AssistantAction actionsFront {
-    toggle : Boolean
-    stateChange : Boolean
     +timestamp: DateTime
   }
-  note right of AssistantAction
-    One-off AssistantAction: activates/deactivates a mechanic
-    or prompts another user interaction.>
-  end note
+
+  class UserCommunication actionsLight extends AssistantAction
+  class MotivationalMessage actionsLight extends UserCommunication
+  class RewardNotification actionsLight extends UserCommunication
+  class AchievementNotification actionsLight extends UserCommunication
+  class UnlockNotification actionsLight extends UserCommunication
+
+  class MechanicStateUpdate actionsLight extends UserCommunication
+
+  class SocialNotification actionsLight extends UserCommunication
+  class SocialComparisonNotification actionsLight extends SocialNotification
+  class SocialEncouragementNotification actionsLight extends SocialNotification
+  class SocialInvitationNotification actionsLight extends SocialNotification
+  class SocialSharingNotification actionsLight extends SocialNotification
 
   class Questionnaire actionsLight extends AssistantAction
-  class AlertMessage actionsLight extends AssistantAction
-  note right of AlertMessage
-    General info, warnings, or alerts to guide or prompt users.
-  end note
+  class IntrinsicMotivationInventory actionsLight extends Questionnaire
+  class UserEngagementScale actionsLight extends Questionnaire
+  class SystemNotice actionsLight extends UserCommunication
+  class PromptMessage actionsLight extends UserCommunication
 
-  class Intrinsic_Motivation_Inventory actionsLight extends Questionnaire
-  class User_Engagement_Scale actionsLight extends Questionnaire
-  class SystemNotice actionsLight extends Questionnaire
-  class PromptMessage actionsLight extends Questionnaire
-  ' !if ($renderMode == "master")
-  
-  ' !else
+  !if ($renderMode != "master")
   AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
-  ' !endif
+  !endif
 }
-@enduml

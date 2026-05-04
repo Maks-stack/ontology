@@ -88,7 +88,7 @@ package "Backend" {
   class UserTraitQueries #eaf797ff {
   }
 
-  class UserContext #f7befeff {
+  class UserProfile #f7befeff {
     + id: number
     + motivationalState: "label: inactive | low |  medium | high"  
     + keySituationType: KeySituationDefinition
@@ -120,7 +120,7 @@ package "Backend" {
     type: AssistantActionType
 	  conditions: Condition[]
 	  content: string
-    + evaluate(UserContext)
+    + evaluate(UserProfile)
   }
   AssistantAction --> AssistantActionType : type
 
@@ -132,12 +132,12 @@ package "Backend" {
     +check: (ctx: AssistantContext) => boolean
   }
   object inactiveCondition #f8db92ff {
-    UserContext.motivationalState === 'inactive
+    UserProfile.motivationalState === 'inactive
   }
   inactiveCondition --> Condition : instance of
 
   object lowMotivationCondition #f8db92ff {
-    UserContext.motivationalState === 'inactive
+    UserProfile.motivationalState === 'inactive
   }
   lowMotivationCondition --> Condition : instance of
   
@@ -301,8 +301,8 @@ MotivationalMechanicRoute --> UserTraitEngine : getUserTraits(userId)
 
 MechanicsQueries --> MotivationalMechanicsCatalog : evaluates
 
-Condition --> UserContext : uses to evaluate
-MotivationalEngine --> UserContext : builds
+Condition --> UserProfile : uses to evaluate
+MotivationalEngine --> UserProfile : builds
 @enduml
 
 @startuml

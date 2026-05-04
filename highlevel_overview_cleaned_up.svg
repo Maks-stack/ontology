@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1295.64 842.13">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f5ffdb;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10 {
+        stroke: #333;
+        stroke-width: .5px;
+      }
+
+      .cls-11 {
+        font-family: Helvetica, Helvetica;
+        isolation: isolate;
+      }
+
+      .cls-11, .cls-12 {
+        font-size: 12px;
+      }
+
+      .cls-2 {
+        fill: #ffe8e8;
+      }
+
+      .cls-3 {
+        fill: #fafeb7;
+      }
+
+      .cls-4 {
+        fill: #e8faff;
+      }
+
+      .cls-12 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+      }
+
+      .cls-13, .cls-14 {
+        stroke: #181818;
+        stroke-width: .6px;
+      }
+
+      .cls-13, .cls-7 {
+        fill: none;
+      }
+
+      .cls-15 {
+        letter-spacing: 0em;
+      }
+
+      .cls-16 {
+        letter-spacing: 0em;
+      }
+
+      .cls-14 {
+        fill: #181818;
+      }
+
+      .cls-5 {
+        fill: #e8e8ff;
+      }
+
+      .cls-17 {
+        letter-spacing: 0em;
+      }
+
+      .cls-6 {
+        fill: #ebffe8;
+      }
+
+      .cls-8 {
+        fill: #fde8ff;
+      }
+
+      .cls-9 {
+        fill: #f1f1f1;
+      }
+
+      .cls-18 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-19 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-20 {
+        letter-spacing: 0em;
+      }
+
+      .cls-21 {
+        letter-spacing: 0em;
+      }
+
+      .cls-22 {
+        letter-spacing: 0em;
+      }
+
+      .cls-23 {
+        letter-spacing: 0em;
+      }
+
+      .cls-24 {
+        letter-spacing: 0em;
+      }
+
+      .cls-25 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-26 {
+        letter-spacing: 0em;
+      }
+
+      .cls-27 {
+        letter-spacing: 0em;
+      }
+
+      .cls-28 {
+        letter-spacing: .11em;
+      }
+
+      .cls-29 {
+        letter-spacing: .11em;
+      }
+
+      .cls-30 {
+        letter-spacing: .02em;
+      }
+
+      .cls-31 {
+        letter-spacing: .02em;
+      }
+
+      .cls-32 {
+        letter-spacing: .03em;
+      }
+
+      .cls-33 {
+        letter-spacing: .03em;
+      }
+
+      .cls-34 {
+        letter-spacing: .02em;
+      }
+
+      .cls-35 {
+        letter-spacing: .01em;
+      }
+
+      .cls-36 {
+        letter-spacing: .04em;
+      }
+
+      .cls-37 {
+        letter-spacing: .03em;
+      }
+
+      .cls-38 {
+        letter-spacing: .04em;
+      }
+
+      .cls-39 {
+        letter-spacing: .03em;
+      }
+
+      .cls-40 {
+        letter-spacing: 0em;
+      }
+
+      .cls-41 {
+        letter-spacing: 0em;
+      }
+
+      .cls-42 {
+        letter-spacing: .01em;
+      }
+
+      .cls-10 {
+        fill: #ffedca;
+      }
+    </style>
+  </defs>
+  <g id="link_AssistantActions_MotivationalMechanics" data-name="link AssistantActions MotivationalMechanics">
+    <g id="link_AssistantActions_MotivationalMechanics_line" data-name="link AssistantActions MotivationalMechanics line">
+      <path id="link_AssistantActions_MotivationalMechanics_path" data-name="link AssistantActions MotivationalMechanics path" class="cls-13" d="M576.12,117.06c-109.79,44.33-219.58,88.67-329.37,133"/>
+    </g>
+    <g id="link_AssistantActions_MotivationalMechanics_arrow" data-name="link AssistantActions MotivationalMechanics arrow">
+      <polygon id="link_AssistantActions_MotivationalMechanics_arrowhead" data-name="link AssistantActions MotivationalMechanics arrowhead" class="cls-14" points="242.24 252.21 252.08 251.93 246.75 250.05 248.63 244.72 242.24 252.21"/>
+    </g>
+    <text class="cls-12" transform="translate(364.09 198.88) rotate(-22.12)"><tspan class="cls-20" x="0" y="0">t</tspan><tspan x="3.9" y="0">oggles</tspan></text>
+  </g>
+  <g id="link_AssistantActions_MotivationalMechanics_2" data-name="link AssistantActions MotivationalMechanics 2">
+    <g id="link_AssistantActions_MotivationalMechanics_2_labels" data-name="link AssistantActions MotivationalMechanics 2 labels">
+      <text class="cls-11" transform="translate(570.55 130.25)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+  </g>
+  <g id="link_MotivationalMechanics_UserProfile" data-name="link MotivationalMechanics UserProfile">
+    <g id="link_MotivationalMechanics_UserProfile_line" data-name="link MotivationalMechanics UserProfile line">
+      <path id="link_MotivationalMechanics_UserProfile_path" data-name="link MotivationalMechanics UserProfile path" class="cls-13" d="M259.46,283.57c-1.24-.61-2.49-1.23-3.73-1.84,308.72,78.87,617.45,157.74,926.17,236.6"/>
+    </g>
+    <g id="link_MotivationalMechanics_UserProfile_arrow" data-name="link MotivationalMechanics UserProfile arrow">
+      <polygon id="link_MotivationalMechanics_UserProfile_arrowhead" data-name="link MotivationalMechanics UserProfile arrowhead" class="cls-14" points="1187.34 519.63 1179.59 513.56 1182.5 518.41 1177.64 521.32 1187.34 519.63"/>
+    </g>
+    <g id="link_MotivationalMechanics_UserProfile_labels" data-name="link MotivationalMechanics UserProfile labels">
+      <text class="cls-11" transform="translate(239.94 295.26)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1150.84 506.63)"><tspan class="cls-29" x="0" y="0">1..</tspan><tspan x="17.33" y="0">2</tspan></text>
+    </g>
+  </g>
+  <g id="link_AssistantActions_UserProfile" data-name="link AssistantActions UserProfile">
+    <g id="link_AssistantActions_UserProfile_line" data-name="link AssistantActions UserProfile line">
+      <path id="link_AssistantActions_UserProfile_path" data-name="link AssistantActions UserProfile path" class="cls-13" d="M697.8,98.46c130.98,3.96,318.05,8.33,442.24,72.79,118.02,61.25,122.2,277.91,128.35,342.08"/>
+    </g>
+    <g id="link_AssistantActions_UserProfile_arrow" data-name="link AssistantActions UserProfile arrow">
+      <polygon id="link_AssistantActions_UserProfile_arrowhead" data-name="link AssistantActions UserProfile arrowhead" class="cls-14" points="1268.31 513.29 1271.6 504.01 1267.92 508.31 1263.63 504.63 1268.31 513.29"/>
+    </g>
+    <g id="link_AssistantActions_UserProfile_labels" data-name="link AssistantActions UserProfile labels">
+      <text class="cls-11" transform="translate(718.98 95.94)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1273.64 497.27)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_AssistantActions_UserProfile_line-2" data-name="link AssistantActions UserProfile line">
+      <text class="cls-12" transform="translate(1152.52 169.99) rotate(38.79)"><tspan x="0" y="0">t</tspan></text>
+      <text class="cls-12" transform="translate(1155.59 172.44) rotate(40.59)"><tspan x="0" y="0">a</tspan></text>
+      <text class="cls-12" transform="translate(1159.92 176.16) rotate(42.33)"><tspan x="0" y="0">r</tspan></text>
+      <text class="cls-12" transform="translate(1162.73 178.69) rotate(44.15)"><tspan x="0" y="0">g</tspan></text>
+      <text class="cls-12" transform="translate(1167.48 183.31) rotate(46.29)"><tspan x="0" y="0">e</tspan></text>
+      <text class="cls-12" transform="translate(1171.59 187.63) rotate(47.92)"><tspan x="0" y="0">t</tspan></text>
+      <text class="cls-12" transform="translate(1174.21 190.53) rotate(49.28)"><tspan x="0" y="0">s</tspan></text>
+    </g>
+  </g>
+  <g id="link_EventRegistration_KeySituations" data-name="link EventRegistration KeySituations">
+    <g id="link_EventRegistration_KeySituations_line" data-name="link EventRegistration KeySituations line">
+      <path id="link_EventRegistration_KeySituations_path" data-name="link EventRegistration KeySituations path" class="cls-13" d="M560.83,640.84c-73.52,24.12-147.04,48.23-220.57,72.35"/>
+    </g>
+    <g id="link_EventRegistration_KeySituations_arrow" data-name="link EventRegistration KeySituations arrow">
+      <polygon id="link_EventRegistration_KeySituations_arrowhead" data-name="link EventRegistration KeySituations arrowhead" class="cls-14" points="335.72 715.28 345.57 715.15 340.27 713.19 342.23 707.88 335.72 715.28"/>
+    </g>
+    <g id="link_EventRegistration_KeySituations_labels" data-name="link EventRegistration KeySituations labels">
+      <text class="cls-11" transform="translate(553.81 655.26)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+      <text class="cls-11" transform="translate(351.59 723.8)"><tspan class="cls-28" x="0" y="0">0..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_EventRegistration_KeySituations_line-2" data-name="link EventRegistration KeySituations line">
+      <text class="cls-12" transform="translate(456.2 671.59) rotate(-18.16)"><tspan x="0" y="0">t</tspan><tspan x="3.96" y="0">r</tspan><tspan x="7.95" y="0">i</tspan><tspan x="10.76" y="0">g</tspan></text>
+      <text class="cls-12" transform="translate(472.81 666.14) rotate(-18.16)"><tspan x="0" y="0">g</tspan></text>
+      <text class="cls-12" transform="translate(479.17 664.05) rotate(-18.16)"><tspan x="0" y="0">e</tspan></text>
+      <text class="cls-12" transform="translate(484.9 662.17) rotate(-18.16)"><tspan x="0" y="0">r</tspan></text>
+      <text class="cls-12" transform="translate(488.63 660.95) rotate(-18.16)"><tspan x="0" y="0">s</tspan></text>
+    </g>
+  </g>
+  <g id="link_UserProfile_UserTraits" data-name="link UserProfile UserTraits">
+    <g id="link_UserProfile_UserTraits_line" data-name="link UserProfile UserTraits line">
+      <path id="link_UserProfile_UserTraits_path" data-name="link UserProfile UserTraits path" class="cls-13" d="M1188.14,535.73c-73.07-7.95-146.15-15.89-219.22-23.84-73.07-7.95-176.52-19.27-249.59-27.21,146.15,15.89,322.67,35.16,468.81,51.05Z"/>
+    </g>
+    <g id="link_UserProfile_UserTraits_arrow" data-name="link UserProfile UserTraits arrow">
+      <polygon id="link_UserProfile_UserTraits_arrowhead" data-name="link UserProfile UserTraits arrowhead" class="cls-14" points="715.06 483.47 723.01 489.29 719.95 484.54 724.71 481.48 715.06 483.47"/>
+    </g>
+    <g id="link_UserProfile_UserTraits_labels" data-name="link UserProfile UserTraits labels">
+      <text class="cls-11" transform="translate(724.34 478.01)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+  </g>
+  <g id="link_UserProfile_UserTraits_2" data-name="link UserProfile UserTraits 2">
+    <g id="link_UserProfile_UserTraits_2_labels" data-name="link UserProfile UserTraits 2 labels">
+      <text class="cls-11" transform="translate(1177.22 531.6)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(653.6 434.16)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+  </g>
+  <g id="link_EventRegistration_Metrics" data-name="link EventRegistration Metrics">
+    <g id="link_EventRegistration_Metrics_line" data-name="link EventRegistration Metrics line">
+      <path id="link_EventRegistration_Metrics_path" data-name="link EventRegistration Metrics path" class="cls-13" d="M558.07,597.37c-107.95-15.69-215.9-31.38-323.85-47.08"/>
+    </g>
+    <g id="link_EventRegistration_Metrics_arrow" data-name="link EventRegistration Metrics arrow">
+      <polygon id="link_EventRegistration_Metrics_arrowhead" data-name="link EventRegistration Metrics arrowhead" class="cls-14" points="233.63 549.82 241.18 556.14 238.44 551.19 243.39 548.45 233.63 549.82"/>
+    </g>
+    <g id="link_EventRegistration_Metrics_labels" data-name="link EventRegistration Metrics labels">
+      <text class="cls-11" transform="translate(585.77 584.92)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+      <text class="cls-11" transform="translate(248.24 551.72)"><tspan class="cls-28" x="0" y="0">0..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <text class="cls-12" transform="translate(302.05 556.87) rotate(8.22)"><tspan x="0" y="0">t</tspan><tspan class="cls-41" x="3.97" y="0">r</tspan><tspan x="7.94" y="0">iggers </tspan><tspan class="cls-25" x="41.4" y="0">r</tspan><tspan class="cls-17" x="45.2" y="0">ecalcul</tspan><tspan class="cls-24" x="80.03" y="0">a</tspan><tspan class="cls-17" x="85.76" y="0">tion</tspan></text>
+  </g>
+  <g id="link_Metrics_EventRegistration" data-name="link Metrics EventRegistration">
+    <g id="link_Metrics_EventRegistration_line" data-name="link Metrics EventRegistration line">
+      <path id="link_Metrics_EventRegistration_path" data-name="link Metrics EventRegistration path" class="cls-13" d="M557.69,626.21l-382.17-73.08"/>
+    </g>
+    <g id="link_Metrics_EventRegistration_arrow" data-name="link Metrics EventRegistration arrow">
+      <polygon id="link_Metrics_EventRegistration_arrowhead" data-name="link Metrics EventRegistration arrowhead" class="cls-14" points="558.74 626.2 550.71 620.5 553.84 625.21 549.13 628.34 558.74 626.2"/>
+    </g>
+    <g id="link_Metrics_EventRegistration_labels" data-name="link Metrics EventRegistration labels">
+      <text class="cls-11" transform="translate(159.63 571.97)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(548.57 618.95)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+    <g id="link_Metrics_EventRegistration_line-2" data-name="link Metrics EventRegistration line">
+      <text class="cls-12" transform="translate(437.04 600.81) rotate(10.83)"><tspan x="0" y="0">c</tspan><tspan x="5.38" y="0">a</tspan><tspan x="11.15" y="0">l</tspan><tspan x="13.99" y="0">c</tspan><tspan x="19.38" y="0">u</tspan><tspan x="25.97" y="0">l</tspan><tspan x="28.82" y="0">a</tspan><tspan x="34.57" y="0">t</tspan><tspan x="38.46" y="0">e</tspan><tspan x="44.47" y="0">d</tspan><tspan x="51.24" y="0"> </tspan><tspan x="53.8" y="0">f</tspan><tspan x="57.3" y="0">r</tspan><tspan x="61.09" y="0">o</tspan><tspan x="67.7" y="0">m</tspan></text>
+    </g>
+  </g>
+  <g id="link_KeySituations_AssistantActions" data-name="link KeySituations AssistantActions">
+    <g id="link_KeySituations_AssistantActions_line" data-name="link KeySituations AssistantActions line">
+      <path id="link_KeySituations_AssistantActions_path" data-name="link KeySituations AssistantActions path" class="cls-13" d="M229.31,729.62C33.59,723.1-1.03,538.82,4.04,370.28,10.96,140.29,240.94,128.91,575.04,101.91"/>
+    </g>
+    <g id="link_KeySituations_AssistantActions_arrow" data-name="link KeySituations AssistantActions arrow">
+      <polygon id="link_KeySituations_AssistantActions_arrowhead" data-name="link KeySituations AssistantActions arrowhead" class="cls-14" points="575.33 101.9 566.43 97.67 570.33 101.77 566.23 105.67 575.33 101.9"/>
+    </g>
+    <g id="link_KeySituations_AssistantActions_labels" data-name="link KeySituations AssistantActions labels">
+      <text class="cls-11" transform="translate(216.23 709.15)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(548.81 96.95)"><tspan class="cls-28" x="0" y="0">0..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_KeySituations_AssistantActions_line-2" data-name="link KeySituations AssistantActions line">
+      <text class="cls-12" transform="translate(16.85 285.1) rotate(-67.73)"><tspan x="0" y="0">t</tspan></text>
+      <text class="cls-12" transform="translate(18.33 281.46) rotate(-66.58)"><tspan x="0" y="0">r</tspan></text>
+      <text class="cls-12" transform="translate(19.9 277.85) rotate(-65.57)"><tspan x="0" y="0">i</tspan></text>
+      <text class="cls-12" transform="translate(21.03 275.32) rotate(-64.15)"><tspan x="0" y="0">g</tspan></text>
+      <text class="cls-12" transform="translate(23.92 269.35) rotate(-62.11)"><tspan x="0" y="0">g</tspan></text>
+      <text class="cls-12" transform="translate(27.04 263.47) rotate(-60.14)"><tspan x="0" y="0">e</tspan></text>
+      <text class="cls-12" transform="translate(30.01 258.31) rotate(-58.6)"><tspan x="0" y="0">r</tspan></text>
+      <text class="cls-12" transform="translate(32.02 255.02) rotate(-57.25)"><tspan x="0" y="0">s</tspan></text>
+    </g>
+  </g>
+  <g id="link_UserProfile_Metrics" data-name="link UserProfile Metrics">
+    <g id="link_UserProfile_Metrics_line" data-name="link UserProfile Metrics line">
+      <path id="link_UserProfile_Metrics_path" data-name="link UserProfile Metrics path" class="cls-13" d="M1188.07,542.44c-317.54-3.56-635.07-7.11-952.61-10.67"/>
+    </g>
+    <g id="link_UserProfile_Metrics_arrow" data-name="link UserProfile Metrics arrow">
+      <polygon id="link_UserProfile_Metrics_arrowhead" data-name="link UserProfile Metrics arrowhead" class="cls-14" points="234.27 531.9 243.58 535.11 239.25 531.47 242.89 527.14 234.27 531.9"/>
+    </g>
+  </g>
+  <g id="link_UserProfile_PlanAndTasks" data-name="link UserProfile PlanAndTasks">
+    <g id="link_UserProfile_PlanAndTasks_line" data-name="link UserProfile PlanAndTasks line">
+      <path id="link_UserProfile_PlanAndTasks_path" data-name="link UserProfile PlanAndTasks path" class="cls-13" d="M1263.07,545.4c1.57,121.23-100.26,154.7-121.17,164.64"/>
+    </g>
+    <g id="link_UserProfile_PlanAndTasks_arrow" data-name="link UserProfile PlanAndTasks arrow">
+      <polygon id="link_UserProfile_PlanAndTasks_arrowhead" data-name="link UserProfile PlanAndTasks arrowhead" class="cls-14" points="1137.84 712.96 1147.48 710.95 1141.89 710.04 1142.81 704.45 1137.84 712.96"/>
+    </g>
+    <g id="link_UserProfile_PlanAndTasks_labels" data-name="link UserProfile PlanAndTasks labels">
+      <text class="cls-11" transform="translate(1277.64 564.06)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1142.81 707.89)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+  </g>
+  <g id="link_EventRegistration_PlanAndTasks" data-name="link EventRegistration PlanAndTasks">
+    <g id="link_EventRegistration_PlanAndTasks_line" data-name="link EventRegistration PlanAndTasks line">
+      <path id="link_EventRegistration_PlanAndTasks_path" data-name="link EventRegistration PlanAndTasks path" class="cls-13" d="M687.61,628.37c111.57,25.53,223.15,51.06,334.72,76.58"/>
+    </g>
+    <g id="link_EventRegistration_PlanAndTasks_arrow" data-name="link EventRegistration PlanAndTasks arrow">
+      <polygon id="link_EventRegistration_PlanAndTasks_arrowhead" data-name="link EventRegistration PlanAndTasks arrowhead" class="cls-14" points="1028.23 706.1 1020.15 700.45 1023.32 705.14 1018.63 708.31 1028.23 706.1"/>
+    </g>
+    <g id="link_EventRegistration_PlanAndTasks_labels" data-name="link EventRegistration PlanAndTasks labels">
+      <text class="cls-11" transform="translate(695.19 627.68)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1012.21 701.18)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+  </g>
+  <g id="link_MotivationalMechanics_Metrics" data-name="link MotivationalMechanics Metrics">
+    <g id="link_MotivationalMechanics_Metrics_line" data-name="link MotivationalMechanics Metrics line">
+      <path id="link_MotivationalMechanics_Metrics_path" data-name="link MotivationalMechanics Metrics path" class="cls-13" d="M235.51,283.98c-13.46,70.62-26.92,141.25-40.38,211.87"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_arrow" data-name="link MotivationalMechanics Metrics arrow">
+      <polygon id="link_MotivationalMechanics_Metrics_arrowhead" data-name="link MotivationalMechanics Metrics arrowhead" class="cls-14" points="194.8 500.46 199.29 491.69 195.08 495.46 191.3 491.25 194.8 500.46"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_labels" data-name="link MotivationalMechanics Metrics labels">
+      <text class="cls-11" transform="translate(183.19 295.41)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(186 490.24)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+  </g>
+  <g id="link_MotivationalMechanics_Metrics_2" data-name="link MotivationalMechanics Metrics 2">
+    <g id="link_MotivationalMechanics_Metrics_2_line" data-name="link MotivationalMechanics Metrics 2 line">
+      <path id="link_MotivationalMechanics_Metrics_2_path" data-name="link MotivationalMechanics Metrics 2 path" class="cls-13" d="M179.27,283.78c-.23,71.69-.46,143.38-.69,215.07"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_2_arrow" data-name="link MotivationalMechanics Metrics 2 arrow">
+      <polygon id="link_MotivationalMechanics_Metrics_2_arrowhead" data-name="link MotivationalMechanics Metrics 2 arrowhead" class="cls-14" points="178.93 500.09 181.15 490.5 177.98 495.18 173.29 492.02 178.93 500.09"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_2_labels" data-name="link MotivationalMechanics Metrics 2 labels">
+      <text class="cls-11" transform="translate(140.05 294.35)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(165.81 492.82)"><tspan x="0" y="0">1</tspan></text>
+    </g>
+  </g>
+  <g id="link_MotivationalMechanics_Metrics_3" data-name="link MotivationalMechanics Metrics 3">
+    <g id="link_MotivationalMechanics_Metrics_3_line" data-name="link MotivationalMechanics Metrics 3 line">
+      <path id="link_MotivationalMechanics_Metrics_3_path" data-name="link MotivationalMechanics Metrics 3 path" class="cls-13" d="M130.34,284.02l30.4,225.59"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_3_arrow" data-name="link MotivationalMechanics Metrics 3 arrow">
+      <polygon id="link_MotivationalMechanics_Metrics_3_arrowhead" data-name="link MotivationalMechanics Metrics 3 arrowhead" class="cls-14" points="162.72 513.42 162.45 503.58 160.57 508.91 155.23 507.03 162.72 513.42"/>
+    </g>
+    <g id="link_MotivationalMechanics_Metrics_3_labels" data-name="link MotivationalMechanics Metrics 3 labels">
+      <text class="cls-11" transform="translate(88.78 293.12)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(133.88 514.28)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+  </g>
+  <g id="link_AssistantActions_Conditions" data-name="link AssistantActions Conditions">
+    <g id="link_AssistantActions_Conditions_line" data-name="link AssistantActions Conditions line">
+      <path id="link_AssistantActions_Conditions_path" data-name="link AssistantActions Conditions path" class="cls-13" d="M972.14,224.72l-274.02-107.67"/>
+    </g>
+    <g id="link_AssistantActions_Conditions_arrow" data-name="link AssistantActions Conditions arrow">
+      <polygon id="link_AssistantActions_Conditions_arrowhead" data-name="link AssistantActions Conditions arrowhead" class="cls-14" points="977.42 227.57 971.4 219.78 973.02 225.2 967.6 226.82 977.42 227.57"/>
+    </g>
+    <g id="link_AssistantActions_Conditions_labels" data-name="link AssistantActions Conditions labels">
+      <text class="cls-11" transform="translate(706.42 131.13)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(947.85 214.28)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_AssistantActions_Conditions_line-2" data-name="link AssistantActions Conditions line">
+      <text class="cls-12" transform="translate(827.55 165.16) rotate(21.45)"><tspan x="0" y="0">h</tspan><tspan x="6.65" y="0">a</tspan><tspan x="12.45" y="0">s</tspan></text>
+    </g>
+  </g>
+  <g id="link_KeySituations_Conditions" data-name="link KeySituations Conditions">
+    <g id="link_KeySituations_Conditions_line" data-name="link KeySituations Conditions line">
+      <path id="link_KeySituations_Conditions_path" data-name="link KeySituations Conditions path" class="cls-13" d="M335.33,731.28c-7.68,1.24,514.31,11.55,613.34-85.16,110.93-108.33,86.31-306.04,87.34-366.74"/>
+    </g>
+    <g id="link_KeySituations_Conditions_arrow" data-name="link KeySituations Conditions arrow">
+      <polygon id="link_KeySituations_Conditions_arrowhead" data-name="link KeySituations Conditions arrowhead" class="cls-14" points="1036.19 278.83 1032.31 287.88 1036.25 283.83 1040.31 287.78 1036.19 278.83"/>
+    </g>
+    <g id="link_KeySituations_Conditions_labels" data-name="link KeySituations Conditions labels">
+      <text class="cls-11" transform="translate(344.63 709.96)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1006.95 293.48)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_KeySituations_Conditions_line-2" data-name="link KeySituations Conditions line">
+      <text class="cls-12" transform="translate(757.23 706.29) rotate(-8.51)"><tspan x="0" y="0">h</tspan></text>
+      <text class="cls-12" transform="translate(763.8 705.3) rotate(-8.79)"><tspan x="0" y="0">a</tspan></text>
+      <text class="cls-12" transform="translate(769.52 704.42) rotate(-9.04)"><tspan x="0" y="0">s</tspan></text>
+    </g>
+  </g>
+  <g id="link_Conditions_Metrics" data-name="link Conditions Metrics">
+    <g id="link_Conditions_Metrics_line" data-name="link Conditions Metrics line">
+      <path id="link_Conditions_Metrics_path" data-name="link Conditions Metrics path" class="cls-13" d="M988.56,279.21c-256.63,82.97-506.87,164.08-748.87,242.32"/>
+    </g>
+    <g id="link_Conditions_Metrics_arrow" data-name="link Conditions Metrics arrow">
+      <polygon id="link_Conditions_Metrics_arrowhead" data-name="link Conditions Metrics arrowhead" class="cls-14" points="234.61 524.73 244.36 523.32 238.84 522.06 240.09 516.55 234.61 524.73"/>
+    </g>
+    <g id="link_Conditions_Metrics_labels" data-name="link Conditions Metrics labels">
+      <text class="cls-11" transform="translate(963.99 267.51)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(243.45 509.33)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+  </g>
+  <g id="link_Conditions_MotivationalMechanics" data-name="link Conditions MotivationalMechanics">
+    <g id="link_Conditions_MotivationalMechanics_line" data-name="link Conditions MotivationalMechanics line">
+      <path id="link_Conditions_MotivationalMechanics_path" data-name="link Conditions MotivationalMechanics path" class="cls-13" d="M977.51,269.51c-238.64,1.64-477.28,3.27-715.93,4.91"/>
+    </g>
+    <g id="link_Conditions_MotivationalMechanics_arrow" data-name="link Conditions MotivationalMechanics arrow">
+      <polygon id="link_Conditions_MotivationalMechanics_arrowhead" data-name="link Conditions MotivationalMechanics arrowhead" class="cls-14" points="261.12 274.22 269.26 279.78 266.04 275.12 270.7 271.91 261.12 274.22"/>
+    </g>
+    <g id="link_Conditions_MotivationalMechanics_labels" data-name="link Conditions MotivationalMechanics labels">
+      <text class="cls-11" transform="translate(968.9 295.78)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(277.8 273.05)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+  </g>
+  <g id="link_Conditions_PlanAndTasks" data-name="link Conditions PlanAndTasks">
+    <g id="link_Conditions_PlanAndTasks_line" data-name="link Conditions PlanAndTasks line">
+      <path id="link_Conditions_PlanAndTasks_path" data-name="link Conditions PlanAndTasks path" class="cls-13" d="M1045.27,279.19c14.34,144.59,28.69,289.19,43.03,433.78"/>
+    </g>
+    <g id="link_Conditions_PlanAndTasks_arrow" data-name="link Conditions PlanAndTasks arrow">
+      <polygon id="link_Conditions_PlanAndTasks_arrowhead" data-name="link Conditions PlanAndTasks arrowhead" class="cls-14" points="1088.31 712.81 1090.54 703.22 1087.37 707.9 1082.69 704.72 1088.31 712.81"/>
+    </g>
+  </g>
+  <g id="link_Conditions_UserProfile" data-name="link Conditions UserProfile">
+    <g id="link_Conditions_UserProfile_line" data-name="link Conditions UserProfile line">
+      <path id="link_Conditions_UserProfile_path" data-name="link Conditions UserProfile path" class="cls-13" d="M1056.02,278.75c45.71,70.19,91.42,140.38,137.13,210.57"/>
+    </g>
+    <g id="link_Conditions_UserProfile_arrow" data-name="link Conditions UserProfile arrow">
+      <polygon id="link_Conditions_UserProfile_arrowhead" data-name="link Conditions UserProfile arrowhead" class="cls-14" points="1196.22 493.31 1194.15 483.68 1193.27 489.27 1187.68 488.4 1196.22 493.31"/>
+    </g>
+    <g id="link_Conditions_UserProfile_labels" data-name="link Conditions UserProfile labels">
+      <text class="cls-11" transform="translate(1085.34 298.07)"><tspan x="0" y="0">1</tspan></text>
+      <text class="cls-11" transform="translate(1160.38 475.92)"><tspan class="cls-28" x="0" y="0">1..</tspan><tspan x="17.33" y="0">*</tspan></text>
+    </g>
+    <g id="link_Conditions_UserProfile_line-2" data-name="link Conditions UserProfile line">
+      <text class="cls-12" transform="translate(1122.19 374.35) rotate(56.93)"><tspan x="0" y="0">c</tspan></text>
+      <text class="cls-12" transform="translate(1125.09 378.81) rotate(56.93)"><tspan x="0" y="0">o</tspan><tspan x="6.59" y="0">n</tspan></text>
+      <text class="cls-12" transform="translate(1132.32 389.91) rotate(56.93)"><tspan x="0" y="0">s</tspan></text>
+      <text class="cls-12" transform="translate(1134.9 393.89) rotate(56.93)"><tspan x="0" y="0">i</tspan></text>
+      <text class="cls-12" transform="translate(1136.44 396.24) rotate(56.93)"><tspan x="0" y="0">d</tspan><tspan x="6.76" y="0">e</tspan></text>
+      <text class="cls-12" transform="translate(1143.4 406.94) rotate(56.93)"><tspan x="0" y="0">r</tspan></text>
+      <text class="cls-12" transform="translate(1145.56 410.24) rotate(56.93)"><tspan x="0" y="0">s</tspan></text>
+    </g>
+  </g>
+  <path class="cls-5" d="M578.62,67.42h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h66.5c1.38,0,2.5,1.12,2.5,2.5v26.13c0,1.38-1.12,2.5-2.5,2.5h-117c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5"/>
+  <line class="cls-7" x1="576.12" y1="88.42" x2="629.12" y2="88.42"/>
+  <text class="cls-11" transform="translate(586.12 107.02)"><tspan class="cls-31" x="0" y="0">AssistantAction</tspan><tspan x="86" y="0">s</tspan></text>
+  <path class="cls-10" d="M980.25,226.92h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h34.5c1.38,0,2.5,1.12,2.5,2.5v26.13c0,1.38-1.12,2.5-2.5,2.5h-85c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5h0"/>
+  <line class="cls-7" x1="977.75" y1="247.92" x2="1030.75" y2="247.92"/>
+  <text class="cls-11" transform="translate(987.75 266.52)"><tspan class="cls-39" x="0" y="0">Condition</tspan><tspan x="54" y="0">s</tspan></text>
+  <path class="cls-9" d="M560.83,588.71h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h73.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5h-124c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5h0"/>
+  <line class="cls-7" x1="558.33" y1="609.71" x2="611.33" y2="609.71"/>
+  <text class="cls-11" transform="translate(568.33 628.31)"><tspan class="cls-30" x="0" y="0">EventRegistratio</tspan><tspan x="92.33" y="0">n</tspan></text>
+  <path class="cls-4" d="M233.12,694.47h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h49.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5h-100c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5"/>
+  <line class="cls-7" x1="230.62" y1="715.47" x2="283.62" y2="715.47"/>
+  <text class="cls-11" transform="translate(240.62 734.07)"><tspan class="cls-42" x="0" y="0">KeySituation</tspan><tspan x="69" y="0">s</tspan></text>
+  <path class="cls-2" d="M165.72,500.66h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h15.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5h-66c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5h0"/>
+  <line class="cls-7" x1="163.22" y1="521.66" x2="216.22" y2="521.66"/>
+  <text class="cls-11" transform="translate(173.22 540.26)"><tspan class="cls-37" x="0" y="0">Metric</tspan><tspan x="35" y="0">s</tspan></text>
+  <path class="cls-1" d="M107.46,231.44h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h101.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5H107.46c-1.38,0-2.5-1.12-2.5-2.5v-47.13c0-1.38,1.12-2.5,2.5-2.5"/>
+  <line class="cls-7" x1="104.96" y1="252.44" x2="157.96" y2="252.44"/>
+  <text class="cls-11" transform="translate(114.96 271.04)"><tspan class="cls-34" x="0" y="0">MotivationalMechanic</tspan><tspan x="121" y="0">s</tspan></text>
+  <path class="cls-6" d="M1030.88,691.85h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h55.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5h-106c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5"/>
+  <line class="cls-7" x1="1028.38" y1="712.85" x2="1081.38" y2="712.85"/>
+  <text class="cls-11" transform="translate(1038.37 731.45)"><tspan class="cls-36" x="0" y="0">PlanAnd</tspan><tspan class="cls-18" x="48.52" y="0">T</tspan><tspan class="cls-36" x="54.97" y="0">ask</tspan><tspan x="75" y="0">s</tspan></text>
+  <path class="cls-8" d="M1190.57,492.81h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h44.5c1.38,0,2.5,1.12,2.5,2.5v26.13c0,1.38-1.12,2.5-2.5,2.5h-95c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5"/>
+  <line class="cls-7" x1="1188.07" y1="513.81" x2="1241.07" y2="513.81"/>
+  <text class="cls-11" transform="translate(1198.07 532.41)"><tspan class="cls-32" x="0" y="0">UserProfile</tspan></text>
+  <path class="cls-3" d="M628.49,445.54h41c1.2.36,2.14,1.3,2.5,2.5l7,18.5h33.5c1.38,0,2.5,1.12,2.5,2.5h0v26.13c0,1.38-1.12,2.5-2.5,2.5h-84c-1.38,0-2.5-1.12-2.5-2.5h0v-47.13c0-1.38,1.12-2.5,2.5-2.5h0"/>
+  <line class="cls-7" x1="625.99" y1="466.54" x2="678.99" y2="466.54"/>
+  <text class="cls-11" transform="translate(635.99 485.14)"><tspan class="cls-38" x="0" y="0">User</tspan><tspan class="cls-15" x="27.16" y="0">T</tspan><tspan class="cls-38" x="34.51" y="0">rait</tspan><tspan x="53" y="0">s</tspan></text>
+  <text class="cls-12" transform="translate(182.56 334.17)"><tspan x="0" y="0"></tspan></text>
+  <text class="cls-12" transform="translate(485.95 530.89)"><tspan x="0" y="0">is defined </tspan><tspan class="cls-21" x="51.14" y="0">b</tspan><tspan x="57.89" y="0">y</tspan></text>
+  <text class="cls-12" transform="translate(843.98 658.4) rotate(15.42)"><tspan class="cls-25" x="0" y="0">r</tspan><tspan class="cls-16" x="3.8" y="0">e</tspan><tspan class="cls-19" x="9.82" y="0">f</tspan><tspan x="13.16" y="0">ers </tspan><tspan class="cls-22" x="30.4" y="0">t</tspan><tspan x="34.3" y="0">o</tspan></text>
+  <text class="cls-12" transform="translate(1224.9 593.13)"><tspan x="0" y="0">has</tspan></text>
+  <text class="cls-12" transform="translate(1091.78 710.05)"><tspan x="0" y="0">1..*</tspan></text>
+  <text class="cls-12" transform="translate(929.77 502.96) rotate(6.32)"><tspan class="cls-25" x="0" y="0">r</tspan><tspan class="cls-16" x="3.8" y="0">e</tspan><tspan class="cls-19" x="9.82" y="0">f</tspan><tspan x="13.16" y="0">e</tspan><tspan class="cls-25" x="19.18" y="0">r</tspan><tspan class="cls-16" x="22.98" y="0">en</tspan><tspan class="cls-22" x="35.65" y="0">c</tspan><tspan x="40.96" y="0">es</tspan></text>
+  <text class="cls-12" transform="translate(211.03 430.78)"><tspan x="0" y="0"></tspan></text>
+  <text class="cls-12" transform="translate(1081.37 623.73)"><tspan x="0" y="0">is related to</tspan></text>
+  <text class="cls-12" transform="translate(763.67 269.19) rotate(-.39)"><tspan x="0" y="0">considers</tspan></text>
+  <text class="cls-12" transform="translate(767.45 269.16) rotate(-.39)"><tspan x="0" y="0"></tspan></text>
+  <text class="cls-12" transform="translate(773.46 269.12) rotate(-.39)"><tspan x="0" y="0"></tspan></text>
+  <text class="cls-12" transform="translate(779.26 269.08) rotate(-.39)"><tspan x="0" y="0"></tspan></text>
+  <text class="cls-12" transform="translate(97.24 388.71)"><tspan x="0" y="0">based on</tspan></text>
+  <text class="cls-12" transform="translate(807.34 335.13) rotate(-18.33)"><tspan x="0" y="0">considers</tspan></text>
+  <text class="cls-12" transform="translate(469.13 332.55) rotate(14.22)"><tspan x="0" y="0">sele</tspan><tspan class="cls-35" x="19.61" y="0">c</tspan><tspan class="cls-20" x="25.14" y="0">t</tspan><tspan x="29.04" y="0">ed </tspan><tspan class="cls-27" x="44.36" y="0">b</tspan><tspan class="cls-17" x="51.11" y="0">y</tspan></text>
+</svg>

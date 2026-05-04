@@ -21,31 +21,34 @@ folder "Metrics" as Metrics <<dynamic>> #ffe8e8ff
 folder "MotivationalMechanics" as MotivationalMechanics <<static>> #f5ffdbff
 folder "Usertrait_Mechanic_Mapping" as Usertrait_Mechanic_Mapping <<static>> #f5ffdbff
 folder "PlanAndTasks" as PlanAndTasks <<static>> #ebffe8ff
-folder "UserContext" as UserContext #fde8ffff
+folder "UserProfile" as UserProfile #fde8ffff
 folder "UserTraits" as UserTraits <<static>> #fafeb7ff
 
 ' relations (with cardinalities when present)
 AssistantActions --> "0..1" MotivationalMechanics : toggles
 Usertrait_Mechanic_Mapping --> MotivationalMechanics : maps
 Usertrait_Mechanic_Mapping --> UserTraits : maps
-MotivationalMechanics "1" --> "1..2" UserContext : selected_by
+MotivationalMechanics "1" --> "1..2" UserProfile : selected_by
 AssistantActions "1" --> "1" MotivationalMechanics : toggles
-AssistantActions "1" --> "1..*" UserContext : targets
+AssistantActions "1" --> "1..*" UserProfile : targets
 EventRegistration "1..*" --> "0..*" KeySituations : triggers
+UserProfile --> "1..*" UserTraits : references
 EventRegistration "1..*" --> "0..*" Metrics : triggers recalculation
 Metrics "1" --> "1" EventRegistration : calculated from
 KeySituations "1" --> "0..*" AssistantActions : triggers
-UserContext "1" --> "1..*" UserTraits : references
-UserContext "1" --> "1..*" AssistantActions : receives
-UserContext --> Metrics : has
-UserContext "1" --> "1" PlanAndTasks : has
+UserProfile "1" --> "1..*" UserTraits : references
+UserProfile "1" --> "1..*" AssistantActions : receives
+UserProfile --> Metrics : "is defined by"
+UserProfile "1" --> "1" PlanAndTasks : has
 EventRegistration "1" --> "1" PlanAndTasks : refers
 MotivationalMechanics "1" --> "1" Metrics : is_determined_by
 MotivationalMechanics "1" --> "1" Metrics : reads
 AssistantActions "1" --> "1..*" Conditions : has
+KeySituations "1" --> "1..*" Conditions : has
 Conditions "1" --> "1..*" Metrics : reads
+Conditions "1" --> "1..*" MotivationalMechanics : reads
 Conditions "1" --> "1..*" PlanAndTasks : reads
-Conditions "1" --> "1..*" UserContext : considers
-Conditions "1" --> "1" UserContext : considers
-MotivationalMechanics --> Metrics : based on
+Conditions "1" --> "1..*" UserProfile : considers
+Conditions "1" --> "1" UserProfile : considers
+MotivationalMechanics "1" --> "1..*" Metrics : based on
 @enduml

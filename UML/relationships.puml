@@ -1,48 +1,38 @@
-@startuml
-Metrics -[hidden]-> EventRegistration
-EventRegistration -[hidden]-> KeySituations
-KeySituations -[hidden]-> AssistantActions
-AssistantActions -[hidden]-> UserContext
-UserContext -[hidden]-> UserTraits
-UserTraits -[hidden]-> MotivationalMechanics
 
-MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserContext.UserTraitWeight : selected_by
+MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserProfile.UserTraitMapping : "selected by"
 
 AssistantActions.AssistantAction "1" --> "1" MotivationalMechanics.MotivationalMechanic : toggles
-AssistantActions.AssistantAction "1" --> "1..*" UserContext.User : targets
+AssistantActions.AssistantAction "1" --> "1..*" UserProfile.User : targets
 
 EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : triggers
 
-EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : triggers recalculation
-Metrics.Metric "1" --> "1" EventRegistration.Event   : calculated from
+UserProfile.UserTraitMapping --> "1..*" UserTraits.UserTrait : references
+MotivationalMechanics.MechanicUserTraitMapping --> UserTraits.UserTrait : maps
+
+EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : "triggers recalculation"
+Metrics.Metric "1" --> "1" EventRegistration.Event : "calculated from"
 
 KeySituations.KeySituation "1" --> "0..*" AssistantActions.AssistantAction : triggers
 
-UserContext.UserTraitWeight "1" --> "1..*" UserTraits.UserTrait : references
-UserContext.User "1" --> "1..*" AssistantActions.AssistantAction : receives
-UserContext.User --> Metrics.Metric : has
+UserProfile.User "1" --> "1..*" AssistantActions.AssistantAction : receives
+UserProfile.User --> Metrics.Metric : "is defined by"
 
-UserContext.User "1" --> "1" PlanAndTasks.Plan : has
+UserProfile.User "1" --> "1" PlanAndTasks.Plan : has
 
-EventRegistration.TaskEvent "1" --> "1" PlanAndTasks.Task : refers
+EventRegistration.TaskEvent "1" --> "1" PlanAndTasks.Task : "refers to"
 PlanAndTasks.Task --> PlanAndTasks.Level : "has available"
 
-MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : is_determined_by
-
-MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> UserTraits.Player : maps
-MotivationalMechanics.Usertrait_Mechanic_Mapping.Level_and_Experience_Point_System_to_Player --> MotivationalMechanics.Level_and_Experience_Point_System : maps
-
-User --> UserEvent : executes
-
-MotivationalMechanics.MotivationalMechanic "1" --> "1" Metrics.Metric : reads
+UserProfile.User --> EventRegistration.UserEvent : executes
 
 AssistantActions.AssistantAction "1" --> "1..*" Conditions.Condition : has
 
-Conditions.Condition "1" --> "1..*" Metrics.Metric : reads
-Conditions.PlanCondition "1" --> "1..*" PlanAndTasks.Plan : reads
+KeySituations.KeySituation "1" --> "1..*" Conditions.Condition : has
 
-Conditions.Condition "1" --> "1..*" UserContext.UserTraitWeight : considers
-Conditions.Condition "1" --> "1" UserContext.UserState : considers
+Conditions.Condition "1" --> "1..*" Metrics.Metric : considers
+Conditions.Condition "1" --> "1..*" MotivationalMechanics.MechanicState : considers
+Conditions.PlanCondition "1" --> "1..*" PlanAndTasks.Plan : "is related to"
 
-MotivationalMechanics.MechanicState --> Metrics.Metric : based on
-@enduml
+Conditions.Condition "1" --> "1..*" UserProfile.UserTraitMapping : considers
+Conditions.Condition "1" --> "1" UserProfile.UserState : considers
+
+MotivationalMechanics.MechanicState "1" --> "1..*" Metrics.Metric : based on

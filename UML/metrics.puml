@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -36,20 +35,5 @@ package Metrics metricsBack {
   class ClickRate metricsLight extends PerformanceMetric
   class Adherence metricsLight extends AdherenceMetric
   class HesitationTime metricsLight extends PerformanceMetric
-
-  object Overloaded 
-  Overloaded -> CognitiveLoadMetric : "instance of"
-  object OptimalLoad      
-  OptimalLoad -> CognitiveLoadMetric : "instance of"
-  object Underchallenged
-  Underchallenged -> CognitiveLoadMetric : "instance of"
-
-  object High
-  High -> MotivationalStateMetric : "instance of"
-  object Medium
-  Medium -> MotivationalStateMetric : "instance of"
-  object Low
-  Low -> MotivationalStateMetric : "instance of"
 }
 
-@enduml

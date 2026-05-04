@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -13,7 +12,9 @@ skinparam packageStyle rectangle
 !define keySituationsLight #d5f6ffff
 
 package KeySituations keySituationsBack {
-  class KeySituation keySituationsFront
+  class KeySituation keySituationsFront {
+
+  }
   class MechanicDisplayedKeySituation keySituationsLight extends KeySituation
   class MechanicInteractionKeySituation keySituationsLight extends KeySituation
   class MilestoneReachedKeySituation keySituationsLight extends KeySituation
@@ -22,8 +23,4 @@ package KeySituations keySituationsBack {
   class TaskStartedKeySituation keySituationsLight extends KeySituation
   class TaskFinishedKeySituation keySituationsLight extends KeySituation
   class SessionEndedKeySituation keySituationsLight extends KeySituation
-  note left of KeySituation
-  Generic KeySituation structure for behavioral logs.
-  end note
 }
-@enduml

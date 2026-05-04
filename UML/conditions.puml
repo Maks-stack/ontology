@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -27,4 +26,3 @@ package Conditions conditionsBack {
   class HalfwayPointReached conditionsFront extends PlanCondition
 }
 
-@enduml

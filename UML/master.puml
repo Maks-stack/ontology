@@ -4,13 +4,13 @@ skinparam linetype polyline
 hide empty methods
 hide empty attributes
 hide empty members
-left to right direction
-skinparam nodesep 40
-skinparam ranksep 40
+top to bottom direction
+skinparam nodesep 60
+skinparam ranksep 80
 skinparam packageStyle rectangle
 title Motiva Framework Ontology
 
-!$renderMode= "master"
+!$renderMode = "master"
 skinparam class {
   StereotypeFontStyle bold
 }

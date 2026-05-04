@@ -1,5 +1,5 @@
-@startuml
 skinparam linetype polyline
+skinparam packageStyle rectangle
 left to right direction
 
 hide empty methods
@@ -9,7 +9,6 @@ hide empty members
 !define mechanicsBack        #f5ffdbff
 !define mechanicsFront      #e4ffa0ff
 
-' keep orientation, reduce width
 scale 0.8
 skinparam nodesep 16
 skinparam ranksep 18
@@ -25,110 +24,46 @@ package MotivationalMechanics mechanicsBack {
   class MotivationalMechanic mechanicsFront
   hide MotivationalMechanic members
 
-  class MotivationalMechanic
-
   class MechanicState mechanicsFront
 
-class Progress_Indicators mechanicsFront extends MotivationalMechanic
-object Level_and_Experience_Point_System
-Level_and_Experience_Point_System --> Progress_Indicators : «instance of»
-note bottom of Level_and_Experience_Point_System
-Core progression; growth via XP and unlocks.
-end note
+  class ProgressIndicator mechanicsFront extends MotivationalMechanic
 
-class Competition_with_others mechanicsFront extends MotivationalMechanic
-hide Competition_with_others members
-object Leaderboards
-Leaderboards --> Competition_with_others : «instance of»
-note bottom of Leaderboards
-Competing with other comparing points
-end note
+  class CompetitionWithOthers mechanicsFront extends MotivationalMechanic
+  hide CompetitionWithOthers members
 
-class Personal_Goals mechanicsFront extends MotivationalMechanic
-hide Personal_Goals members
-object Self_Assigned_Targets
-Self_Assigned_Targets --> Personal_Goals : «instance of»
-note bottom of Self_Assigned_Targets
-Users define objectives.
-end note
+  class PersonalGoals mechanicsFront extends MotivationalMechanic
+  hide PersonalGoals members
 
-class Personalization_and_Creativity mechanicsFront extends MotivationalMechanic
-hide Personalization_and_Creativity members
-object Custom_Player_Made_Content
-Custom_Player_Made_Content --> Personalization_and_Creativity : «instance of»
-note bottom of Custom_Player_Made_Content
-User-generated content.
-end note
+  class PersonalizationAndCreativity mechanicsFront extends MotivationalMechanic
+  hide PersonalizationAndCreativity members
 
-class Sharing_Achievements mechanicsFront extends MotivationalMechanic
-hide Sharing_Achievements members
-object Social_Share_Buttons
-Social_Share_Buttons --> Sharing_Achievements : «instance of»
-note bottom of Social_Share_Buttons
-Share externally.
-end note
+  class SharingAchievements mechanicsFront extends MotivationalMechanic
+  hide SharingAchievements members
 
-class Social_Networking mechanicsFront extends MotivationalMechanic
-hide Social_Networking members
-object Community_Insights
-Community_Insights --> Social_Networking : «instance of»
-note bottom of Community_Insights
-Show peer behavior.
-end note
+  class SocialNetworking mechanicsFront extends MotivationalMechanic
+  hide SocialNetworking members
 
-class Surprises_and_Events mechanicsFront extends MotivationalMechanic
-hide Surprises_and_Events members
-object Mystery_Boxes
-Mystery_Boxes --> Surprises_and_Events : «instance of»
-note bottom of Mystery_Boxes
-Randomized rewards.
-end note
+  class SurprisesAndEvents mechanicsFront extends MotivationalMechanic
+  hide SurprisesAndEvents members
 
-class Motivational_Messages mechanicsFront extends MotivationalMechanic
-hide Motivational_Messages members
-object Encouraging_Messages
-Encouraging_Messages --> Motivational_Messages : «instance of»
-note bottom of Encouraging_Messages
-Positive reinforcement.
-end note
+  class MotivationalMessages mechanicsFront extends MotivationalMechanic
+  hide MotivationalMessages members
 
-class Time_Based_Challenges mechanicsFront extends MotivationalMechanic
-hide Time_Based_Challenges members
-object Appointment_Dynamics
-Appointment_Dynamics --> Time_Based_Challenges : «instance of»
-note bottom of Appointment_Dynamics
-Scheduled events.
-end note
+  class TimeBasedChallenges mechanicsFront extends MotivationalMechanic
+  hide TimeBasedChallenges members
 
-class Rewards_and_Unlocks mechanicsFront extends MotivationalMechanic
-hide Rewards_and_Unlocks members
-object In_Game_Currency
-In_Game_Currency --> Rewards_and_Unlocks : «instance of»
-note bottom of In_Game_Currency
-Virtual resources.
-end note
+  class RewardsAndUnlocks mechanicsFront extends MotivationalMechanic
+  hide RewardsAndUnlocks members
 
-
-  package Usertrait_Mechanic_Mapping mechanicsBack {
-    class MechanicUserTraitMapping mechanicsFront {
-      +weight: float 
-    }
-    object Level_and_Experience_Point_System_to_Player {
-      weight: 0.8
-    }
-    Level_and_Experience_Point_System_to_Player --> MechanicUserTraitMapping : instance of 
-
+  class MechanicUserTraitMapping mechanicsFront {
+    +weight: float
   }
 
-  ' relations
-  Usertrait_Mechanic_Mapping.MechanicUserTraitMapping --> MotivationalMechanics.MotivationalMechanic : maps
+  MechanicUserTraitMapping --> MotivationalMechanics.MotivationalMechanic : maps
 
-  ' !if ($renderMode == "master")
-  
-  ' !else
-  Usertrait_Mechanic_Mapping.MechanicUserTraitMapping --> UserTraits.UserTrait : maps
-  ' !endif
-  
+  !if ($renderMode != "master")
+  MechanicUserTraitMapping --> UserTraits.UserTrait : maps
+  !endif
+
   MotivationalMechanic "1" --> "1" MechanicState : has
 }
-@enduml

@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -27,23 +26,16 @@ package EventRegistration eventsBack {
 
   together {
     class ClickEvent eventsLight extends UserEvent
-    class LoginEvent eventsLight extends UserEvent
-    class LogoutEvent eventsLight extends UserEvent
     class ErrorCommittedEvent eventsLight extends UserEvent
-    class ScoreEvent eventsLight extends UserEvent
     class ScreenVisitedEvent eventsLight extends UserEvent
 
     class HourPassedEvent eventsLight extends SystemEvent
-    class DayPassedEvent eventsLight extends SystemEvent
-    class WeekPassedEvent eventsLight extends SystemEvent
-
+    
     class TaskStartedEvent eventsLight extends TaskEvent
     class TaskFinishedEvent eventsLight extends TaskEvent
 
     class MechanicDisplayedEvent eventsLight extends MechanicEvent
-    class MechanicInteractedEvent eventsLight extends MechanicEvent
     class MechanicDismissedEvent eventsLight extends MechanicEvent
   }
 
 }
-@enduml

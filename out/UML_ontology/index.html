@@ -7,15 +7,63 @@
     body { font-family: system-ui, sans-serif; margin: 24px; }
     .wrap { display: grid; gap: 12px; }
     .note { font-size: 14px; opacity: .85; padding: 8px 10px; background:#f7f7f7; border:1px solid #e5e5e5; border-radius:8px; }
+
+    .download-banner {
+      background: #f3f7ff;
+      border: 2px solid #4b9cff;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .download-banner-text {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .download-btn-prominent {
+      border: 2px solid #2f6fe4;
+      background: #4b9cff;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font: 600 15px system-ui, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .download-btn-prominent:hover {
+      filter: brightness(0.97);
+    }
+
+    .download-btn-prominent:active {
+      transform: translateY(1px);
+    }
+
     .toolbar {
       position: fixed; right: 18px; bottom: 18px;
       display: grid; gap: 8px; z-index: 9999;
     }
+
     .toolbtn {
       border: 1px solid #ccc; background: #fff;
       padding: 8px 10px; border-radius: 8px; font: inherit; cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,.08);
+      text-decoration: none;
+      color: inherit;
+      display: inline-block;
+      text-align: center;
     }
+
     .toolbtn:active { transform: translateY(1px); }
     .is-grab { cursor: grab; }
     .is-grabbing { cursor: grabbing; }
@@ -27,12 +75,14 @@
       display: grid; gap: 6px; z-index: 9999;
       max-height: calc(100vh - 36px); overflow: auto; padding-right: 4px; margin-top: 200px;
     }
+
     .pkgbtn {
       border: 1px solid #ccc; background: #fff; padding: 6px 10px;
       border-radius: 8px; font: 13px system-ui, sans-serif; cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,.08); text-align: left;
       max-width: 200px;
     }
+
     .pkgbtn:active { transform: translateY(1px); }
     .pkgbtn.is-active { border-color: #4b9cff; box-shadow: 0 0 0 2px rgba(75,156,255,.2); }
   </style>
@@ -43,9 +93,22 @@
   </div>
 
   <div class="wrap" style="margin-left: 200px;">
+    <div class="download-banner">
+      <div class="download-banner-text">
+        To download the ontology as an <strong>OWL ontology in RDF/XML format</strong>, click the following button:
+      </div>
+      <a
+        class="download-btn-prominent"
+        href="./OLW_file/motiva_ontology_v2.owl"
+        download="motiva_ontology_v2.owl"
+        title="Download ontology in OWL format"
+      >
+        Download Ontology (.owl)
+      </a>
+    </div>
+
     <h1>Highlight and select elements</h1>
 
-    <!-- Dynamic per-selection text lives here -->
     <div id="noteBox" class="note"></div>
 
     <div style="display: flex; gap: 8px; align-items: center;">
@@ -53,9 +116,7 @@
          style="margin-left:auto; padding:6px 8px; border:1px solid #ccc; border-radius:8px; min-width:240px;">
       <datalist id="graphTerms"></datalist>
 
-      <!-- Single diagram picker -->
       <select id="diagramPicker" style="padding:6px 8px; border:1px solid #ccc; border-radius:8px;">
-        <!-- options populated by JS -->
       </select>
     </div>
 
@@ -70,7 +131,6 @@
   </div>
 
   <script>
-  // ====== Helpers ======
   function normalizeId(str) {
     return (str || '').replace(/^elem_/,'').replace(/^link_/,'').replace(/^cluster_/,'')
       .toLowerCase().replace(/[^a-z0-9]+/g,'');
@@ -83,7 +143,6 @@
             inner.y + inner.height <= outer.y + outer.height + padding);
   }
 
-  // ====== Pan/zoom utilities ======
   function unionContentBBox(svg) {
     let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity, any=false;
     svg.querySelectorAll('*').forEach(node=>{
@@ -132,7 +191,6 @@
   }
   function panBy(svg, state, dx, dy){ state.vb.x += dx; state.vb.y += dy; setViewBox(svg, state.vb); }
 
-  // ====== Globals for UI ======
   const svgObj   = document.getElementById('svgObj');
   const pkgPanel = document.getElementById('pkgPanel');
   const clearBtn = document.getElementById('clearPkgBtn');
@@ -141,7 +199,6 @@
   const picker = document.getElementById('diagramPicker');
   const noteBox = document.getElementById('noteBox');
 
-  // ====== Diagram switching with per-selection custom text ======
   const DIAGRAMS = [
     {
       label:'Ontology',
@@ -201,7 +258,7 @@
         The Motivational Assistant UI and its logic are added on top of the already existing application so they must be more loosely coupled.
         For that reason an Adapter pattern is used to connect the Motivational Assistant to the main system. In the adapter Events like Session Started, Task finished are defined. The Motivational Assistan UI can call these events to notify the Motivational Assistant Logic about the users actions. These events are received by the Motivational Assistants logic and processed. The Motivational Assistants Logic then updates the Domain Model with new Metrics and new user States.<br><br>
         We can see that the Domain Model contains some parts that are shared between the Personal Development application and the Motivational Assistant like the User Model, Tasks and Plans. These parts are used by both systems.<br><br>
-        Some other parts specific to the Motivatonal Assistant like events, metrics and  mechanic mappings are not shared.<br><br>
+        Some other parts specific to the Motivatonal Assistant like events, metrics and mechanic mappings are not shared.<br><br>
         The Motivational Assistant Logic then sends back Assistan Actions via the Action Mapper in the Adapter which the Motivational Assistant UI can receive and then convert them into UI changes, activation or deactivation of mechanics etc.
         `
     },
@@ -240,14 +297,12 @@
   picker.addEventListener('change', ()=> setDiagram(picker.value));
   initPicker();
 
-  // ====== Main loader per-diagram ======
   svgObj.addEventListener('load', () => {
     const svgDoc  = svgObj.contentDocument;
     if (!svgDoc) { console.warn('SVG contentDocument not available.'); return; }
     const svgRoot = svgDoc.documentElement;
     if (!svgRoot || svgRoot.nodeName.toLowerCase() !== 'svg') { console.warn('Embedded doc is not <svg>.'); return; }
 
-    // safety: wipe buttons on reload except Clear
     [...pkgPanel.querySelectorAll('.pkgbtn')].forEach(b => { if (b !== clearBtn) b.remove(); });
 
     svgRoot.setAttribute('preserveAspectRatio', 'xMidYMid meet');
@@ -354,7 +409,6 @@
 
       g[id^="elem_"], g[id^="cluster_"] { cursor: pointer; }
 
-      /* Oversized invisible hit geometry for links */
       g[id^="link_"] .hit {
         stroke:#000; stroke-opacity:0.001; stroke-width:300;
         fill:none; vector-effect:non-scaling-stroke; pointer-events: stroke; cursor: pointer;

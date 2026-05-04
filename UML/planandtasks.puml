@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -16,9 +15,6 @@ package PlanAndTasks planBack {
     +name: String
     +description: String
   }
-  note right of Plan
-    Succession of task blocks (composites).
-  end note
 
   class Task planFront {
     +title: String
@@ -29,22 +25,12 @@ package PlanAndTasks planBack {
     +name: String
     +difficulty: Int
   }
-  note bottom of Level
-    Optional difficulty per task.
-  end note
-
   class TaskRequirement planFront {
     +requiredRepetitions: int
   }
-  note left of TaskRequirement
-    How many times a Task must be repeated on a Level.
-  end note
 
   class TaskAssignment planFront {
   }
-  note right of TaskAssignment
-    Assigns a Task and its requirements to a block.
-  end note
 
   class TaskBlock planFront {
     +title: String
@@ -52,9 +38,6 @@ package PlanAndTasks planBack {
     +startDate: DateTime
     +endDate: DateTime
   }
-  note right of TaskBlock
-    Composite grouping of assignments and blocks.
-  end note
 
   TaskAssignment --> "1" Task : has assigned
   TaskAssignment --> "1..*" TaskRequirement : has assigned
@@ -63,4 +46,3 @@ package PlanAndTasks planBack {
   Plan *--> "1..*" TaskBlock
   TaskBlock *--> "1..*" TaskAssignment : contains
 }
-@enduml

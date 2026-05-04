@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -16,57 +15,21 @@ package UserTraits traitsBack {
 
   class MotivationalTrait traitsFront extends UserTrait
   hide MotivationalTrait members
-  note bottom of MotivationalTrait
-  Representation of motivational characteristics.
-  end note
 
   class PlayerType traitsFront extends UserTrait
-  note bottom of PlayerType
-  User gaming style or approach.
-  end note
-
-  object "Philanthropist" as Philanthropist
-  Philanthropist --> PlayerType : "instance of"
-  object "Achiever" as Achiever
-  Achiever --> PlayerType : "instance of"
-  object "Free_Spirit" as Free_Spirit
-  Free_Spirit --> PlayerType : "instance of"
-  object "Socializer" as Socializer
-  Socializer --> PlayerType : "instance of"
-  object "Player" as Player
-  Player --> PlayerType : "instance of"
-  object "Disruptor" as Disruptor
-  Disruptor --> PlayerType : "instance of"
-
 
   class DigitalLiteracy traitsFront extends UserTrait
   hide DigitalLiteracy members
-  note bottom of DigitalLiteracy
-  Familiarity with digital technologies.
-  end note
 
   class CognitiveAbility traitsFront extends UserTrait
   hide CognitiveAbility members
-  note bottom of CognitiveAbility
-  Reasoning, memory, problem-solving.
-  end note
 
   class AttentionSpan traitsFront extends UserTrait
   hide AttentionSpan members
-  note bottom of AttentionSpan
-  Ability to maintain focus.
-  end note
 
   class SelfDiscipline traitsFront extends UserTrait
   hide SelfDiscipline members
-  note bottom of SelfDiscipline
-  Consistency and task completion.
-  end note
 
   class FrustrationTolerance traitsFront extends UserTrait
   hide FrustrationTolerance members
-  note bottom of FrustrationTolerance
-  Coping with difficulty and delay.
-  end note
 }
-@enduml

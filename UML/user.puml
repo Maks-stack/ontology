@@ -1,4 +1,3 @@
-@startuml
 skinparam linetype polyline
 hide empty methods
 hide empty attributes
@@ -13,14 +12,15 @@ skinparam packageStyle rectangle
 !define contextState #f7befeff
 !define contextLight #f5c6fbff
 
-package UserContext contextBack {
+package UserProfile contextBack {
   class User contextFront
 
   class UserTraitMapping contextState {
     +weight: float
   }
 
+  class UserState contextState
+
   User --> "1..*" UserState : has
   User --> "1..*" UserTraitMapping : has
 }
-@enduml
