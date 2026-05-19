@@ -62,6 +62,9 @@ package MotivationalMechanics mechanicsBack {
   MechanicUserTraitMapping --> MotivationalMechanics.MotivationalMechanic : maps
 
   !if ($renderMode != "master")
+  package UserTraits #fafeb7ff {
+    class UserTrait #f5fba0ff
+  }
   MechanicUserTraitMapping --> UserTraits.UserTrait : maps
   !endif
 

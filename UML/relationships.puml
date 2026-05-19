@@ -1,7 +1,7 @@
 
-MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserProfile.UserTraitMapping : "selected by"
+MotivationalMechanics.MotivationalMechanic "1" --> "1..2" UserProfile.UserTraitMapping : "determined by"
 
-AssistantActions.AssistantAction "1" --> "1" MotivationalMechanics.MotivationalMechanic : toggles
+AssistantActions.SystemAction "1" --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
 AssistantActions.AssistantAction "1" --> "1..*" UserProfile.User : targets
 
 EventRegistration.Event "1..*" --> "0..*" KeySituations.KeySituation : triggers
@@ -10,7 +10,6 @@ UserProfile.UserTraitMapping --> "1..*" UserTraits.UserTrait : references
 MotivationalMechanics.MechanicUserTraitMapping --> UserTraits.UserTrait : maps
 
 EventRegistration.Event "1..*" --> "0..*" Metrics.Metric : "triggers recalculation"
-Metrics.Metric "1" --> "1" EventRegistration.Event : "calculated from"
 
 KeySituations.KeySituation "1" --> "0..*" AssistantActions.AssistantAction : triggers
 
@@ -34,5 +33,7 @@ Conditions.PlanCondition "1" --> "1..*" PlanAndTasks.Plan : "is related to"
 
 Conditions.Condition "1" --> "1..*" UserProfile.UserTraitMapping : considers
 Conditions.Condition "1" --> "1" UserProfile.UserState : considers
+
+UserProfile.UserState --> "1..*" Metrics.UserStateMetric : "is defined by"
 
 MotivationalMechanics.MechanicState "1" --> "1..*" Metrics.Metric : based on

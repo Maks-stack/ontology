@@ -36,7 +36,9 @@ package AssistantActions actionsBack {
   class SystemNotice actionsLight extends UserCommunication
   class PromptMessage actionsLight extends UserCommunication
 
+  class SystemAction actionsLight extends AssistantAction
+
   !if ($renderMode != "master")
-  AssistantActions.AssistantAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+  AssistantActions.SystemAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
   !endif
 }
