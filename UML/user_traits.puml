@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -32,4 +35,13 @@ package UserTraits traitsBack {
 
   class FrustrationTolerance traitsFront extends UserTrait
   hide FrustrationTolerance members
+
+  !if ($renderMode != "master")
+  package MotivationalMechanics #f5ffdbff {
+    class MechanicUserTraitMapping #e4ffa0ff {
+      +weight: float
+    }
+  }
+  MotivationalMechanics.MechanicUserTraitMapping --> UserTrait : maps
+  !endif
 }

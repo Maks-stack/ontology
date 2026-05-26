@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -18,16 +21,13 @@ package AssistantActions actionsBack {
 
   class UserCommunication actionsLight extends AssistantAction
   class MotivationalMessage actionsLight extends UserCommunication
-  class RewardNotification actionsLight extends UserCommunication
   class AchievementNotification actionsLight extends UserCommunication
-  class UnlockNotification actionsLight extends UserCommunication
 
   class MechanicStateUpdate actionsLight extends UserCommunication
 
   class SocialNotification actionsLight extends UserCommunication
   class SocialComparisonNotification actionsLight extends SocialNotification
-  class SocialEncouragementNotification actionsLight extends SocialNotification
-  class SocialInvitationNotification actionsLight extends SocialNotification
+  
   class SocialSharingNotification actionsLight extends SocialNotification
 
   class Questionnaire actionsLight extends AssistantAction
@@ -39,6 +39,13 @@ package AssistantActions actionsBack {
   class SystemAction actionsLight extends AssistantAction
 
   !if ($renderMode != "master")
+  package MotivationalMechanics #f5ffdbff {
+    class MotivationalMechanic #e4ffa0ff
+  }
+  package Conditions #ffedcaff {
+    class Condition #f8db92ff
+  }
   AssistantActions.SystemAction --> "0..1" MotivationalMechanics.MotivationalMechanic : toggles
+  AssistantActions.AssistantAction --> "1..*" Conditions.Condition : has
   !endif
 }

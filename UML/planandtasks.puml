@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -45,4 +48,15 @@ package PlanAndTasks planBack {
 
   Plan *--> "1..*" TaskBlock
   TaskBlock *--> "1..*" TaskAssignment : contains
+
+  !if ($renderMode != "master")
+  package UserProfile #fde8ffff {
+    class User #f59bffff
+  }
+  package EventRegistration #f1f1f1ff {
+    class TaskEvent #e6e6e6ff
+  }
+  UserProfile.User "1" --> "1" Plan : has
+  EventRegistration.TaskEvent "1" --> "1" Task : "refers to"
+  !endif
 }

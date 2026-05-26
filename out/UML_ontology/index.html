@@ -93,6 +93,7 @@
   </div>
 
   <div class="wrap" style="margin-left: 200px;">
+    <!-- download-banner commented out — OWL file available on request
     <div class="download-banner">
       <div class="download-banner-text">
         To download the ontology as an <strong>OWL ontology in RDF/XML format</strong>, click the following button:
@@ -106,8 +107,38 @@
         Download Ontology (.owl)
       </a>
     </div>
+    -->
+    <div class="download-banner">
+      <div class="download-banner-text">
+        The ontology is available as an <strong>OWL ontology in RDF/XML format</strong> on request —
+        write to <a href="mailto:maximilian.menschel@upm.es">maximilian.menschel@upm.es</a>.
+      </div>
+    </div>
 
-    <h1>Highlight and select elements</h1>
+    <h1 style="margin-bottom:4px;">MotivOnt</h1>
+    <p style="font-size:15px; color:#444; max-width:860px; margin-top:4px; line-height:1.6;">
+      MotivOnt is a modular semantic ontology designed to assist software developers in the implementation
+      of goal-oriented gamification systems. Targeted toward applications promoting personal development,
+      the ontology describes core concepts and adaptive feedback structures developed as UML class diagrams
+      and subsequently formalized in OWL to enable semantic reasoning and interoperability. It facilitates
+      the creation of scheduled progression plans, integrates motivational state modeling, and supports the
+      definition of personalized gamification mechanics through domain-agnostic metrics.
+    </p>
+    <p style="font-size:15px; color:#444; max-width:860px; line-height:1.6;">
+      The ontology is organized into ten interoperable modules:
+      <strong>UserProfile</strong>, <strong>UserTraits</strong>, <strong>Metrics</strong>,
+      <strong>PlanAndTasks</strong>, <strong>EventRegistration</strong>, <strong>KeySituations</strong>,
+      <strong>Conditions</strong>, <strong>AssistantActions</strong>, and
+      <strong>MotivationalMechanics</strong> (including <strong>MechanicUserTraitMapping</strong>).
+      The interactive diagram below allows you to explore the module structure and class relationships.
+    </p>
+    <p style="font-size:13px; color:#666; max-width:860px; line-height:1.5;">
+      <strong>Cite as:</strong> M. Menschel, J. Ramírez, C. Moral Martos, and E. Villalba-Mora,
+      "MotivOnt: A Domain Model for Motivational Assistants in Personal Development Applications,"
+      <!-- <em>IEEE Access</em>, doi: 10.1109/ACCESS.2024.0429000. -->
+    </p>
+
+    <h2 style="font-size:16px; margin-bottom:6px;">Explore the ontology</h2>
 
     <div id="noteBox" class="note"></div>
 
@@ -203,42 +234,19 @@
     {
       label:'Ontology',
       path:'./master.svg',
-      note:`<strong>Ontology:</strong> 
-      Core semantic classes and relations. Use to reason about domain structure.<br>
-      Packages:<br>
-      <strong>Metrics:</strong> capture quantifiable user data from events.<br>
-      <strong>KeySituations:</strong> significant vents triggering relevant key situations. One or more events combined can trigger a KeySituation.<br>
-      <strong>AssistantActions:</strong> actions taken by the assistant in response to KeySituations, informed by Metrics and UserModel. Can contain state of mechanics, user messages<br>
-      <strong>KeySituations:</strong> significant Situations triggered by events. Play an important role for user motivation and usage flow.<br>
-      <strong>PlanAndTasks:</strong> user plans and tasks assigned. Mark a planned progression for the user. Might be shared by Personal Development app and Motivational Assistant.<br>
-      <strong>UserModel</strong>: representation of the user with connections to traits, state, metrics, and assigned tasks.<br>
-      <strong>User Traits</strong>: motivational or personality traits of the user.<br>
-      <strong>Motivational Mechanics</strong>: mechanics applied to motivate the user, selected based on trait-mechanic mappings.<br><br>
+      note:`<strong>UserProfile:</strong> Lightweight module centered on the User class, each with a UserState and UserTraitMappings indicating the degree of correlation between the user and each defined trait.<br>
+      <strong>UserTraits:</strong> Character, personality, and other relevant traits influencing a user's behavior, usage patterns, and responses to motivational mechanics. Highly domain-dependent and expected to be extended.<br>
+      <strong>Metrics:</strong> Tracked user behavior formalized as measurable numerical values derived from Events, used to monitor progress, engagement, and performance.<br>
+      <strong>PlanAndTasks:</strong> Structures the expected user progression through a Plan divided into TaskBlocks, each containing TaskAssignments linked to Tasks and TaskRequirements with optional difficulty levels.<br>
+      <strong>EventRegistration:</strong> Records raw user behavior and marks important moments during a user's progression. Events trigger Metric recalculation and can give rise to KeySituations.<br>
+      <strong>KeySituations:</strong> Link between raw user behavior and critical interaction moments; entry points for activating adaptive behavior and motivational mechanics. Can be gated by Conditions.<br>
+      <strong>Conditions:</strong> Decision logic used to gate KeySituations and AssistantActions, reading from UserProfile, Metrics, and MechanicState.<br>
+      <strong>AssistantActions:</strong> Any interaction delivered by the motivational assistant to the user as a result of the event-to-key-situation flow. Includes UserCommunication, Questionnaire, and SystemAction subclasses.<br>
+      <strong>MotivationalMechanics:</strong> Structured collection of motivational mechanics organized by functional categories. MechanicUserTraitMapping assigns each mechanic a weighted relation to every defined UserTrait, enabling personalized mechanic selection.<br>
       `
     },
     {
-      label:'Instances',
-      path:'./UML_ontology_instances.svg',
-      note:`<strong>Instances:</strong> <br><br>
-      This diagram shows concrete instances for user U123 on 2025-09-15.<br><br>
-
-      EventRegistration records two events (session started, task finished) and one event collection window with counts and duration.<br>
-      Events trigger KeySituations for session start and task completion.<br><br>
-
-      Metrics capture adherence for the user and usage rate for the Level/XP mechanic.<br>
-      The event collection aggregates into adherence and summarizes the session-start situation.<br><br>
-
-      <strong>AssistantActions</strong> fire from the key situations: a welcome prompt at 08:12, a demographics form at 08:30, and an IMI survey at 09:00.<br>
-      These actions affect the UserModel, the IMI produces a metric, considers the user’s Player trait weight and the Player↔Level/XP mapping, and can toggle the Level/XP mechanic.<br><br>
-
-      UserModel holds the user instance and their Player trait weight (0.75) and owns a plan with a week-38 block and a Memory Game assignment with requirements (reps and level).<br><br>
-
-      Mappings link traits to mechanics with weights, e.g., Player→Level/XP (0.8) and Socializer→Community Insights (0.8).<br><br>
-
-      Net effect: events → situations → actions → user and metrics, with trait-mechanic mappings guiding which mechanics get reinforced or toggled.`
-    },
-    {
-      label:'High Level Ontology',
+      label:"High Level Ontology",
       path:'./master_highlevel.svg',
       note:`
       <strong>High Level Overview :</strong> <br><br>
@@ -247,29 +255,6 @@
       MotivationalMechanics are selected per user based on mappings between UserTraits (individual motivational or personality attributes) and mechanics with the highest predicted effectiveness. These mappings are represented in Usertrait_Mechanic_Mapping.<br><br>
       The UserModel functions as the central representation of the individual, encompassing their state, traits, metrics, and assigned tasks. It maintains continuous reference to and synchronization with these components, completing the adaptive feedback loop between user behavior, system observation, and personalized motivation.`
     },
-    {
-      label:'Architecture',
-      path:'./Architecture.svg',
-      note:`<strong>Architecture:</strong> <br><br>
-        The User interacts with the main system through the UI Layer. In the diagram the Personal Development applications UI and the Motivational Assistants UI are seperated, while in practice the code might be mixed.<br><br>
-
-        The Personal Development UI communicates directly with the Personal Development model as they are very tighly coupled. We assume that the Personal Development UI, the Personal Development Logic and a Domain model containing some data about the user and their progress already exists as a whole application. <br><br>
-
-        The Motivational Assistant UI and its logic are added on top of the already existing application so they must be more loosely coupled.
-        For that reason an Adapter pattern is used to connect the Motivational Assistant to the main system. In the adapter Events like Session Started, Task finished are defined. The Motivational Assistan UI can call these events to notify the Motivational Assistant Logic about the users actions. These events are received by the Motivational Assistants logic and processed. The Motivational Assistants Logic then updates the Domain Model with new Metrics and new user States.<br><br>
-        We can see that the Domain Model contains some parts that are shared between the Personal Development application and the Motivational Assistant like the User Model, Tasks and Plans. These parts are used by both systems.<br><br>
-        Some other parts specific to the Motivatonal Assistant like events, metrics and mechanic mappings are not shared.<br><br>
-        The Motivational Assistant Logic then sends back Assistan Actions via the Action Mapper in the Adapter which the Motivational Assistant UI can receive and then convert them into UI changes, activation or deactivation of mechanics etc.
-        `
-    },
-    {
-      label:'Detailed Implementation Architecture',
-      path:'./DetailedImplementationArchitecture.svg',
-      note:`<strong>Detailed Implementation Architecture:</strong> <br><br>
-        This diagram refines the Architecture view down to concrete components, services, and data flows.<br><br>
-        It shows how the Motivational Assistant logic is decomposed into modules (event ingestion, situation detection, metric aggregation, mechanic selection, action generation) and how these modules interact via explicit interfaces and data contracts.<br><br>
-        Use this view when you need to think about code modules, deployment boundaries, or how the adapter connects to persistence, queues, and external services.`
-    }
   ];
 
   function setDiagram(path){

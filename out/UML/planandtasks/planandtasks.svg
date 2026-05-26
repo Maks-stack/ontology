@@ -1,1 +1,344 @@
-<?xml version="1.0" encoding="us-ascii" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="233px" preserveAspectRatio="none" style="width:1162px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 1162 233" width="1162px" zoomAndPan="magnify"><defs/><g><!--cluster PlanAndTasks--><g id="cluster_PlanAndTasks"><rect fill="#EBFFE8" height="220" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:1.5;" width="1149" x="7" y="7"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="102" x="530.5" y="22.5352">PlanAndTasks</text></g><!--class Plan--><g id="elem_Plan"><rect codeLine="14" fill="#90EE90" height="72.9766" id="Plan" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="152" x="23" y="108.51"/><ellipse cx="80.25" cy="124.51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M82.7231,130.6531 Q82.1421,130.9519 81.5029,131.1013 Q80.8638,131.2507 80.1582,131.2507 Q77.6514,131.2507 76.3315,129.5989 Q75.0117,127.947 75.0117,124.8259 Q75.0117,121.6965 76.3315,120.0447 Q77.6514,118.3928 80.1582,118.3928 Q80.8638,118.3928 81.5112,118.5422 Q82.1587,118.6916 82.7231,118.9905 L82.7231,121.7131 Q82.0923,121.1321 81.4988,120.8623 Q80.9053,120.5925 80.2744,120.5925 Q78.9297,120.5925 78.2449,121.6592 Q77.5601,122.7258 77.5601,124.8259 Q77.5601,126.9177 78.2449,127.9844 Q78.9297,129.051 80.2744,129.051 Q80.9053,129.051 81.4988,128.7812 Q82.0923,128.5115 82.7231,127.9304 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="29" x="100.75" y="129.801">Plan</text><line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="174" y1="140.51" y2="140.51"/><ellipse cx="34" cy="154.2541" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="43" y="158.0452">name: String</text><ellipse cx="34" cy="170.7424" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="43" y="174.5334">description: String</text></g><!--class Task--><g id="elem_Task"><rect codeLine="19" fill="#90EE90" height="72.9766" id="Task" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="152" x="760" y="138.51"/><ellipse cx="815.75" cy="154.51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M818.2231,160.6531 Q817.6421,160.9519 817.0029,161.1013 Q816.3638,161.2507 815.6582,161.2507 Q813.1514,161.2507 811.8315,159.5989 Q810.5117,157.947 810.5117,154.8259 Q810.5117,151.6965 811.8315,150.0447 Q813.1514,148.3928 815.6582,148.3928 Q816.3638,148.3928 817.0112,148.5422 Q817.6587,148.6916 818.2231,148.9905 L818.2231,151.7131 Q817.5923,151.1321 816.9988,150.8623 Q816.4053,150.5925 815.7744,150.5925 Q814.4297,150.5925 813.7449,151.6592 Q813.0601,152.7258 813.0601,154.8259 Q813.0601,156.9177 813.7449,157.9844 Q814.4297,159.051 815.7744,159.051 Q816.4053,159.051 816.9988,158.7812 Q817.5923,158.5115 818.2231,157.9304 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="836.25" y="159.801">Task</text><line style="stroke:#181818;stroke-width:0.5;" x1="761" x2="911" y1="170.51" y2="170.51"/><ellipse cx="771" cy="184.2541" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="780" y="188.0452">title: String</text><ellipse cx="771" cy="200.7424" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="780" y="204.5334">description: String</text></g><!--class Level--><g id="elem_Level"><rect codeLine="24" fill="#90EE90" height="72.9766" id="Level" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113" x="1027" y="41.51"/><ellipse cx="1063.15" cy="57.51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1065.6231,63.6531 Q1065.0421,63.9519 1064.4029,64.1013 Q1063.7638,64.2507 1063.0582,64.2507 Q1060.5514,64.2507 1059.2315,62.5989 Q1057.9117,60.947 1057.9117,57.8259 Q1057.9117,54.6965 1059.2315,53.0447 Q1060.5514,51.3928 1063.0582,51.3928 Q1063.7638,51.3928 1064.4112,51.5422 Q1065.0587,51.6916 1065.6231,51.9905 L1065.6231,54.7131 Q1064.9923,54.1321 1064.3988,53.8623 Q1063.8053,53.5925 1063.1744,53.5925 Q1061.8297,53.5925 1061.1449,54.6592 Q1060.4601,55.7258 1060.4601,57.8259 Q1060.4601,59.9177 1061.1449,60.9844 Q1061.8297,62.051 1063.1744,62.051 Q1063.8053,62.051 1064.3988,61.7812 Q1064.9923,61.5115 1065.6231,60.9304 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34" x="1081.85" y="62.801">Level</text><line style="stroke:#181818;stroke-width:0.5;" x1="1028" x2="1139" y1="73.51" y2="73.51"/><ellipse cx="1038" cy="87.2541" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="1047" y="91.0452">name: String</text><ellipse cx="1038" cy="103.7424" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="85" x="1047" y="107.5334">difficulty: Int</text></g><!--class TaskRequirement--><g id="elem_TaskRequirement"><rect codeLine="28" fill="#90EE90" height="56.4883" id="TaskRequirement" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="188" x="742" y="41.76"/><ellipse cx="773.2" cy="57.76" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M775.6731,63.9031 Q775.0921,64.2019 774.4529,64.3513 Q773.8138,64.5007 773.1082,64.5007 Q770.6014,64.5007 769.2815,62.8489 Q767.9617,61.197 767.9617,58.0759 Q767.9617,54.9465 769.2815,53.2947 Q770.6014,51.6428 773.1082,51.6428 Q773.8138,51.6428 774.4612,51.7922 Q775.1087,51.9416 775.6731,52.2405 L775.6731,54.9631 Q775.0423,54.3821 774.4488,54.1123 Q773.8553,53.8425 773.2244,53.8425 Q771.8797,53.8425 771.1949,54.9092 Q770.5101,55.9758 770.5101,58.0759 Q770.5101,60.1677 771.1949,61.2344 Q771.8797,62.301 773.2244,62.301 Q773.8553,62.301 774.4488,62.0312 Q775.0423,61.7615 775.6731,61.1804 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120" x="790.8" y="63.051">TaskRequirement</text><line style="stroke:#181818;stroke-width:0.5;" x1="743" x2="929" y1="73.76" y2="73.76"/><ellipse cx="753" cy="87.5041" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="162" x="762" y="91.2952">requiredRepetitions: int</text></g><!--class TaskAssignment--><g id="elem_TaskAssignment"><rect codeLine="32" fill="#90EE90" height="32" id="TaskAssignment" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145" x="473" y="129"/><ellipse cx="488" cy="145" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M490.4731,151.1431 Q489.8921,151.4419 489.2529,151.5913 Q488.6138,151.7407 487.9082,151.7407 Q485.4014,151.7407 484.0815,150.0889 Q482.7617,148.437 482.7617,145.3159 Q482.7617,142.1865 484.0815,140.5347 Q485.4014,138.8828 487.9082,138.8828 Q488.6138,138.8828 489.2612,139.0322 Q489.9087,139.1816 490.4731,139.4805 L490.4731,142.2031 Q489.8423,141.6221 489.2488,141.3523 Q488.6553,141.0825 488.0244,141.0825 Q486.6797,141.0825 485.9949,142.1492 Q485.3101,143.2158 485.3101,145.3159 Q485.3101,147.4077 485.9949,148.4744 Q486.6797,149.541 488.0244,149.541 Q488.6553,149.541 489.2488,149.2712 Q489.8423,149.0015 490.4731,148.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113" x="502" y="150.291">TaskAssignment</text></g><!--class TaskBlock--><g id="elem_TaskBlock"><rect codeLine="35" fill="#90EE90" height="105.9531" id="TaskBlock" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161" x="216" y="92.02"/><ellipse cx="258.45" cy="108.02" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M260.9231,114.1631 Q260.3421,114.4619 259.7029,114.6113 Q259.0638,114.7607 258.3582,114.7607 Q255.8514,114.7607 254.5315,113.1089 Q253.2117,111.457 253.2117,108.3359 Q253.2117,105.2065 254.5315,103.5547 Q255.8514,101.9028 258.3582,101.9028 Q259.0638,101.9028 259.7112,102.0522 Q260.3587,102.2016 260.9231,102.5005 L260.9231,105.2231 Q260.2923,104.6421 259.6988,104.3723 Q259.1053,104.1025 258.4744,104.1025 Q257.1297,104.1025 256.4449,105.1692 Q255.7601,106.2358 255.7601,108.3359 Q255.7601,110.4277 256.4449,111.4944 Q257.1297,112.561 258.4744,112.561 Q259.1053,112.561 259.6988,112.2912 Q260.2923,112.0215 260.9231,111.4404 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="278.55" y="113.311">TaskBlock</text><line style="stroke:#181818;stroke-width:0.5;" x1="217" x2="376" y1="124.02" y2="124.02"/><ellipse cx="227" cy="137.7641" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="236" y="141.5552">title: String</text><ellipse cx="227" cy="154.2524" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="126" x="236" y="158.0434">description: String</text><ellipse cx="227" cy="170.7407" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="135" x="236" y="174.5317">startDate: DateTime</text><ellipse cx="227" cy="187.229" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="236" y="191.02">endDate: DateTime</text></g><!--link TaskAssignment to Task--><g id="link_TaskAssignment_Task"><path codeLine="42" d="M618.15,154.4 C629.72,155.91 638,157 638,157 C638,157 698.0949,162.4942 753.7049,167.5742 " fill="none" id="TaskAssignment-to-Task" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="759.68,168.12,751.0812,163.3178,754.7007,167.6651,750.3534,171.2847,759.68,168.12" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="639" y="153.5684">has assigned</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="8" x="744.0245" y="180.7624">1</text></g><!--link TaskAssignment to TaskRequirement--><g id="link_TaskAssignment_TaskRequirement"><path codeLine="43" d="M609.81,128.54 C648.46,118.49 692.7633,106.9806 735.8933,95.7606 " fill="none" id="TaskAssignment-to-TaskRequirement" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="741.7,94.25,731.9828,92.6447,736.8611,95.5088,733.997,100.387,741.7,94.25" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="82" x="639" y="97.3484">has assigned</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="711.967" y="109.1611">1..*</text></g><!--link TaskRequirement to Level--><g id="link_TaskRequirement_Level"><path codeLine="44" d="M930.16,73.04 C962.72,74.1 992.2232,75.0546 1020.7632,75.9846 " fill="none" id="TaskRequirement-to-Level" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="1026.76,76.18,1017.895,71.889,1021.7627,76.0172,1017.6345,79.8848,1026.76,76.18" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="55" x="951" y="70.3284">can have</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="24" x="994.8119" y="89.4233">0..1</text></g><!--link Plan to TaskBlock--><g id="link_Plan_TaskBlock"><path codeLine="46" d="M187.31,145 C200.54,145 196.35,145 209.69,145 " fill="none" id="Plan-TaskBlock" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="175.31,145,181.31,149,187.31,145,181.31,141,175.31,145" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="215.69,145,206.69,141,210.69,145,206.69,149,215.69,145" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="186.087" y="158.2026">1..*</text></g><!--link TaskBlock to TaskAssignment--><g id="link_TaskBlock_TaskAssignment"><path codeLine="47" d="M389.35,145 C420.08,145 436.94,145 466.85,145 " fill="none" id="TaskBlock-TaskAssignment" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="377.35,145,383.35,149,389.35,145,383.35,141,377.35,145" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="472.85,145,463.85,141,467.85,145,463.85,149,472.85,145" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="54" x="398" y="141.5684">contains</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="22" x="442.8771" y="158.298">1..*</text></g><!--SRC=[fPB1QiCm38RlVWgjlNKqTB33o67GCWQ37KRR5r1Z9J5n7CzM2s7qtMSdfKkR3JPs2KJ_xq-_PFjA6OiEQz3A4BUMm3QwZJ-YL9A0QiijrCHb8_smXCnExVPC_j9OxyXveIbdu0QSAae6gHnbh1eZ_BcVQIHvid2_61GTccfKj9XLMD26MqqGGMWAJKBSICf3Jh0QpIfuO4gxFAU7FB-GdbrZ6AOw9YaSaH7YH8It82-DtAAl_1VcGm1a6htlz04Z2W2t1cjAOHF6DqLV2PDaJjauuK0uYZCeTXY3MB7-A-cL3gH_bKdbkShscjiKNWntb66SDRtlmxNK520ZdEj5kIPB8ML8urDG9ye5PkczAimtb2lVIZVPVrOG1C_e-0av-EDtgshg1J9oLExQNmMSpnzXSZVfRoE54ZrWfvByoPmaiybeNTyU7Hgwiuia2Rtw-qeX2o-fn0F5MDspcbqrw1PqOlNBkdOCmWLUM28guyNn4m00]--></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1188.61 245">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #90ee90;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke: #181818;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-7 {
+        stroke-width: .5px;
+      }
+
+      .cls-2 {
+        fill: #f59bff;
+      }
+
+      .cls-8 {
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+
+      .cls-8, .cls-9, .cls-10 {
+        isolation: isolate;
+      }
+
+      .cls-8, .cls-10 {
+        font-size: 14px;
+      }
+
+      .cls-11 {
+        stroke: #038048;
+      }
+
+      .cls-11, .cls-3, .cls-4 {
+        fill: none;
+      }
+
+      .cls-12 {
+        letter-spacing: 1.29em;
+      }
+
+      .cls-13 {
+        letter-spacing: 1em;
+      }
+
+      .cls-14 {
+        letter-spacing: .41em;
+      }
+
+      .cls-15 {
+        letter-spacing: .41em;
+      }
+
+      .cls-16 {
+        letter-spacing: .81em;
+      }
+
+      .cls-17 {
+        letter-spacing: .63em;
+      }
+
+      .cls-18 {
+        letter-spacing: .65em;
+      }
+
+      .cls-19 {
+        letter-spacing: .73em;
+      }
+
+      .cls-20 {
+        letter-spacing: .54em;
+      }
+
+      .cls-21 {
+        letter-spacing: .17em;
+      }
+
+      .cls-22 {
+        fill: #f1f1f1;
+      }
+
+      .cls-22, .cls-23, .cls-24 {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+
+      .cls-23 {
+        fill: #ebffe8;
+      }
+
+      .cls-5 {
+        fill: #add1b2;
+      }
+
+      .cls-9 {
+        font-size: 13px;
+      }
+
+      .cls-9, .cls-10 {
+        font-family: Helvetica, Helvetica;
+      }
+
+      .cls-25 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-26 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-27 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-6 {
+        fill: #181818;
+      }
+
+      .cls-28 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-29 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-30 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-24 {
+        fill: #fde8ff;
+      }
+
+      .cls-31 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-32 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-33 {
+        letter-spacing: .06em;
+      }
+
+      .cls-34 {
+        letter-spacing: .06em;
+      }
+
+      .cls-35 {
+        letter-spacing: .08em;
+      }
+
+      .cls-36 {
+        letter-spacing: .06em;
+      }
+
+      .cls-37 {
+        letter-spacing: .06em;
+      }
+
+      .cls-38 {
+        letter-spacing: .06em;
+      }
+
+      .cls-39 {
+        letter-spacing: .02em;
+      }
+
+      .cls-40 {
+        letter-spacing: .04em;
+      }
+
+      .cls-41 {
+        letter-spacing: .04em;
+      }
+
+      .cls-42 {
+        letter-spacing: .04em;
+      }
+
+      .cls-43 {
+        letter-spacing: .03em;
+      }
+
+      .cls-44 {
+        letter-spacing: .04em;
+      }
+
+      .cls-45 {
+        letter-spacing: .04em;
+      }
+
+      .cls-46 {
+        letter-spacing: .04em;
+      }
+
+      .cls-7 {
+        fill: #e6e6e6;
+      }
+
+      .cls-47 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <g id="cluster_PlanAndTasks" data-name="cluster PlanAndTasks">
+    <rect class="cls-23" x="12.6" y="7" width="1164" height="232" rx="2.5" ry="2.5"/>
+    <text class="cls-8" transform="translate(472.6 22.54)"><tspan class="cls-40" x="0" y="0">PlanAnd</tspan><tspan class="cls-32" x="60.95" y="0">T</tspan><tspan class="cls-40" x="69.07" y="0">ask</tspan><tspan x="94.21" y="0">s</tspan></text>
+  </g>
+  <g id="cluster_UserProfile" data-name="cluster UserProfile">
+    <rect class="cls-24" x="58.39" y="29.11" width="96" height="83" rx="2.5" ry="2.5"/>
+    <text class="cls-8" transform="translate(66.39 44.64)"><tspan class="cls-45" x="0" y="0">UserProfil</tspan><tspan x="72.21" y="0">e</tspan></text>
+  </g>
+  <g id="cluster_EventRegistration" data-name="cluster EventRegistration">
+    <rect class="cls-22" x="468.6" y="50" width="144" height="83" rx="2.5" ry="2.5"/>
+    <text class="cls-8" transform="translate(476.6 65.54)"><tspan class="cls-46" x="0" y="0">EventRegistratio</tspan><tspan x="119.45" y="0">n</tspan></text>
+  </g>
+  <g id="elem_Plan" data-name="elem Plan">
+    <rect id="Plan" class="cls-1" x="29.6" y="133.51" width="152" height="72.98" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="86.85" cy="149.51" r="11"/>
+    <path d="M89.33,155.65c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15.43.1.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(107.35 154.8)"><tspan class="cls-39" x="0" y="0">Pla</tspan><tspan x="21.21" y="0">n</tspan></text>
+    <line class="cls-3" x1="30.6" y1="165.51" x2="180.6" y2="165.51"/>
+    <circle class="cls-11" cx="40.6" cy="179.25" r="3"/>
+    <text class="cls-10" transform="translate(49.6 183.04)"><tspan x="0" y="0">name:</tspan><tspan class="cls-20" x="38.91" y="0"> </tspan><tspan x="50.43" y="0">String</tspan></text>
+    <circle class="cls-11" cx="40.6" cy="195.74" r="3"/>
+    <text class="cls-10" transform="translate(49.6 199.53)"><tspan x="0" y="0">description:</tspan><tspan class="cls-13" x="71.59" y="0"> </tspan><tspan x="89.43" y="0">String</tspan></text>
+  </g>
+  <g id="elem_Task" data-name="elem Task">
+    <rect id="Task" class="cls-1" x="784.6" y="41.51" width="152" height="72.98" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="840.35" cy="57.51" r="11"/>
+    <path d="M842.83,63.65c-.39.2-.79.35-1.22.45s-.87.15-1.34.15c-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15s.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(860.85 62.8)"><tspan class="cls-30" x="0" y="0">T</tspan><tspan class="cls-35" x="8.07" y="0">as</tspan><tspan x="25" y="0">k</tspan></text>
+    <line class="cls-3" x1="785.6" y1="73.51" x2="935.6" y2="73.51"/>
+    <circle class="cls-11" cx="795.6" cy="87.25" r="3"/>
+    <text class="cls-10" transform="translate(804.6 91.04)"><tspan x="0" y="0">title:</tspan><tspan class="cls-17" x="25.68" y="0"> </tspan><tspan x="38.43" y="0">String</tspan></text>
+    <circle class="cls-11" cx="795.6" cy="103.74" r="3"/>
+    <text class="cls-10" transform="translate(804.6 107.53)"><tspan x="0" y="0">description:</tspan><tspan class="cls-13" x="71.59" y="0"> </tspan><tspan x="89.43" y="0">String</tspan></text>
+  </g>
+  <g id="elem_Level" data-name="elem Level">
+    <rect id="Level" class="cls-1" x="1051.6" y="146.51" width="113" height="72.98" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="1087.75" cy="162.51" r="11"/>
+    <path d="M1090.23,168.65c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15s.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(1106.45 167.8)"><tspan class="cls-47" x="0" y="0">Leve</tspan><tspan x="30.89" y="0">l</tspan></text>
+    <line class="cls-3" x1="1052.6" y1="178.51" x2="1163.6" y2="178.51"/>
+    <circle class="cls-11" cx="1062.6" cy="192.25" r="3"/>
+    <text class="cls-10" transform="translate(1071.6 196.04)"><tspan x="0" y="0">name:</tspan><tspan class="cls-20" x="38.91" y="0"> </tspan><tspan x="50.43" y="0">String</tspan></text>
+    <circle class="cls-11" cx="1062.6" cy="208.74" r="3"/>
+    <text class="cls-10" transform="translate(1071.6 212.53)"><tspan x="0" y="0">di</tspan><tspan class="cls-27" x="10.9" y="0">f</tspan><tspan x="14.54" y="0">ficulty:</tspan><tspan class="cls-16" x="54.22" y="0"> </tspan><tspan x="69.43" y="0">Int</tspan></text>
+  </g>
+  <g id="elem_TaskRequirement" data-name="elem TaskRequirement">
+    <rect id="TaskRequirement" class="cls-1" x="766.6" y="154.76" width="188" height="56.49" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="797.8" cy="170.76" r="11" transform="translate(501.45 930.91) rotate(-80.78)"/>
+    <path d="M800.28,176.9c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15.43.1.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(815.4 176.05)"><tspan class="cls-29" x="0" y="0">T</tspan><tspan class="cls-36" x="7.79" y="0">askRequiremen</tspan><tspan x="116.11" y="0">t</tspan></text>
+    <line class="cls-3" x1="767.6" y1="186.76" x2="953.6" y2="186.76"/>
+    <circle class="cls-11" cx="777.6" cy="200.5" r="3"/>
+    <text class="cls-10" transform="translate(786.6 204.29)"><tspan x="0" y="0">requiredRepetitions:</tspan><tspan class="cls-12" x="125.3" y="0"> </tspan><tspan x="147.21" y="0">int</tspan></text>
+  </g>
+  <g id="elem_TaskAssignment" data-name="elem TaskAssignment">
+    <rect id="TaskAssignment" class="cls-1" x="467.6" y="157" width="145" height="32" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="482.6" cy="173" r="11"/>
+    <path d="M485.08,179.14c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15s.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(496.6 178.29)"><tspan class="cls-28" x="0" y="0">T</tspan><tspan class="cls-33" x="7.85" y="0">askAssignmen</tspan><tspan x="109.11" y="0">t</tspan></text>
+  </g>
+  <g id="elem_TaskBlock" data-name="elem TaskBlock">
+    <rect id="TaskBlock" class="cls-1" x="222.6" y="117.02" width="161" height="105.95" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="265.05" cy="133.02" r="11"/>
+    <path d="M267.53,139.16c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15.43.1.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(285.15 138.31)"><tspan class="cls-26" x="0" y="0">T</tspan><tspan class="cls-42" x="7.62" y="0">askBloc</tspan><tspan x="61" y="0">k</tspan></text>
+    <line class="cls-3" x1="223.6" y1="149.02" x2="382.6" y2="149.02"/>
+    <circle class="cls-11" cx="233.6" cy="162.76" r="3"/>
+    <text class="cls-10" transform="translate(242.6 166.55)"><tspan x="0" y="0">title:</tspan><tspan class="cls-17" x="25.68" y="0"> </tspan><tspan x="38.43" y="0">String</tspan></text>
+    <circle class="cls-11" cx="233.6" cy="179.25" r="3"/>
+    <text class="cls-10" transform="translate(242.6 183.04)"><tspan x="0" y="0">description:</tspan><tspan class="cls-13" x="71.59" y="0"> </tspan><tspan x="89.43" y="0">String</tspan></text>
+    <circle class="cls-11" cx="233.6" cy="195.74" r="3"/>
+    <text class="cls-10" transform="translate(242.6 199.53)"><tspan x="0" y="0">startDate:</tspan><tspan class="cls-19" x="60.69" y="0"> </tspan><tspan x="74.83" y="0">Date</tspan><tspan class="cls-31" x="104.4" y="0">T</tspan><tspan x="112.44" y="0">ime</tspan></text>
+    <circle class="cls-11" cx="233.6" cy="212.23" r="3"/>
+    <text class="cls-10" transform="translate(242.6 216.02)"><tspan x="0" y="0">endDate:</tspan><tspan class="cls-18" x="56.82" y="0"> </tspan><tspan x="69.83" y="0">Date</tspan><tspan class="cls-31" x="99.4" y="0">T</tspan><tspan x="107.44" y="0">ime</tspan></text>
+  </g>
+  <g id="elem_User" data-name="elem User">
+    <rect id="User" class="cls-2" x="74.39" y="64.11" width="63" height="32" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="89.39" cy="80.11" r="11"/>
+    <path d="M91.86,86.25c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15.43.1.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(103.39 85.4)"><tspan class="cls-43" x="0" y="0">Use</tspan><tspan x="26.34" y="0">r</tspan></text>
+  </g>
+  <g id="elem_TaskEvent" data-name="elem TaskEvent">
+    <rect id="TaskEvent" class="cls-7" x="489.6" y="85" width="101" height="32" rx="2.5" ry="2.5"/>
+    <circle class="cls-5" cx="504.6" cy="101" r="11"/>
+    <path d="M507.08,107.14c-.39.2-.79.35-1.22.45-.43.1-.87.15-1.34.15-1.67,0-2.95-.55-3.83-1.65-.88-1.1-1.32-2.69-1.32-4.77s.44-3.68,1.32-4.78c.88-1.1,2.16-1.65,3.83-1.65.47,0,.92.05,1.35.15.43.1.84.25,1.21.45v2.72c-.42-.39-.83-.67-1.22-.85-.4-.18-.8-.27-1.22-.27-.9,0-1.57.36-2.03,1.07-.46.71-.68,1.77-.68,3.17s.23,2.45.68,3.16c.46.71,1.13,1.07,2.03,1.07.42,0,.83-.09,1.22-.27.4-.18.8-.46,1.22-.85v2.72Z"/>
+    <text class="cls-10" transform="translate(518.6 106.29)"><tspan class="cls-25" x="0" y="0">T</tspan><tspan class="cls-44" x="7.55" y="0">askEven</tspan><tspan x="65.11" y="0">t</tspan></text>
+  </g>
+  <g id="link_TaskAssignment_Task" data-name="link TaskAssignment Task">
+    <path id="TaskAssignment-to-Task" class="cls-4" d="M603.87,156.5c60.44-15.88,142.73-37.5,142.73-37.5,0,0,11.26-4.08,31.99-11.6"/>
+    <polygon class="cls-6" points="784.23 105.35 774.41 104.66 779.53 107.06 777.14 112.18 784.23 105.35"/>
+    <text class="cls-9" transform="translate(663.6 115.57)"><tspan x="0" y="0">has</tspan><tspan class="cls-15" x="20.96" y="0"> </tspan><tspan x="29.96" y="0">assigned</tspan></text>
+    <text class="cls-9" transform="translate(768.57 121.26)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <g id="link_TaskAssignment_TaskRequirement" data-name="link TaskAssignment TaskRequirement">
+    <path id="TaskAssignment-to-TaskRequirement" class="cls-4" d="M612.83,181.86c26.31,3.24,49.77,6.14,49.77,6.14h84s1.98-.08,13.69-.6"/>
+    <polygon class="cls-6" points="766.28 187.13 757.11 183.53 761.29 187.35 757.47 191.53 766.28 187.13"/>
+    <text class="cls-9" transform="translate(663.6 184.57)"><tspan x="0" y="0">has</tspan><tspan class="cls-15" x="20.96" y="0"> </tspan><tspan x="29.96" y="0">assigned</tspan></text>
+    <text class="cls-9" transform="translate(736.55 200.56)"><tspan class="cls-34" x="0" y="0">1..</tspan><tspan x="16.94" y="0">*</tspan></text>
+  </g>
+  <g id="link_TaskRequirement_Level" data-name="link TaskRequirement Level">
+    <path id="TaskRequirement-to-Level" class="cls-4" d="M954.76,183h90.6"/>
+    <polygon class="cls-6" points="1051.36 183 1042.36 179 1046.36 183 1042.36 187 1051.36 183"/>
+    <text class="cls-9" transform="translate(975.6 179.57)"><tspan x="0" y="0">can</tspan><tspan class="cls-21" x="20.96" y="0"> </tspan><tspan x="26.81" y="0">have</tspan></text>
+    <text class="cls-9" transform="translate(1019.41 196.45)"><tspan class="cls-38" x="0" y="0">0..</tspan><tspan x="16.77" y="0">1</tspan></text>
+  </g>
+  <g id="link_Plan_TaskBlock" data-name="link Plan TaskBlock">
+    <path id="Plan-TaskBlock" class="cls-4" d="M193.91,170h22.38"/>
+    <polygon class="cls-6" points="181.91 170 187.91 174 193.91 170 187.91 166 181.91 170"/>
+    <polygon class="cls-6" points="222.29 170 213.29 166 217.29 170 213.29 174 222.29 170"/>
+    <text class="cls-9" transform="translate(192.69 183.2)"><tspan class="cls-34" x="0" y="0">1..</tspan><tspan x="16.94" y="0">*</tspan></text>
+  </g>
+  <g id="link_TaskBlock_TaskAssignment" data-name="link TaskBlock TaskAssignment">
+    <path id="TaskBlock-TaskAssignment" class="cls-4" d="M395.93,171c39.32.43,27.36.74,65.52,1.15"/>
+    <polygon class="cls-6" points="383.93 170.87 389.89 174.94 395.93 171 389.98 166.94 383.93 170.87"/>
+    <polygon class="cls-6" points="467.45 172.22 458.5 168.12 462.45 172.17 458.41 176.12 467.45 172.22"/>
+    <text class="cls-9" transform="translate(404.6 167.71)"><tspan class="cls-37" x="0" y="0">contain</tspan><tspan x="47.5" y="0">s</tspan></text>
+    <text class="cls-9" transform="translate(437.48 185.44)"><tspan class="cls-34" x="0" y="0">1..</tspan><tspan x="16.94" y="0">*</tspan></text>
+  </g>
+  <g id="link_User_Plan" data-name="link User Plan">
+    <path id="User-to-Plan" class="cls-4" d="M106.6,95.87v36.43"/>
+    <polygon class="cls-6" points="106.47 133.36 110.47 124.36 106.47 128.36 102.47 124.36 106.47 133.36"/>
+    <text class="cls-9" transform="translate(112.58 124.23)"><tspan class="cls-41" x="0" y="0">ha</tspan><tspan x="15.5" y="0">s</tspan></text>
+    <text class="cls-9" transform="translate(145.22 94.25)"><tspan x="0" y="0">1</tspan></text>
+    <text class="cls-9" transform="translate(94.48 131.18)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+  <g id="link_TaskEvent_Task" data-name="link TaskEvent Task">
+    <path id="TaskEvent-to-Task" class="cls-4" d="M590.87,97.41c51.78-3.74,127.53-9.22,187.27-13.53"/>
+    <polygon class="cls-6" points="784.12 83.45 774.86 80.11 779.14 83.81 775.43 88.09 784.12 83.45"/>
+    <text class="cls-9" transform="translate(678.1 83.33)"><tspan x="0" y="0">refers</tspan><tspan class="cls-14" x="33.23" y="0"> </tspan><tspan x="42.16" y="0">to</tspan></text>
+    <text class="cls-9" transform="translate(598.57 110.55)"><tspan x="0" y="0">1</tspan></text>
+    <text class="cls-9" transform="translate(768.7 97.23)"><tspan x="0" y="0">1</tspan></text>
+  </g>
+</svg>

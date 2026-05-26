@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -24,5 +27,20 @@ package Conditions conditionsBack {
 
   class PlanCondition conditionsFront extends Condition
   class HalfwayPointReached conditionsFront extends PlanCondition
+
+  !if ($renderMode != "master")
+  package Metrics #ffe8e8ff {
+    class Metric #fda5a5ff
+  }
+  package MotivationalMechanics #f5ffdbff {
+    class MechanicState #e4ffa0ff
+  }
+  package PlanAndTasks #ebffe8ff {
+    class Plan #lightgreen
+  }
+  Condition --> "1..*" Metrics.Metric : considers
+  Condition --> "1..*" MotivationalMechanics.MechanicState : considers
+  PlanCondition --> "1..*" PlanAndTasks.Plan : "is related to"
+  !endif
 }
 

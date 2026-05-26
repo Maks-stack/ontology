@@ -5,8 +5,8 @@ hide empty methods
 hide empty attributes
 hide empty members
 top to bottom direction
-skinparam nodesep 60
-skinparam ranksep 80
+skinparam nodesep 100
+skinparam ranksep 130
 skinparam packageStyle rectangle
 title Motiva Framework Ontology
 

@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -30,10 +33,16 @@ package Metrics metricsBack {
   class WeeklyAdherence metricsLight extends AdherenceMetric
   class MechanicUsageRate metricsLight extends EngagementMetric
   class MechanicDisplayRate metricsLight extends EngagementMetric
-  class MechanicEngagement metricsLight extends EngagementMetric
   class SessionDuration metricsLight extends SystemMetric
   class ClickRate metricsLight extends PerformanceMetric
   class Adherence metricsLight extends AdherenceMetric
   class HesitationTime metricsLight extends PerformanceMetric
+
+  !if ($renderMode != "master")
+  package UserProfile #fde8ffff {
+    class UserState #f7befeff
+  }
+  UserProfile.UserState --> "1..*" UserStateMetric : "is defined by"
+  !endif
 }
 

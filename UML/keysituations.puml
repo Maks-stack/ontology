@@ -1,4 +1,7 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
 hide empty methods
 hide empty attributes
 hide empty members
@@ -16,11 +19,19 @@ package KeySituations keySituationsBack {
 
   }
   class MechanicDisplayedKeySituation keySituationsLight extends KeySituation
-  class MechanicInteractionKeySituation keySituationsLight extends KeySituation
   class MilestoneReachedKeySituation keySituationsLight extends KeySituation
-  class DailyChallengePosedKeySituation keySituationsLight extends KeySituation
   class SessionStartedKeySituation keySituationsLight extends KeySituation
-  class TaskStartedKeySituation keySituationsLight extends KeySituation
-  class TaskFinishedKeySituation keySituationsLight extends KeySituation
   class SessionEndedKeySituation keySituationsLight extends KeySituation
+  class TaskStartedKeySituation keySituationsLight extends KeySituation
+
+  !if ($renderMode != "master")
+  package AssistantActions #e8e8ffff {
+    class AssistantAction #cacaffff
+  }
+  package Conditions #ffedcaff {
+    class Condition #f8db92ff
+  }
+  KeySituation --> "0..*" AssistantActions.AssistantAction : triggers
+  KeySituation --> "1..*" Conditions.Condition : has
+  !endif
 }

@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteCond %{HTTP_REFERER} !^https://ageinglab\.ctb\.upm\.es/ [NC]
+RewriteCond %{HTTP_REFERER} !^https://www\.ageinglab\.ctb\.upm\.es/ [NC]
+RewriteRule .* - [F,L]

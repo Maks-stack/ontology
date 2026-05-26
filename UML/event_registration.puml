@@ -1,4 +1,8 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
+
 hide empty methods
 hide empty attributes
 hide empty members
@@ -37,5 +41,20 @@ package EventRegistration eventsBack {
     class MechanicDisplayedEvent eventsLight extends MechanicEvent
     class MechanicDismissedEvent eventsLight extends MechanicEvent
   }
+
+  !if ($renderMode != "master")
+  package KeySituations #e8faffff {
+    class KeySituation #bbf0ffff
+  }
+  package Metrics #ffe8e8ff {
+    class Metric #fda5a5ff
+  }
+  package UserProfile #fde8ffff {
+    class User #f59bffff
+  }
+  Event --> "0..*" KeySituations.KeySituation : triggers
+  Event --> "0..*" Metrics.Metric : "triggers recalculation"
+  UserProfile.User --> EventRegistration.UserEvent : executes
+  !endif
 
 }

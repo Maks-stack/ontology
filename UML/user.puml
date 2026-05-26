@@ -1,4 +1,8 @@
 skinparam linetype polyline
+!if ($renderMode != "master")
+!pragma layout smetana
+!endif
+
 hide empty methods
 hide empty attributes
 hide empty members
@@ -23,4 +27,13 @@ package UserProfile contextBack {
 
   User --> "1..*" UserState : has
   User --> "1..*" UserTraitMapping : has
+
+  !if ($renderMode != "master")
+  package UserTraits #fafeb7ff {
+    class UserTrait #f5fba0ff
+  }
+
+  UserTraitMapping --> "1..*" UserTraits.UserTrait : references
+  UserProfile.UserTraitMapping : "determined by"
+  !endif
 }
